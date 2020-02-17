@@ -20,6 +20,14 @@ namespace Team4_YelpProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        public class Business
+        {
+            public string name { get; set; }
+            public string state { get; set; }
+            public string city { get; set; }
+            public string business_id { get; set; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
