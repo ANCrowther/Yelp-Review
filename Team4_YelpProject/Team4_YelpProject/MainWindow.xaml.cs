@@ -31,6 +31,15 @@ namespace Team4_YelpProject
         public MainWindow()
         {
             InitializeComponent();
+            addState();
+            addGridColumns();
         }
+
+        private string buildConnectionString()
+        {
+            return "Host = localhost; Username = postgre; Database = milestone1db; password = spiffy";
+        }
+
+
     }
 }
