@@ -26,7 +26,7 @@ namespace Team4_YelpProject
             public string name { get; set; }
             public string state { get; set; }
             public string city { get; set; }
-            public string business_id { get; set; }
+            //public string business_id { get; set; }
         }
 
         public MainWindow()
@@ -38,7 +38,7 @@ namespace Team4_YelpProject
 
         private string buildConnectionString()
         {
-            return "Host = localhost; Username = postgre; Database = milestone1db; password = spiffy";
+            return "Host = localhost; Username = postgres; Database = milestone1db; password = spiffy";
         }
 
         private void addState()
@@ -50,13 +50,12 @@ namespace Team4_YelpProject
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT distinct state FROM business ORDER BY state";
+
                     try
                     {
                         var reader = cmd.ExecuteReader();
                         while (reader.Read())
-                        {
-                            StateList.Items.Add(reader.GetString(0));
-                        }
+                            stateList.Items.Add(reader.GetString(0));
                     }
                     catch (NpgsqlException ex)
                     {
@@ -90,11 +89,11 @@ namespace Team4_YelpProject
             col3.Width = 150;
             businessGrid.Columns.Add(col3);
 
-            DataGridTextColumn col4 = new DataGridTextColumn();
-            col4.Binding = new Binding("business_id");
-            col4.Header = "";
-            col4.Width = 0;
-            businessGrid.Columns.Add(col4);
+            //DataGridTextColumn col4 = new DataGridTextColumn();
+            //col4.Binding = new Binding("business_id");
+            //col4.Header = "";
+            //col4.Width = 0;
+            //businessGrid.Columns.Add(col4);
         }
 
         private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
@@ -106,17 +105,16 @@ namespace Team4_YelpProject
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = sqlstr;
+
                     try
                     {
                         var reader = cmd.ExecuteReader();
                         while (reader.Read())
-                        {
                             myf(reader);
-                        }
                     }
                     catch (NpgsqlException ex)
                     {
-                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                        System.Windows.MessageBox.Show("SQL Error - " + ex.Message.ToString());
                     }
                     finally
                     {
@@ -128,9 +126,33 @@ namespace Team4_YelpProject
 
         private void addGridRow(NpgsqlDataReader R)
         {
-            businessGrid.Items.Add(new Business() { name = R.GetString(0), state = R.GetString(1), city = R.GetString(2), business_id = R.GetString(3) });
+            businessGrid.Items.Add(new Business() { name = R.GetString(0), state = R.GetString(1), city = R.GetString(2) });
+
         }
 
+        private void addCity(NpgsqlDataReader R)
+        {
+            cityList.Items.Add(R.GetString(0));
+        }
 
+        private void stateList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cityList.Items.Clear();
+            if (stateList.SelectedIndex >= 0)
+            {
+                string sqlStr = "SELECT distinct city FROM business WHERE state = '" + stateList.SelectedItem.ToString() + "' ORDER BY city";
+                executeQuery(sqlStr, addCity);
+            }
+        }
+
+        private void cityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            businessGrid.Items.Clear();
+            if (cityList.SelectedIndex >= 0)
+            {
+                string sqlStr = "SELECT name, state, city FROM business WHERE state = '" + stateList.SelectedItem.ToString() + "' AND city = '" + cityList.SelectedItem.ToString() + "' ORDER BY name";
+                executeQuery(sqlStr, addGridRow);
+            }
+        }
     }
 }
