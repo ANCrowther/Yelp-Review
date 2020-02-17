@@ -96,5 +96,41 @@ namespace Team4_YelpProject
             col4.Width = 0;
             businessGrid.Columns.Add(col4);
         }
+
+        private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
+        {
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = sqlstr;
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            myf(reader);
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        private void addGridRow(NpgsqlDataReader R)
+        {
+            businessGrid.Items.Add(new Business() { name = R.GetString(0), state = R.GetString(1), city = R.GetString(2), business_id = R.GetString(3) });
+        }
+
+
     }
 }
