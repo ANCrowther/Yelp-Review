@@ -12,6 +12,11 @@
         <ComboBox x:Name="stateList" HorizontalAlignment="Left" Margin="115,30,0,0" VerticalAlignment="Top" Width="350" SelectionChanged="stateList_SelectionChanged"/>
         <ComboBox x:Name="cityList" HorizontalAlignment="Left" Margin="115,60,0,0" VerticalAlignment="Top" Width="350" SelectionChanged="cityList_SelectionChanged"/>
         <DataGrid x:Name="businessGrid" HorizontalAlignment="Left" Height="300" Margin="50,100,0,0" VerticalAlignment="Top" Width="450" SelectionChanged="businessGrid_SelectionChanged"/>
-
+        <TabControl>
+            <TabItem Width="150" Height="30" Header="User Information">
+            </TabItem>
+            <TabItem Width="150" Height="30" Header="Business Information">
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
