@@ -167,5 +167,24 @@ namespace Team4_YelpProject
             //    }
             //}
         }
+
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (UserNameTextBox.Text == "")
+            {
+
+            }
+            else
+            {
+                UserNameTextBox.Background = Brushes.White;
+
+            }
+        }
+
+        private void UserIDListBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

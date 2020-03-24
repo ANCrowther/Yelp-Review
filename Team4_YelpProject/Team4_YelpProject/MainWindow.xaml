@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Team4_YelpProject"
         mc:Ignorable="d"
-        Title="Team 4 Yelp App" Height="650" Width="1200">
+        Title="Team 4 Yelp App" Height="750" Width="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -26,7 +26,41 @@
                             <GradientStop Color="#FE447676"/>
                         </LinearGradientBrush>
                     </Grid.Background>
-                    <Label Content="Set Current User" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" FontFamily="OCR A Extended" Foreground="#FFFFEBEB" FontSize="14"/>
+                    <GroupBox x:Name="SelectCurrentUserGroupBox" Header="Select Current User" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontFamily="OCR A Extended" FontSize="14" FontWeight="Bold" Foreground="#FFFFE800">
+                        <Grid>
+                            <TextBox x:Name="UserNameTextBox" Height="25" Margin="10,10,0,0" TextWrapping="Wrap" Width="300" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                                <TextBox.Background>
+                                    <ImageBrush AlignmentX="Left" Stretch="None" ImageSource="EnterUsernameHere.bmp"/>
+                                </TextBox.Background>
+                            </TextBox>
+                            <TextBox x:Name="UserIDListBox" Height="150" Width="300" Margin="10,45,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UserIDListBox_TextChanged">
+
+                            </TextBox>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="FriendsGroupBox" Header="Friends List" HorizontalAlignment="Left" Height="426" Margin="10,245,0,0" VerticalAlignment="Top" Width="330" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14">
+                        <Grid x:Name="RemoveFriendButton">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="37*"/>
+                                <ColumnDefinition Width="281*"/>
+                            </Grid.ColumnDefinitions>
+                            <DataGrid HorizontalAlignment="Left" Height="350" Width="300" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+                            <Button Content="REMOVE FRIEND" Margin="47,370,84,0" Width="150" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Column="1"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox x:Name="UserLocationGroupBox" Header="Set User Location" HorizontalAlignment="Left" Height="231" Margin="350,9,0,0" VerticalAlignment="Top" Width="261" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14">
+                        <Grid>
+                            <Label Content="Current Latitude: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Foreground="#FFE6FD00"/>
+                            <Label x:Name="currentLatitude" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="160,10,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00"/>
+                            <Label Content="Current Longitude: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,50,0,0" Foreground="#FFE6FD00"/>
+                            <Label x:Name="currentLongitude" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="160,50,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00"/>
+                            <Label Content="Latititude" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,90,0,0" Foreground="#FFE6FD00"/>
+                            <Label Content="Longitude" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,130,0,0" Foreground="#FFE6FD00"/>
+                            <TextBox x:Name="LatTextBox" Height="25" Width="145" Margin="100,90,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UserIDListBox_TextChanged"/>
+                            <TextBox x:Name="LongTextBox" Height="25" Width="145" Margin="100,130,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UserIDListBox_TextChanged"/>
+                            <Button Content="SET LOCATION" Margin="45,175,54,0" Width="150" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                        </Grid>
+                    </GroupBox>
                 </Grid>
 
             </TabItem>
