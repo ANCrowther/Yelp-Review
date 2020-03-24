@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Npgsql;
 
+using EasyTabs;
+
 namespace Team4_YelpProject
 {
     /// <summary>
@@ -21,6 +23,7 @@ namespace Team4_YelpProject
     public partial class Window1 : Window
     {
         private string bid = "";
+
         public Window1(string bid)
         {
             InitializeComponent();

@@ -54,8 +54,8 @@ namespace Team4_YelpProject
                     try
                     {
                         var reader = cmd.ExecuteReader();
-                        while (reader.Read())
-                            stateList.Items.Add(reader.GetString(0));
+                        //while (reader.Read())
+                            //stateList.Items.Add(reader.GetString(0));
                     }
                     catch (NpgsqlException ex)
                     {
@@ -75,25 +75,25 @@ namespace Team4_YelpProject
             col1.Binding = new Binding("name");
             col1.Header = "Business Name";
             col1.Width = 255;
-            businessGrid.Columns.Add(col1);
+            //businessGrid.Columns.Add(col1);
 
             DataGridTextColumn col2 = new DataGridTextColumn();
             col2.Binding = new Binding("state");
             col2.Header = "State";
             col2.Width = 60;
-            businessGrid.Columns.Add(col2);
+            //businessGrid.Columns.Add(col2);
 
             DataGridTextColumn col3 = new DataGridTextColumn();
             col3.Binding = new Binding("city");
             col3.Header = "City";
             col3.Width = 150;
-            businessGrid.Columns.Add(col3);
+            //businessGrid.Columns.Add(col3);
 
             DataGridTextColumn col4 = new DataGridTextColumn();
             col4.Binding = new Binding("bid");
             col4.Header = "";
             col4.Width = 0;
-            businessGrid.Columns.Add(col4);
+            //businessGrid.Columns.Add(col4);
         }
 
         private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
@@ -126,46 +126,46 @@ namespace Team4_YelpProject
 
         private void addGridRow(NpgsqlDataReader R)
         {
-            businessGrid.Items.Add(new Business() { name = R.GetString(0), state = R.GetString(1), city = R.GetString(2), bid = R.GetString(3) });
+            //businessGrid.Items.Add(new Business() { name = R.GetString(0), state = R.GetString(1), city = R.GetString(2), bid = R.GetString(3) });
 
         }
 
         private void addCity(NpgsqlDataReader R)
         {
-            cityList.Items.Add(R.GetString(0));
+            //cityList.Items.Add(R.GetString(0));
         }
 
         private void stateList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            cityList.Items.Clear();
-            if (stateList.SelectedIndex >= 0)
-            {
-                string sqlStr = "SELECT distinct city FROM business WHERE state = '" + stateList.SelectedItem.ToString() + "' ORDER BY city";
-                executeQuery(sqlStr, addCity);
-            }
+            //cityList.Items.Clear();
+            //if (stateList.SelectedIndex >= 0)
+            //{
+            //    string sqlStr = "SELECT distinct city FROM business WHERE state = '" + stateList.SelectedItem.ToString() + "' ORDER BY city";
+            //    executeQuery(sqlStr, addCity);
+            //}
         }
 
         private void cityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            businessGrid.Items.Clear();
-            if (cityList.SelectedIndex >= 0)
-            {
-                string sqlStr = "SELECT name, state, city, business_id FROM business WHERE state = '" + stateList.SelectedItem.ToString() + "' AND city = '" + cityList.SelectedItem.ToString() + "' ORDER BY name";
-                executeQuery(sqlStr, addGridRow);
-            }
+            //businessGrid.Items.Clear();
+            //if (cityList.SelectedIndex >= 0)
+            //{
+            //    string sqlStr = "SELECT name, state, city, business_id FROM business WHERE state = '" + stateList.SelectedItem.ToString() + "' AND city = '" + cityList.SelectedItem.ToString() + "' ORDER BY name";
+            //    executeQuery(sqlStr, addGridRow);
+            //}
         }
 
         private void businessGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (businessGrid.SelectedIndex >= 0)
-            {
-                Business B = businessGrid.Items[businessGrid.SelectedIndex] as Business;
-                if ((B.bid != null) && (B.bid.ToString().CompareTo("") != 0))
-                {
-                    Window1 businessWindow = new Window1(B.bid.ToString());
-                    businessWindow.Show();
-                }
-            }
+            //if (businessGrid.SelectedIndex >= 0)
+            //{
+            //    Business B = businessGrid.Items[businessGrid.SelectedIndex] as Business;
+            //    if ((B.bid != null) && (B.bid.ToString().CompareTo("") != 0))
+            //    {
+            //        Window1 businessWindow = new Window1(B.bid.ToString());
+            //        businessWindow.Show();
+            //    }
+            //}
         }
     }
 }
