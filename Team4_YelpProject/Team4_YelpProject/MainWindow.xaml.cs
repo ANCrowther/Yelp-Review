@@ -176,9 +176,10 @@ namespace Team4_YelpProject
         /// <param name="e"></param>
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            userIDListBox.Items.Clear();
             if (UserNameTextBox.Text == "")
             {
-
+                UserNameTextBox.Background = Brushes.Transparent;
             }
             else
             {
@@ -186,11 +187,9 @@ namespace Team4_YelpProject
             }
         }
 
-        private void UserIDListBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void userIDListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
-
-
     }
 }

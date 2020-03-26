@@ -43,9 +43,7 @@
                                     <ImageBrush AlignmentX="Left" Stretch="None" ImageSource="EnterUsernameHere.bmp"/>
                                 </TextBox.Background>
                             </TextBox>
-                            <TextBox x:Name="UserIDListBox" Height="150" Width="300" Margin="10,45,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UserIDListBox_TextChanged" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-
-                            </TextBox>
+                            <ListBox x:Name="userIDListBox" Height="154" VerticalAlignment="Bottom" Margin="10,0,10,10" SelectionChanged="userIDListBox_SelectionChanged"></ListBox>
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="FriendsGroupBox" Header="Friends List" HorizontalAlignment="Left" Height="426" Margin="10,245,0,0" VerticalAlignment="Top" Width="330" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
@@ -114,8 +112,8 @@
                                 <Grid>
                                     <Label Content="Latititude" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Foreground="#FFE6FD00"/>
                                     <Label Content="Longitude" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,40,0,0" Foreground="#FFE6FD00"/>
-                                    <TextBox x:Name="LatTextBox" Height="25" Width="145" Margin="100,10,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UserIDListBox_TextChanged"/>
-                                    <TextBox x:Name="LongTextBox" Height="25" Width="145" Margin="100,40,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" TextChanged="UserIDListBox_TextChanged"/>
+                                    <TextBox x:Name="LatTextBox" Height="25" Width="145" Margin="100,10,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
+                                    <TextBox x:Name="LongTextBox" Height="25" Width="145" Margin="100,40,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
                                     <Button Content="SET LOCATION" Margin="44,70,54,0" Width="150" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                                 </Grid>
                             </GroupBox>
@@ -150,14 +148,24 @@
                     <!--SELECT LOCATION GROUPBOX-->
                     <GroupBox Header="Select Location" Margin="10,10,877,10" Foreground="#FFFFF300" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
                         <Grid>
+                            <!--State Values-->
+                            <Label x:Name="State" Content="State" HorizontalAlignment="Left" FontSize ="14" Margin="43,10,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
+                            <ComboBox x:Name="stateDropBox" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="66" Height="26" RenderTransformOrigin="0.773,-0.615"/>
+
+                            <!--City Values-->
+                            <Label x:Name="City" Content="City" HorizontalAlignment="Left" FontSize ="14" Margin="50,50,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
+                            <!--<ListBox x:Name="CityListBox" HorizontalAlignment="Left" Height="69" Margin="60,47,0,0" VerticalAlignment="Top" Width="210"/>-->
+                            <ComboBox x:Name="cityDropBox" HorizontalAlignment="Left" Margin="115,50,0,0" VerticalAlignment="Top" Width="150" Height="26" RenderTransformOrigin="0.773,-0.615"/>
+
+                            <!--Zipcode Values-->
+                            <Label x:Name="Zipcode" Content="Zipcode" HorizontalAlignment="Left" FontSize ="14" Margin="25,90,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
+                            <!--<ListBox x:Name="ZipcodeListBox" HorizontalAlignment="Left" Height="67" Margin="84,138,0,0" VerticalAlignment="Top" Width="123"/>-->
+                            <ComboBox x:Name="zipcodeDropBox" HorizontalAlignment="Left" Margin="115,90,0,0" VerticalAlignment="Top" Width="129" Height="26" RenderTransformOrigin="0.773,-0.615"/>
+
+
                             <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="22,325,0,0" VerticalAlignment="Top" Width="58" Height="27"/>
                             <Button x:Name="removeButton" Content="Remove" HorizontalAlignment="Left" Margin="22,370,0,0" VerticalAlignment="Top" Width="58" Height="27"/>
                             <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Left" Margin="13,603,0,0" VerticalAlignment="Top" Width="58" Height="27" RenderTransformOrigin="0.397,-1.222"/>
-                            <Label x:Name="State" Content="State" HorizontalAlignment="Left" FontSize ="14" Margin="10,7,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <Label x:Name="City" Content="City" HorizontalAlignment="Left" FontSize ="14" Margin="10,47,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <ListBox x:Name="CityListBox" HorizontalAlignment="Left" Height="69" Margin="60,47,0,0" VerticalAlignment="Top" Width="210"/>
-                            <Label x:Name="Zipcode" Content="Zipcode" HorizontalAlignment="Left" FontSize ="14" Margin="10,138,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <ListBox x:Name="ZipcodeListBox" HorizontalAlignment="Left" Height="67" Margin="84,138,0,0" VerticalAlignment="Top" Width="123"/>
                             <Label x:Name="Category" Content="Category" HorizontalAlignment="Left" FontSize ="14" Margin="10,226,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
                             <ListBox x:Name="CategoryListBox" HorizontalAlignment="Left" Height="170" Margin="91,227,0,0" VerticalAlignment="Top" Width="179"/>
                             <Label x:Name="Select" Content="Select" HorizontalAlignment="Left" FontSize ="14" Margin="10,429,0,0" VerticalAlignment="Top" Foreground="#FFE8FF00" RenderTransformOrigin="-1.024,-1.552"/>
@@ -232,7 +240,7 @@
 
                     </Button>
                     <Button x:Name="showTipsButton" Content="ShowTips" Grid.Column="1" Margin="342,481,508,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00">
-                        
+
                     </Button>
 
                 </Grid>
