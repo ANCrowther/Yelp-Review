@@ -210,10 +210,11 @@
                     </GroupBox>
 
                     <!--SELECTED BUSINESS GROUPBOX-->
-                    <GroupBox Grid.Column="1" Header="Selected Business" Foreground="#FFFFF300" HorizontalAlignment="Left" Height="293" Margin="117,378,0,0" VerticalAlignment="Top" Width="286">
-                        <Grid>
-                            <TextBox x:Name="businessNameTextBox"  HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" TextWrapping="Wrap" Text="Business Name" VerticalAlignment="Top" Width="255" FontFamily="OCR A Extended" FontSize="14" VerticalContentAlignment="Center"/>
-
+                    <GroupBox Grid.Column="1" Header="Selected Business" Foreground="#FFFFF300" HorizontalAlignment="Left" Height="155" Margin="117,378,0,0" VerticalAlignment="Top" Width="440">
+                        <Grid HorizontalAlignment="Left" Width="274">
+                            <TextBox x:Name="businessNameTextBox"  HorizontalAlignment="Left" Height="25" Margin="10,10,-141,0" TextWrapping="Wrap" Text="Business Name" VerticalAlignment="Top" Width="405" FontFamily="OCR A Extended" FontSize="14" VerticalContentAlignment="Center"/>
+                            <TextBox x:Name="addressTextBox"  HorizontalAlignment="Left" Height="25" Margin="10,50,-141,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top" Width="405" FontFamily="OCR A Extended" FontSize="14" VerticalContentAlignment="Center"/>
+                            <TextBox x:Name="hoursTextBox"  HorizontalAlignment="Left" Height="25" Margin="10,90,-141,0" TextWrapping="Wrap" Text="Today: Opens / Closes" VerticalAlignment="Top" Width="405" FontFamily="OCR A Extended" FontSize="14" VerticalContentAlignment="Center"/>
                         </Grid>
                     </GroupBox>
                 </Grid>

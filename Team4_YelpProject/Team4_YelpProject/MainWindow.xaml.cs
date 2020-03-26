@@ -186,5 +186,10 @@ namespace Team4_YelpProject
         {
 
         }
+
+        private void tabControl_SelectionChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }
