@@ -177,20 +177,20 @@ namespace Team4_YelpProject
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             userIDListBox.Items.Clear();
-            
+            if (UserNameTextBox.Text != string.Empty)
+            {
+                UserNameTextBox.Background = Brushes.White;
+            }
+            else
+            {
+                UserNameTextBox.Background = Brushes.Transparent;
+            }
+
             using (var conn = new NpgsqlConnection(buildConnectionString()))
             {
                 conn.Open();
                 using (var cmd = new NpgsqlCommand())
                 {
-                    if (UserNameTextBox.Text == "")
-                    {
-                        UserNameTextBox.Background = Brushes.Transparent;
-                    }
-                    else
-                    {
-                        UserNameTextBox.Background = Brushes.White;
-                    }
                     cmd.Connection = conn;
                     cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + UserNameTextBox.Text + "';";
                     executeMainQuery(cmd.CommandText, setUserData);
@@ -246,7 +246,32 @@ namespace Team4_YelpProject
 
         private void userIDListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            string userName = UserNameTextBox.Text;
+            //if (userIDListBox.SelectedIndex >= 0)
+            //{
+            //}
+            using (var conn = new NpgsqlConnection(buildConnectionString()))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + userName + "';";
+                    executeMainQuery(cmd.CommandText, setUserData);
+                }
 
+                conn.Close();
+            }
         }
+
+        //private void cityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    //businessGrid.Items.Clear();
+        //    //if (cityList.SelectedIndex >= 0)
+        //    //{
+        //    //    string sqlStr = "SELECT name, state, city, business_id FROM business WHERE state = '" + stateList.SelectedItem.ToString() + "' AND city = '" + cityList.SelectedItem.ToString() + "' ORDER BY name";
+        //    //    executeQuery(sqlStr, addGridRow);
+        //    //}
+        //}
     }
 }
