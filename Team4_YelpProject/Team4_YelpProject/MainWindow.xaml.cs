@@ -177,13 +177,70 @@ namespace Team4_YelpProject
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             userIDListBox.Items.Clear();
-            if (UserNameTextBox.Text == "")
+            
+            using (var conn = new NpgsqlConnection(buildConnectionString()))
             {
-                UserNameTextBox.Background = Brushes.Transparent;
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    if (UserNameTextBox.Text == "")
+                    {
+                        UserNameTextBox.Background = Brushes.Transparent;
+                    }
+                    else
+                    {
+                        UserNameTextBox.Background = Brushes.White;
+                    }
+                    cmd.Connection = conn;
+                    cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + UserNameTextBox.Text + "';";
+                    executeMainQuery(cmd.CommandText, setUserData);
+                }
+
+                conn.Close();
             }
-            else
+        }
+
+        void setUserData(NpgsqlDataReader R)
+        {
+            while(R.Read())
             {
-                UserNameTextBox.Background = Brushes.White;
+                userIDListBox.Items.Add(R.GetString(0));
+                UserNameResult.Content = R.GetString(1);
+                UserStarsResult.Content = R.GetDouble(2).ToString();
+                UserFansResult.Content = R.GetInt16(3).ToString();
+                UserYelpingSinceResult.Content = R.GetDate(4).ToString();
+                FunnyCount.Content = R.GetInt16(5).ToString();
+                CoolCount.Content = R.GetInt16(6).ToString();
+                UsefulCount.Content = R.GetInt16(7).ToString();
+            }
+
+        }
+
+        private void executeMainQuery(string sqlstr, Action<NpgsqlDataReader> myf)
+        {
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = sqlstr;
+
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        reader.Read();
+                        myf(reader);
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL Error - " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
             }
         }
 

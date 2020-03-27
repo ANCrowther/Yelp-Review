@@ -102,7 +102,7 @@
                             </GroupBox>
 
                             <!--SET USER LOCATION GROUPBOX-->
-                            <GroupBox x:Name="UserLocationGroupBox" Header="Set User Location" HorizontalAlignment="Left" Height="120" Margin="408,9,-184,0" VerticalAlignment="Top" Width="260" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.Column="1" Grid.ColumnSpan="3">
+                            <GroupBox x:Name="UserLocationGroupBox" Header="Set User Location" HorizontalAlignment="Left" Height="120" Margin="0,10,-226,0" VerticalAlignment="Top" Width="260" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.Column="2" Grid.ColumnSpan="2">
                                 <GroupBox.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="#FF471919" Offset="0"/>
