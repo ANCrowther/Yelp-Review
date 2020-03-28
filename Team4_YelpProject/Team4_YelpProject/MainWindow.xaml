@@ -6,6 +6,46 @@
         xmlns:local="clr-namespace:Team4_YelpProject"
         mc:Ignorable="d"
         Title="Team 4 Yelp App" Height="750" Width="1200" Background="#FF5F5858">
+    <Window.Resources>
+        <!--<local:BoolVisibilityConverter x:Key="InputToVisibility"/>
+        <Style x:Key="WatermarkTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Margin" Value="10,10,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Height="{TemplateBinding Height}"
+                                Width="{TemplateBinding Width}"
+                                Margin="{TemplateBinding Margin}"
+                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                            <Grid>
+                                <TextBlock Text="Enter Username Here...">
+                                    <TextBlock.Visibility>
+                                        <MultiBinding Converter="{StaticResource InputToVisibility}">
+                                            <Binding ElementName="UserNameTextBox" Path="Text.IsEmpty"/>
+                                            <Binding ElementName="UserNameTextBox" Path="IsFocused"/>
+                                        </MultiBinding>
+                                    </TextBlock.Visibility>
+                                </TextBlock>
+                                
+        <TextBox x:Name="UserNameTextBox" Background="Transparent"/>
+        
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="269*"/>
@@ -38,20 +78,14 @@
                     </Grid.Background>
                     <GroupBox x:Name="SelectCurrentUserGroupBox" Header="Select Current User" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontFamily="OCR A Extended" FontSize="14" FontWeight="Bold" Foreground="#FFFFE800" Grid.ColumnSpan="2">
                         <Grid>
-                            <TextBox x:Name="UserNameTextBox" Height="25" Margin="10,10,0,0" TextWrapping="Wrap" Width="300" TextChanged="TextBox_TextChanged" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-                                <TextBox.Background>
-                                    <ImageBrush AlignmentX="Left" Stretch="None" ImageSource="EnterUsernameHere.bmp"/>
-                                </TextBox.Background>
+                            <TextBox x:Name="UserNameTextBox" Height="25" Width="300" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"  TextChanged="UserNameTextBox_SelectionChanged" Grid.ColumnSpan="2">
+                                <!--Style="{StaticResource WatermarkTextBox}"-->
                             </TextBox>
-                            <ListBox x:Name="userIDListBox" Height="154" VerticalAlignment="Bottom" Margin="10,0,10,10" SelectionChanged="userIDListBox_SelectionChanged"></ListBox>
+                            <ListBox x:Name="userIDListBox" Height="154" VerticalAlignment="Bottom" Margin="10,0,10,10" SelectionChanged="userIDListBox_SelectionChanged" Grid.ColumnSpan="2" ></ListBox>
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="FriendsGroupBox" Header="Friends List" HorizontalAlignment="Left" Height="426" Margin="10,245,0,0" VerticalAlignment="Top" Width="330" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
                         <Grid x:Name="RemoveFriendButton">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="37*"/>
-                                <ColumnDefinition Width="281*"/>
-                            </Grid.ColumnDefinitions>
                             <DataGrid x:Name="FriendListDataGrid"  HorizontalAlignment="Left" Height="385" Width="300" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
                         </Grid>
                     </GroupBox>
@@ -62,7 +96,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="0*"/>
                                 <ColumnDefinition Width="225*"/>
-                                <ColumnDefinition/>
                                 <ColumnDefinition Width="16*"/>
                             </Grid.ColumnDefinitions>
                             <Label x:Name="UserNameLabel" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Foreground="#FFE6FD00" Grid.ColumnSpan="2"/>
@@ -138,10 +171,10 @@
                     <!--FILTER BY PRICES GROUPBOX-->
                     <GroupBox Header="Filter by Price" Margin="722,9,153,558" Grid.Column="1" Foreground="#FFFFF300">
                         <Grid>
-                            <CheckBox Content="$" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="$$" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="$$$" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="$$$$" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="$" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="$$" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="$$$" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="$$$$" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
                         </Grid>
                     </GroupBox>
 
@@ -204,16 +237,16 @@
                     <!--FILTER BY ATTRIBUTES GROUPBOX-->
                     <GroupBox Grid.Column="1" Header="Filter by Attributes" Foreground="#FFFFF300" HorizontalAlignment="Left" Height="237" Margin="722,172,0,0" VerticalAlignment="Top" Width="234">
                         <Grid>
-                            <CheckBox Content="Accepts Credit Cards" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Takes Reservations" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Wheelchair Accessible" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Outdoor Seating" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Good for Kids" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Good for Groups" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Delivery" HorizontalAlignment="Left" Margin="20,130,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Take Out" HorizontalAlignment="Left" Margin="20,150,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Free Wi-Fi" HorizontalAlignment="Left" Margin="20,170,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Bike Parking" HorizontalAlignment="Left" Margin="20,190,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Accepts Credit Cards" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Takes Reservations" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Wheelchair Accessible" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Outdoor Seating" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Good for Kids" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Good for Groups" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Delivery" HorizontalAlignment="Left" Margin="20,130,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Take Out" HorizontalAlignment="Left" Margin="20,150,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Free Wi-Fi" HorizontalAlignment="Left" Margin="20,170,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton Content="Bike Parking" HorizontalAlignment="Left" Margin="20,190,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
                         </Grid>
                     </GroupBox>
 
@@ -228,12 +261,12 @@
 
                     <GroupBox Header="Filter by Meal" Grid.Column="1" Foreground="#FFFFF300" Margin="823,9,10,515">
                         <Grid>
-                            <CheckBox x:Name="breakfastCB" Content="Breakfast" HorizontalAlignment="Left" Margin="20,10,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="lunchCB" Content="Lunch" HorizontalAlignment="Left" Margin="20,30,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="brunchCB" Content="Brunch" HorizontalAlignment="Left" Margin="20,50,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="dinnerCB" Content="Dinner" HorizontalAlignment="Left" Margin="20,70,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="dessertCB" Content="Dessert" HorizontalAlignment="Left" Margin="20,90,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="lateNightCB" Content="Late Night" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton x:Name="breakfastCB" Content="Breakfast" HorizontalAlignment="Left" Margin="20,10,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton x:Name="lunchCB" Content="Lunch" HorizontalAlignment="Left" Margin="20,30,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton x:Name="brunchCB" Content="Brunch" HorizontalAlignment="Left" Margin="20,50,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton x:Name="dinnerCB" Content="Dinner" HorizontalAlignment="Left" Margin="20,70,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton x:Name="dessertCB" Content="Dessert" HorizontalAlignment="Left" Margin="20,90,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <RadioButton x:Name="lateNightCB" Content="Late Night" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
                         </Grid>
                     </GroupBox>
                     <Button x:Name="showCheckinsButton" Content="ShowCheckins" Grid.Column="1" Margin="161,481,689,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00">

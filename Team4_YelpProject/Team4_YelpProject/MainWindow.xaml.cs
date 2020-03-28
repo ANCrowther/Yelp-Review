@@ -41,6 +41,11 @@ namespace Team4_YelpProject
             return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
         }
 
+        //private void DelegateEventHandlers()
+        //{
+        //    this.UserNameTextBox.KeyDown += new KeyEventHandler(UserNameTextBox_KeyDown);
+        //    //this.UserNameTextBox.
+        //}
         //private void addState()
         //{
         //    using (var connection = new NpgsqlConnection(buildConnectionString()))
@@ -168,37 +173,40 @@ namespace Team4_YelpProject
         //    //}
         //}
 
-        /// <summary>
-        /// UserNameTextBox field.
-        ///  When no user info, will display a background image 'enter username here'.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            userIDListBox.Items.Clear();
-            if (UserNameTextBox.Text != string.Empty)
-            {
-                UserNameTextBox.Background = Brushes.White;
-            }
-            else
-            {
-                UserNameTextBox.Background = Brushes.Transparent;
-            }
 
-            using (var conn = new NpgsqlConnection(buildConnectionString()))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + UserNameTextBox.Text + "';";
-                    executeMainQuery(cmd.CommandText, setUserData);
-                }
+        //private void UserNameTextBox_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if(e.Key == Key.Enter)
+        //    {
+        //        UserNameTextBox_Leave(sender, new EventArgs());
+        //    }
+        //}
 
-                conn.Close();
-            }
-        }
+        //private void UserNameTextBox_Leave(object sender, EventArgs e)
+        //{
+        //    userIDListBox.Items.Clear();
+        //    if (UserNameTextBox.Text != string.Empty)
+        //    {
+        //        UserNameTextBox.Background = Brushes.White;
+        //    }
+        //    else
+        //    {
+        //        UserNameTextBox.Background = Brushes.Transparent;
+        //    }
+
+        //    using (var conn = new NpgsqlConnection(buildConnectionString()))
+        //    {
+        //        conn.Open();
+        //        using (var cmd = new NpgsqlCommand())
+        //        {
+        //            cmd.Connection = conn;
+        //            cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + UserNameTextBox.Text + "';";
+        //            executeMainQuery(cmd.CommandText, setUserData);
+        //        }
+
+        //        conn.Close();
+        //    }
+        //}
 
         void setUserData(NpgsqlDataReader R)
         {
@@ -216,6 +224,31 @@ namespace Team4_YelpProject
 
         }
 
+        private void userIDListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string userName = UserNameTextBox.Text;
+            //if (userIDListBox.SelectedIndex >= 0)
+            //{
+            //}
+            using (var conn = new NpgsqlConnection(buildConnectionString()))
+            {
+                conn.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = conn;
+                    cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + userName + "';";
+                    executeMainQuery(cmd.CommandText, setUserData);
+                }
+
+                conn.Close();
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sqlstr"></param>
+        /// <param name="myf"></param>
         private void executeMainQuery(string sqlstr, Action<NpgsqlDataReader> myf)
         {
             using (var connection = new NpgsqlConnection(buildConnectionString()))
@@ -244,25 +277,24 @@ namespace Team4_YelpProject
             }
         }
 
-        private void userIDListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void UserNameTextBox_SelectionChanged(object sender, TextChangedEventArgs e)
         {
-            string userName = UserNameTextBox.Text;
-            //if (userIDListBox.SelectedIndex >= 0)
-            //{
-            //}
-            using (var conn = new NpgsqlConnection(buildConnectionString()))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + userName + "';";
-                    executeMainQuery(cmd.CommandText, setUserData);
-                }
+            userIDListBox.Items.Clear();
 
-                conn.Close();
-            }
+            //using (var conn = new NpgsqlConnection(buildConnectionString()))
+            //{
+            //    conn.Open();
+            //    using (var cmd = new NpgsqlCommand())
+            //    {
+            //        cmd.Connection = conn;
+            //        cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,tipCount,totallikes,user_latitude,user_longitude FROM users WHERE name='" + UserNameTextBox.Text + "';";
+            //        executeMainQuery(cmd.CommandText, setUserData);
+            //    }
+
+            //    conn.Close();
+            //}
         }
+
 
         //private void cityList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
