@@ -34,6 +34,7 @@ namespace Team4_YelpProject
             InitializeComponent();
             addFriendsGridColumns();
             addLatestTipsGridColumns();
+            addState();
         }
 
         private string buildConnectionString()
@@ -265,6 +266,68 @@ namespace Team4_YelpProject
         }
     
         //Business Tab
+        public class Business
+        {
+            public string name { get; set; }
+            public string state { get; set; }
+            public string city { get; set; }
+            public string business_id { get; set; }
+        }
 
+        private void addState()
+        {
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT distinct state FROM business ORDER BY state";
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            stateDropBox.Items.Add(reader.GetString(0));
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL Error - " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        private void addCity(NpgsqlDataReader R)
+        {
+            cityDropBox.Items.Add(R.GetString(0));
+        }
+
+        private void addZipcode(NpgsqlDataReader R)
+        {
+            zipcodeDropBox.Items.Add(R.GetInt32(0));
+        }
+
+        private void stateDropBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            cityDropBox.Items.Clear();
+            zipcodeDropBox.Items.Clear();
+            SelectListBox.Items.Clear();
+            CategoryListBox.Items.Clear();
+
+            if (stateDropBox.SelectedIndex >= 0)
+            {
+                string sqlStr = "SELECT DISTINCT city FROM business WHERE state ='" + stateDropBox.SelectedItem.ToString() + "' ORDER BY city;";
+                executeQuery(sqlStr, addCity);
+
+                string sqlStr1 = "SELECT DISTINCT zipcode FROM business WHERE state ='" + stateDropBox.SelectedItem.ToString() + "' ORDER BY zipcode;";
+                executeQuery(sqlStr1, addZipcode);
+            }
+        }
     }
 }

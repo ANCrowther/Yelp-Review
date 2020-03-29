@@ -184,7 +184,7 @@
                         <Grid>
                             <!--State Values-->
                             <Label x:Name="State" Content="State" HorizontalAlignment="Left" FontSize ="14" Margin="43,10,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <ComboBox x:Name="stateDropBox" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="66" Height="26" RenderTransformOrigin="0.773,-0.615"/>
+                            <ComboBox x:Name="stateDropBox" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="66" Height="26" RenderTransformOrigin="0.773,-0.615" SelectionChanged="stateDropBox_SelectionChanged"/>
 
                             <!--City Values-->
                             <Label x:Name="City" Content="City" HorizontalAlignment="Left" FontSize ="14" Margin="50,50,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
