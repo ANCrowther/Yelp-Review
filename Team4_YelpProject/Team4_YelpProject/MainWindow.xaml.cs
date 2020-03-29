@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Npgsql;
 
 namespace Team4_YelpProject
@@ -21,18 +12,28 @@ namespace Team4_YelpProject
     /// </summary>
     public partial class MainWindow : Window
     {
-        public class Business
+        public class FriendsList
         {
             public string name { get; set; }
-            public string totalLikes { get; set; }
-            public string avgStars { get; set; }
+            public int totalLikes { get; set; }
+            public double avgStars { get; set; }
             public string yelpingSince { get; set; }
+        }
+
+        public class TipsList
+        {
+            public string userName { get; set; }
+            public string businessName { get; set; }
+            public string city { get; set; }
+            public string text { get; set; }
+            public string date { get; set; }
         }
 
         public MainWindow()
         {
             InitializeComponent();
             addFriendsGridColumns();
+            addLatestTipsGridColumns();
         }
 
         private string buildConnectionString()
@@ -67,11 +68,44 @@ namespace Team4_YelpProject
             FriendListDataGrid.Columns.Add(col4);
         }
 
-        void setUserData(NpgsqlDataReader R)
+        private void addLatestTipsGridColumns()
+        {
+            DataGridTextColumn col1 = new DataGridTextColumn();
+            col1.Binding = new Binding("userName");
+            col1.Header = "User Name";
+            col1.Width = 100;
+            ReviewByFriendDataGrid.Columns.Add(col1);
+
+            DataGridTextColumn col2 = new DataGridTextColumn();
+            col2.Binding = new Binding("businessName");
+            col2.Header = "Business";
+            col2.Width = 100;
+            ReviewByFriendDataGrid.Columns.Add(col2);
+
+            DataGridTextColumn col3 = new DataGridTextColumn();
+            col3.Binding = new Binding("city");
+            col3.Header = "City";
+            col3.Width = 70;
+            ReviewByFriendDataGrid.Columns.Add(col3);
+
+            DataGridTextColumn col4 = new DataGridTextColumn();
+            col4.Binding = new Binding("text");
+            col4.Header = "Text";
+            col4.Width = 400;
+            ReviewByFriendDataGrid.Columns.Add(col4);
+
+            DataGridTextColumn col5 = new DataGridTextColumn();
+            col4.Binding = new Binding("date");
+            col4.Header = "Date";
+            col4.Width = 50;
+            ReviewByFriendDataGrid.Columns.Add(col5);
+        }
+
+        private void setUserData(NpgsqlDataReader R)
         {
             while(R.Read())
             {
-                userIDListBox.Items.Add(R.GetString(0));
+                //userIDListBox.Items.Add(R.GetString(0));
                 UserNameBox.Text = R.GetString(1);
                 UserStarsResult.Content = R.GetDouble(2).ToString();
                 UserFansResult.Content = R.GetInt16(3).ToString();
@@ -81,6 +115,22 @@ namespace Team4_YelpProject
                 UsefulCount.Content = R.GetInt16(7).ToString();
                 LatTextBox.Text = R.GetDouble(8).ToString();
                 LongTextBox.Text = R.GetDouble(9).ToString();
+            }
+        }
+
+        private void setFriendData(NpgsqlDataReader R)
+        {
+            while (R.Read())
+            {
+                addFriendsGridRow(R);
+            }
+        }
+
+        private void setTipReviewList(NpgsqlDataReader R)
+        {
+            while (R.Read())
+            {
+                addTipsGridRow(R);
             }
         }
 
@@ -95,6 +145,8 @@ namespace Team4_YelpProject
             UsefulCount.Content = "_____";
             LatTextBox.Clear();
             LongTextBox.Clear();
+            FriendListDataGrid.Items.Clear();
+            ReviewByFriendDataGrid.Items.Clear();
         }
 
         private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
@@ -129,35 +181,64 @@ namespace Team4_YelpProject
         private void userIDListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             clearUserData();
-            FriendListDataGrid.Items.Clear();
 
-            using (var conn = new NpgsqlConnection(buildConnectionString()))
+            if (userIDListBox.SelectedIndex >= 0)
             {
-                conn.Open();
-                string userID = userIDListBox.SelectedItem.ToString();
-                using (var cmd = new NpgsqlCommand())
+                //Run user query
+                using (var conn = new NpgsqlConnection(buildConnectionString()))
                 {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,user_latitude,user_longitude FROM users WHERE user_id='" + userID + "';";
+                    conn.Open();
 
-                    setUserData(cmd.ExecuteReader());
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
+                        setUserData(cmd.ExecuteReader());
+                    }
+
+                    conn.Close();
                 }
 
-                if (userIDListBox.SelectedIndex >= 0)
+                //Run friend list query
+                using (var conn = new NpgsqlConnection(buildConnectionString()))
                 {
-                    string sqlStr = "SELECT name,totalLikes,average_stars,yelping_since FROM user,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U.user_id FROM users AS UWHERE U.user_id='" + userID + "')";
-                    executeQuery(sqlStr, addFriendsGridRow);
+                    conn.Open();
+
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "');";
+                        setFriendData(cmd.ExecuteReader());
+                    }
+
+                    conn.Close();
                 }
 
-                conn.Close();
+                //Run Tips list query
+                using (var conn = new NpgsqlConnection(buildConnectionString()))
+                {
+                    conn.Open();
+
+                    using (var cmd = new NpgsqlCommand())
+                    {
+                        cmd.Connection = conn;
+                        cmd.CommandText = "SELECT U.name, B.name, B.city, T.text, T.tipDate FROM tip AS T, business AS B, users AS U,(SELECT distinct friend_id FROM users AS U1, friend AS F WHERE U1.name = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE friend_id=T.user_id AND B.business_id=T.business_id AND T.user_id=U.user_id";
+                        setTipReviewList(cmd.ExecuteReader());
+                    }
+
+                    conn.Close();
+                }
             }
+        }
 
-
+        private void addTipsGridRow(NpgsqlDataReader R)
+        {
+            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
         }
 
         private void addFriendsGridRow(NpgsqlDataReader R)
         {
-            FriendListDataGrid.Items.Add(new Business() { name = R.GetString(0), totalLikes = R.GetString(1), avgStars = R.GetString(2), yelpingSince = R.GetString(3)});
+            FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
         }
 
         private void addUserIDListBox(NpgsqlDataReader R)
@@ -175,9 +256,15 @@ namespace Team4_YelpProject
             }
         }
 
-        private void FriendListDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ReviewByFriendDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
+
+        private void FriendListDataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+        }
+    
+        //Business Tab
+
     }
 }

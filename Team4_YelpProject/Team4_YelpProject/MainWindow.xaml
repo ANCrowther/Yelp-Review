@@ -86,7 +86,7 @@
                     </GroupBox>
                     <GroupBox x:Name="FriendsGroupBox" Header="Friends List" HorizontalAlignment="Left" Height="426" Margin="10,245,0,0" VerticalAlignment="Top" Width="330" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
                         <Grid x:Name="RemoveFriendButton">
-                            <DataGrid x:Name="FriendListDataGrid"  HorizontalAlignment="Left" Height="385" Width="300" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="FriendListDataGrid_SelectionChanged" />
+                            <DataGrid x:Name="FriendListDataGrid"  HorizontalAlignment="Left" Height="385" Width="300" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="FriendListDataGrid_SelectionChanged_1" />
                         </Grid>
                     </GroupBox>
 
@@ -154,7 +154,7 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Reviews by friends - Latest reviews posted by the user's friends" HorizontalAlignment="Left" Height="485" Margin="118,186,0,0" VerticalAlignment="Top" Width="826" Grid.ColumnSpan="2" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.Column="1">
-                        <DataGrid x:Name="ReviewByFriendDataGrid" HorizontalAlignment="Center" Height="439" Margin="12,10,12,5" VerticalAlignment="Center" Width="790"/>
+                        <DataGrid x:Name="ReviewByFriendDataGrid" HorizontalAlignment="Center" Height="439" Margin="12,10,12,5" VerticalAlignment="Center" Width="790" SelectionChanged="ReviewByFriendDataGrid_SelectionChanged"/>
                     </GroupBox>
                 </Grid>
             </TabItem>
