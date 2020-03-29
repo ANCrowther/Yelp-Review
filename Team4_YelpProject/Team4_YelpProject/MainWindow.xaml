@@ -86,7 +86,7 @@
                     </GroupBox>
                     <GroupBox x:Name="FriendsGroupBox" Header="Friends List" HorizontalAlignment="Left" Height="426" Margin="10,245,0,0" VerticalAlignment="Top" Width="330" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
                         <Grid x:Name="RemoveFriendButton">
-                            <DataGrid x:Name="FriendListDataGrid"  HorizontalAlignment="Left" Height="385" Width="300" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" />
+                            <DataGrid x:Name="FriendListDataGrid"  HorizontalAlignment="Left" Height="385" Width="300" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" SelectionChanged="FriendListDataGrid_SelectionChanged" />
                         </Grid>
                     </GroupBox>
 
