@@ -35,6 +35,7 @@ namespace Team4_YelpProject
             addFriendsGridColumns();
             addLatestTipsGridColumns();
             addState();
+            initializeCategoryList();
         }
 
         private string buildConnectionString()
@@ -264,25 +265,45 @@ namespace Team4_YelpProject
         private void FriendListDataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
         }
-    
+
         //Business Tab
+        string[] categoryList = new string[10];
         public class Business
         {
-            public string name { get; set; }
-            public string state { get; set; }
+            public string businessName { get; set; }
+            public string street { get; set; }
             public string city { get; set; }
+            public string state { get; set; }
+            public double distance { get; set; }
+            public double stars { get; set; }
+            public int tipCount { get; set; }
+            public int totalCheckins { get; set; }
+            //public string business_id { get; set; }
+        }
+
+        public class CategoryOption
+        {
+            public string category { get; set; }
             public string business_id { get; set; }
+        }
+
+        private void initializeCategoryList()
+        {
+            for (int index = 0; index < 10; index++)
+            {
+                categoryList[index] = string.Empty;
+            }
         }
 
         private void addState()
         {
-            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            using (var conn = new NpgsqlConnection(buildConnectionString()))
             {
-                connection.Open();
+                conn.Open();
                 using (var cmd = new NpgsqlCommand())
                 {
-                    cmd.Connection = connection;
-                    cmd.CommandText = "SELECT distinct state FROM business ORDER BY state";
+                    cmd.Connection = conn;
+                    cmd.CommandText = "SELECT DISTINCT state FROM business ORDER BY state";
                     try
                     {
                         var reader = cmd.ExecuteReader();
@@ -297,7 +318,7 @@ namespace Team4_YelpProject
                     }
                     finally
                     {
-                        connection.Close();
+                        conn.Close();
                     }
                 }
             }
@@ -313,6 +334,25 @@ namespace Team4_YelpProject
             zipcodeDropBox.Items.Add(R.GetInt32(0));
         }
 
+        private void addCategoryItem(NpgsqlDataReader R)
+        {
+            CategoryListBox.Items.Add(R.GetString(0));
+        }
+
+        //private void addCategories()
+        //{
+        //    CategoryListBox.Items.Clear();
+        //    using (var conn = new NpgsqlConnection(buildConnectionString()))
+        //    {
+        //        conn.Open();
+        //        using (var cmd = new NpgsqlCommand())
+        //        {
+        //            string sqlStr = "SELECT DISTINCT category FROM categories, business WHERE business.business_id=category.business_id AND state = '" + stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' AND zipcode='" + zipcodeDropBox.SelectedItem.ToString() + "' ORDER BY category";
+        //            executeQuery(sqlStr, addCategoryItem);
+        //        }
+        //    }
+        //}
+
         private void stateDropBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             cityDropBox.Items.Clear();
@@ -327,6 +367,28 @@ namespace Team4_YelpProject
 
                 string sqlStr1 = "SELECT DISTINCT zipcode FROM business WHERE state ='" + stateDropBox.SelectedItem.ToString() + "' ORDER BY zipcode;";
                 executeQuery(sqlStr1, addZipcode);
+            }
+        }
+
+        private void cityDropBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            zipcodeDropBox.Items.Clear();
+
+            if (cityDropBox.SelectedIndex >= 0)
+            {
+                string sqlStr = "SELECT DISTINCT zipcode FROM business WHERE state ='" + stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' ORDER BY zipcode;";
+                executeQuery(sqlStr, addZipcode);
+            }
+        }
+
+        private void zipcodeDropBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            CategoryListBox.Items.Clear();
+
+            if (zipcodeDropBox.SelectedIndex >= 0)
+            {
+                string sqlStr = "SELECT DISTINCT C.category FROM business AS B, categories AS C WHERE B.business_id=C.business_id AND state='"+ stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' AND zipcode='" + zipcodeDropBox.SelectedItem.ToString() + "' ORDER BY category;";
+                executeQuery(sqlStr, addCategoryItem);
             }
         }
     }

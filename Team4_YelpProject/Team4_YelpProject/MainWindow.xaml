@@ -189,12 +189,12 @@
                             <!--City Values-->
                             <Label x:Name="City" Content="City" HorizontalAlignment="Left" FontSize ="14" Margin="50,50,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
                             <!--<ListBox x:Name="CityListBox" HorizontalAlignment="Left" Height="69" Margin="60,47,0,0" VerticalAlignment="Top" Width="210"/>-->
-                            <ComboBox x:Name="cityDropBox" HorizontalAlignment="Left" Margin="115,50,0,0" VerticalAlignment="Top" Width="150" Height="26" RenderTransformOrigin="0.773,-0.615"/>
+                            <ComboBox x:Name="cityDropBox" HorizontalAlignment="Left" Margin="115,50,0,0" VerticalAlignment="Top" Width="150" Height="26" RenderTransformOrigin="0.773,-0.615" SelectionChanged="cityDropBox_SelectionChanged"/>
 
                             <!--Zipcode Values-->
                             <Label x:Name="Zipcode" Content="Zipcode" HorizontalAlignment="Left" FontSize ="14" Margin="25,90,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
                             <!--<ListBox x:Name="ZipcodeListBox" HorizontalAlignment="Left" Height="67" Margin="84,138,0,0" VerticalAlignment="Top" Width="123"/>-->
-                            <ComboBox x:Name="zipcodeDropBox" HorizontalAlignment="Left" Margin="115,90,0,0" VerticalAlignment="Top" Width="129" Height="26" RenderTransformOrigin="0.773,-0.615"/>
+                            <ComboBox x:Name="zipcodeDropBox" HorizontalAlignment="Left" Margin="115,90,0,0" VerticalAlignment="Top" Width="129" Height="26" RenderTransformOrigin="0.773,-0.615" SelectionChanged="zipcodeDropBox_SelectionChanged"/>
 
 
                             <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="22,325,0,0" VerticalAlignment="Top" Width="58" Height="27"/>
