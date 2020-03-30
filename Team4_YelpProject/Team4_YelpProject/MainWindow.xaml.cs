@@ -76,19 +76,19 @@ namespace Team4_YelpProject
             DataGridTextColumn col1 = new DataGridTextColumn();
             col1.Binding = new Binding("userName");
             col1.Header = "User Name";
-            col1.Width = 100;
+            col1.Width = 120;
             ReviewByFriendDataGrid.Columns.Add(col1);
 
             DataGridTextColumn col2 = new DataGridTextColumn();
             col2.Binding = new Binding("businessName");
             col2.Header = "Business";
-            col2.Width = 100;
+            col2.Width = 200;
             ReviewByFriendDataGrid.Columns.Add(col2);
 
             DataGridTextColumn col3 = new DataGridTextColumn();
             col3.Binding = new Binding("city");
             col3.Header = "City";
-            col3.Width = 70;
+            col3.Width = 150;
             ReviewByFriendDataGrid.Columns.Add(col3);
 
             DataGridTextColumn col4 = new DataGridTextColumn();
@@ -98,9 +98,9 @@ namespace Team4_YelpProject
             ReviewByFriendDataGrid.Columns.Add(col4);
 
             DataGridTextColumn col5 = new DataGridTextColumn();
-            col4.Binding = new Binding("date");
-            col4.Header = "Date";
-            col4.Width = 50;
+            col5.Binding = new Binding("date");
+            col5.Header = "Date";
+            col5.Width = 100;
             ReviewByFriendDataGrid.Columns.Add(col5);
         }
 
@@ -111,7 +111,7 @@ namespace Team4_YelpProject
 
         private void addTipGridRow(NpgsqlDataReader R)
         {
-            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetTimeStamp(4).ToString() });
+            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetDate(4).ToString() });
         }
 
         private void addFriendGridRow(NpgsqlDataReader R)
@@ -135,22 +135,6 @@ namespace Team4_YelpProject
                 LongTextBox.Text = R.GetDouble(9).ToString();
             }
         }
-
-        //private void setFriendData(NpgsqlDataReader R)
-        //{
-        //    while (R.Read())
-        //    {
-        //        FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
-        //    }
-        //}
-
-        //private void setTipReviewList(NpgsqlDataReader R)
-        //{
-        //    while (R.Read())
-        //    {
-        //        ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
-        //    }
-        //}
 
         private void clearUserData()
         {
@@ -220,45 +204,16 @@ namespace Team4_YelpProject
                 /*    Run friend list query    */
                 if (userIDListBox.SelectedIndex >= 0)
                 {
-                    string sqlStr = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "');";
+                    string sqlStr = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "' ORDER BY name,average_stars,totallikes);";
                     executeQuery(sqlStr, addFriendGridRow);
                 }
-
-                //using (var conn = new NpgsqlConnection(buildConnectionString()))
-                //{
-                //    conn.Open();
-
-                //    using (var cmd = new NpgsqlCommand())
-                //    {
-                //        cmd.Connection = conn;
-                //        cmd.CommandText = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "');";
-                //        //executeQuery();
-                //        setFriendData(cmd.ExecuteReader());
-                //    }
-
-                //    conn.Close();
-                //}
 
                 /*    Run Tips list query    */
                 if(userIDListBox.SelectedIndex >= 0)
                 {
-                    string sqlStr = "SELECT U.name, B.name, B.city, T.text, T.tipdate FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = 'bczUjT7jrfU7rzuuVsUsCw' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id;";
+                    string sqlStr = "SELECT U.name, B.name, B.city, text, date(T.tipdate) FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id ORDER BY date(T.tipdate) DESC;";
                     executeQuery(sqlStr, addTipGridRow);
                 }
-
-                //using (var conn = new NpgsqlConnection(buildConnectionString()))
-                //{
-                //    conn.Open();
-
-                //    using (var cmd = new NpgsqlCommand())
-                //    {
-                //        cmd.Connection = conn;
-                //        cmd.CommandText = "SELECT U.name, B.name, B.city, T.text, T.tipDate FROM tip AS T, business AS B, users AS U,(SELECT distinct friend_id FROM users AS U1, friend AS F WHERE U1.name = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE friend_id=T.user_id AND B.business_id=T.business_id AND T.user_id=U.user_id";
-                //        setTipReviewList(cmd.ExecuteReader());
-                //    }
-
-                //    conn.Close();
-                //}
             }
         }
 
@@ -274,7 +229,10 @@ namespace Team4_YelpProject
             /*    UNDER CONSTRUCTION    */
         }
 
+
         /*    Business Tab    */
+
+
         private string[] categoryList = new string[10];
         private string categorySelection = string.Empty;
         private string queryList = string.Empty;
