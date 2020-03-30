@@ -267,7 +267,11 @@ namespace Team4_YelpProject
         }
 
         //Business Tab
-        string[] categoryList = new string[10];
+        private string[] categoryList = new string[10];
+        private string categorySelection = string.Empty;
+        private string queryList = string.Empty;
+        private int categorySize = 0;
+
         public class Business
         {
             public string businessName { get; set; }
@@ -339,19 +343,28 @@ namespace Team4_YelpProject
             CategoryListBox.Items.Add(R.GetString(0));
         }
 
-        //private void addCategories()
-        //{
-        //    CategoryListBox.Items.Clear();
-        //    using (var conn = new NpgsqlConnection(buildConnectionString()))
-        //    {
-        //        conn.Open();
-        //        using (var cmd = new NpgsqlCommand())
-        //        {
-        //            string sqlStr = "SELECT DISTINCT category FROM categories, business WHERE business.business_id=category.business_id AND state = '" + stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' AND zipcode='" + zipcodeDropBox.SelectedItem.ToString() + "' ORDER BY category";
-        //            executeQuery(sqlStr, addCategoryItem);
-        //        }
-        //    }
-        //}
+        private void addBusinessResultDataGrid()
+        {
+
+        }
+
+        private void addCategoriesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            businessResultDataGrid.Items.Clear();
+            SelectListBox.Items.Add(categorySelection);
+            categorySize += 1;
+
+            if (categorySize >= 0)
+            {
+                if (categorySize == 1)
+                {
+                    queryList = string.Empty;
+                }
+                categoryList[categorySize - 1] = categorySelection;
+            }
+
+            addBusinessResultDataGrid();
+        }
 
         private void stateDropBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -389,6 +402,21 @@ namespace Team4_YelpProject
             {
                 string sqlStr = "SELECT DISTINCT C.category FROM business AS B, categories AS C WHERE B.business_id=C.business_id AND state='"+ stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' AND zipcode='" + zipcodeDropBox.SelectedItem.ToString() + "' ORDER BY category;";
                 executeQuery(sqlStr, addCategoryItem);
+            }
+        }
+
+        private void removeCateoriesBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void CategoryListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            businessResultDataGrid.Items.Clear();
+
+            if (CategoryListBox.SelectedIndex >= 0)
+            {
+                categorySelection = CategoryListBox.SelectedItem.ToString();
             }
         }
     }

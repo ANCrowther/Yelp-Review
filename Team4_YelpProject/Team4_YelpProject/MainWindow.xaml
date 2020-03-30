@@ -197,11 +197,11 @@
                             <ComboBox x:Name="zipcodeDropBox" HorizontalAlignment="Left" Margin="115,90,0,0" VerticalAlignment="Top" Width="129" Height="26" RenderTransformOrigin="0.773,-0.615" SelectionChanged="zipcodeDropBox_SelectionChanged"/>
 
 
-                            <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="22,325,0,0" VerticalAlignment="Top" Width="58" Height="27"/>
-                            <Button x:Name="removeButton" Content="Remove" HorizontalAlignment="Left" Margin="22,370,0,0" VerticalAlignment="Top" Width="58" Height="27"/>
+                            <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="22,325,0,0" VerticalAlignment="Top" Width="58" Height="27" Click="addCategoriesBtn_Click"/>
+                            <Button x:Name="removeButton" Content="Remove" HorizontalAlignment="Left" Margin="22,370,0,0" VerticalAlignment="Top" Width="58" Height="27" Click="removeCateoriesBtn_Click"/>
                             <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Left" Margin="13,603,0,0" VerticalAlignment="Top" Width="58" Height="27" RenderTransformOrigin="0.397,-1.222"/>
                             <Label x:Name="Category" Content="Category" HorizontalAlignment="Left" FontSize ="14" Margin="10,226,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <ListBox x:Name="CategoryListBox" HorizontalAlignment="Left" Height="170" Margin="91,227,0,0" VerticalAlignment="Top" Width="179"/>
+                            <ListBox x:Name="CategoryListBox" HorizontalAlignment="Left" Height="170" Margin="91,227,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="CategoryListBox_SelectionChanged"/>
                             <Label x:Name="Select" Content="Select" HorizontalAlignment="Left" FontSize ="14" Margin="10,429,0,0" VerticalAlignment="Top" Foreground="#FFE8FF00" RenderTransformOrigin="-1.024,-1.552"/>
                             <ListBox x:Name="SelectListBox" HorizontalAlignment="Left" Height="201" Margin="91,429,0,0" VerticalAlignment="Top" Width="179"/>
                         </Grid>
@@ -214,7 +214,7 @@
                                 <ColumnDefinition Width="568*"/>
                                 <ColumnDefinition Width="29*"/>
                             </Grid.ColumnDefinitions>
-                            <ListBox HorizontalAlignment="Left" Height="215" Margin="10,24,0,0" VerticalAlignment="Top" Width="576" Grid.ColumnSpan="2"/>
+                            <DataGrid x:Name="businessResultDataGrid" HorizontalAlignment="Left" Height="215" Margin="10,25,0,0" VerticalAlignment="Top" Width="575" Grid.ColumnSpan="2"/>
                             <Label x:Name="businessCount" Content="# of Businesses " FontSize ="14" Margin="395,-15,28,0" VerticalAlignment="Top" Foreground="#FFE8FF00" RenderTransformOrigin="-1.024,-1.552" FontFamily="OCR A Extended">
                                 <Label.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
