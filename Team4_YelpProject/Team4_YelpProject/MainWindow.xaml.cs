@@ -76,7 +76,7 @@ namespace Team4_YelpProject
             DataGridTextColumn col1 = new DataGridTextColumn();
             col1.Binding = new Binding("userName");
             col1.Header = "User Name";
-            col1.Width = 120;
+            //col1.Width = 100;
             ReviewByFriendDataGrid.Columns.Add(col1);
 
             DataGridTextColumn col2 = new DataGridTextColumn();
@@ -88,7 +88,7 @@ namespace Team4_YelpProject
             DataGridTextColumn col3 = new DataGridTextColumn();
             col3.Binding = new Binding("city");
             col3.Header = "City";
-            col3.Width = 150;
+            col3.Width = 120;
             ReviewByFriendDataGrid.Columns.Add(col3);
 
             DataGridTextColumn col4 = new DataGridTextColumn();
