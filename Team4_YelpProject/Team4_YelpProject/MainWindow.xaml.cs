@@ -104,6 +104,21 @@ namespace Team4_YelpProject
             ReviewByFriendDataGrid.Columns.Add(col5);
         }
 
+        private void addUserIDListBox(NpgsqlDataReader R)
+        {
+            userIDListBox.Items.Add(R.GetString(0));
+        }
+
+        private void addTipGridRow(NpgsqlDataReader R)
+        {
+            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
+        }
+
+        private void addFriendGridRow(NpgsqlDataReader R)
+        {
+            FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
+        }
+
         private void setUserData(NpgsqlDataReader R)
         {
             while(R.Read())
@@ -121,21 +136,21 @@ namespace Team4_YelpProject
             }
         }
 
-        private void setFriendData(NpgsqlDataReader R)
-        {
-            while (R.Read())
-            {
-                FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
-            }
-        }
+        //private void setFriendData(NpgsqlDataReader R)
+        //{
+        //    while (R.Read())
+        //    {
+        //        FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
+        //    }
+        //}
 
-        private void setTipReviewList(NpgsqlDataReader R)
-        {
-            while (R.Read())
-            {
-                ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
-            }
-        }
+        //private void setTipReviewList(NpgsqlDataReader R)
+        //{
+        //    while (R.Read())
+        //    {
+        //        ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
+        //    }
+        //}
 
         private void clearUserData()
         {
@@ -203,51 +218,53 @@ namespace Team4_YelpProject
                 }
 
                 /*    Run friend list query    */
-                using (var conn = new NpgsqlConnection(buildConnectionString()))
+                if (userIDListBox.SelectedIndex >= 0)
                 {
-                    conn.Open();
-
-                    using (var cmd = new NpgsqlCommand())
-                    {
-                        cmd.Connection = conn;
-                        cmd.CommandText = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "');";
-                        setFriendData(cmd.ExecuteReader());
-                    }
-
-                    conn.Close();
+                    string sqlStr = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "');";
+                    executeQuery(sqlStr, addFriendGridRow);
                 }
+
+                //using (var conn = new NpgsqlConnection(buildConnectionString()))
+                //{
+                //    conn.Open();
+
+                //    using (var cmd = new NpgsqlCommand())
+                //    {
+                //        cmd.Connection = conn;
+                //        cmd.CommandText = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "');";
+                //        //executeQuery();
+                //        setFriendData(cmd.ExecuteReader());
+                //    }
+
+                //    conn.Close();
+                //}
 
                 /*    Run Tips list query    */
-                using (var conn = new NpgsqlConnection(buildConnectionString()))
+                if(userIDListBox.SelectedIndex >= 0)
                 {
-                    conn.Open();
-
-                    using (var cmd = new NpgsqlCommand())
-                    {
-                        cmd.Connection = conn;
-                        cmd.CommandText = "SELECT U.name, B.name, B.city, T.text, T.tipDate FROM tip AS T, business AS B, users AS U,(SELECT distinct friend_id FROM users AS U1, friend AS F WHERE U1.name = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE friend_id=T.user_id AND B.business_id=T.business_id AND T.user_id=U.user_id";
-                        setTipReviewList(cmd.ExecuteReader());
-                    }
-
-                    conn.Close();
+                    string sqlStr = "SELECT U.name, B.name, B.city, T.text, T.tipdate FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = 'bczUjT7jrfU7rzuuVsUsCw' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id;";
+                    executeQuery(sqlStr, addTipGridRow);
                 }
-            }
-        }
 
-        private void addUserIDListBox(NpgsqlDataReader R)
-        {
-            userIDListBox.Items.Add(R.GetString(0));
+                //using (var conn = new NpgsqlConnection(buildConnectionString()))
+                //{
+                //    conn.Open();
+
+                //    using (var cmd = new NpgsqlCommand())
+                //    {
+                //        cmd.Connection = conn;
+                //        cmd.CommandText = "SELECT U.name, B.name, B.city, T.text, T.tipDate FROM tip AS T, business AS B, users AS U,(SELECT distinct friend_id FROM users AS U1, friend AS F WHERE U1.name = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE friend_id=T.user_id AND B.business_id=T.business_id AND T.user_id=U.user_id";
+                //        setTipReviewList(cmd.ExecuteReader());
+                //    }
+
+                //    conn.Close();
+                //}
+            }
         }
 
         private void UsernameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             userIDListBox.Items.Clear();
-            //if (e.Key == Key.Enter)
-            //{
-            //    string sqlStr = "SELECT distinct user_id,name FROM users WHERE name='" + UserNameTextBox.Text + "';";
-            //    executeQuery(sqlStr, addUserIDListBox);
-            //}
-
             string sqlStr = "SELECT distinct user_id,name FROM users WHERE name='" + UserNameTextBox.Text + "';";
             executeQuery(sqlStr, addUserIDListBox);
         }
