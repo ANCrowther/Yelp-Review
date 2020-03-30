@@ -12,6 +12,16 @@ namespace Team4_YelpProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        public MainWindow()
+        {
+            InitializeComponent();
+            addFriendsGridColumns();
+            addLatestTipsGridColumns();
+            addState();
+            initializeCategoryList();
+        }
+
+        /*    User Information Tab    */
         public class FriendsList
         {
             public string name { get; set; }
@@ -27,15 +37,6 @@ namespace Team4_YelpProject
             public string city { get; set; }
             public string text { get; set; }
             public string date { get; set; }
-        }
-
-        public MainWindow()
-        {
-            InitializeComponent();
-            addFriendsGridColumns();
-            addLatestTipsGridColumns();
-            addState();
-            initializeCategoryList();
         }
 
         private string buildConnectionString()
@@ -124,7 +125,7 @@ namespace Team4_YelpProject
         {
             while (R.Read())
             {
-                addFriendsGridRow(R);
+                FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
             }
         }
 
@@ -132,7 +133,7 @@ namespace Team4_YelpProject
         {
             while (R.Read())
             {
-                addTipsGridRow(R);
+                ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
             }
         }
 
@@ -186,7 +187,7 @@ namespace Team4_YelpProject
 
             if (userIDListBox.SelectedIndex >= 0)
             {
-                //Run user query
+                /*    Run user query    */
                 using (var conn = new NpgsqlConnection(buildConnectionString()))
                 {
                     conn.Open();
@@ -201,7 +202,7 @@ namespace Team4_YelpProject
                     conn.Close();
                 }
 
-                //Run friend list query
+                /*    Run friend list query    */
                 using (var conn = new NpgsqlConnection(buildConnectionString()))
                 {
                     conn.Open();
@@ -216,7 +217,7 @@ namespace Team4_YelpProject
                     conn.Close();
                 }
 
-                //Run Tips list query
+                /*    Run Tips list query    */
                 using (var conn = new NpgsqlConnection(buildConnectionString()))
                 {
                     conn.Open();
@@ -233,16 +234,6 @@ namespace Team4_YelpProject
             }
         }
 
-        private void addTipsGridRow(NpgsqlDataReader R)
-        {
-            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
-        }
-
-        private void addFriendsGridRow(NpgsqlDataReader R)
-        {
-            FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
-        }
-
         private void addUserIDListBox(NpgsqlDataReader R)
         {
             userIDListBox.Items.Add(R.GetString(0));
@@ -251,22 +242,22 @@ namespace Team4_YelpProject
         private void UsernameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             userIDListBox.Items.Clear();
-            if (e.Key == Key.Enter)
-            {
-                string sqlStr = "SELECT distinct user_id,name FROM users WHERE name='" + UserNameTextBox.Text + "';";
-                executeQuery(sqlStr, addUserIDListBox);
-            }
+            //if (e.Key == Key.Enter)
+            //{
+            //    string sqlStr = "SELECT distinct user_id,name FROM users WHERE name='" + UserNameTextBox.Text + "';";
+            //    executeQuery(sqlStr, addUserIDListBox);
+            //}
+
+            string sqlStr = "SELECT distinct user_id,name FROM users WHERE name='" + UserNameTextBox.Text + "';";
+            executeQuery(sqlStr, addUserIDListBox);
         }
 
-        private void ReviewByFriendDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void setLocationBtn_Click(object sender, RoutedEventArgs e)
         {
+            /*    UNDER CONSTRUCTION    */
         }
 
-        private void FriendListDataGrid_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-        }
-
-        //Business Tab
+        /*    Business Tab    */
         private string[] categoryList = new string[10];
         private string categorySelection = string.Empty;
         private string queryList = string.Empty;
