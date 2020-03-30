@@ -111,7 +111,7 @@ namespace Team4_YelpProject
 
         private void addTipGridRow(NpgsqlDataReader R)
         {
-            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(2), date = R.GetString(3) });
+            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetTimeStamp(4).ToString() });
         }
 
         private void addFriendGridRow(NpgsqlDataReader R)
