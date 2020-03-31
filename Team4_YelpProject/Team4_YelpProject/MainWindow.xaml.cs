@@ -18,7 +18,7 @@ namespace Team4_YelpProject
             addFriendsGridColumns();
             addLatestTipsGridColumns();
             addState();
-            initializeCategoryList();
+            addBusinessResultGridColumns();
         }
 
         /*    User Information Tab    */
@@ -233,10 +233,7 @@ namespace Team4_YelpProject
         /*    Business Tab    */
 
 
-        private string[] categoryList = new string[10];
         private string categorySelection = string.Empty;
-        private string queryList = string.Empty;
-        private int categorySize = 0;
 
         public class Business
         {
@@ -257,12 +254,74 @@ namespace Team4_YelpProject
             public string business_id { get; set; }
         }
 
-        private void initializeCategoryList()
+        public class BusinessResults
         {
-            for (int index = 0; index < 10; index++)
+            public string businessName { get; set; }
+            public string address { get; set; }
+            public string city { get; set; }
+            public string state { get; set; }
+            public double distance { get; set; }
+            public double stars { get; set; }
+            public int numberOfTips { get; set; }
+            public int totalCheckins { get; set; }
+            public double bLatitude { get; set; }
+            public double bLongitude { get; set; }
+
+            public double calculateDistance(double latitude, double longitude)
             {
-                categoryList[index] = string.Empty;
+                return Math.Sqrt(Math.Pow(bLatitude - latitude, 2) + Math.Pow(bLongitude - longitude, 2));
             }
+        }
+
+        private void addBusinessResultGridColumns()
+        {
+            DataGridTextColumn col1 = new DataGridTextColumn();
+            col1.Binding = new Binding("businessName");
+            col1.Header = "Business Name";
+            col1.Width = 100;
+            ReviewByFriendDataGrid.Columns.Add(col1);
+
+            DataGridTextColumn col2 = new DataGridTextColumn();
+            col2.Binding = new Binding("address");
+            col2.Header = "Address";
+            col2.Width = 200;
+            ReviewByFriendDataGrid.Columns.Add(col2);
+
+            DataGridTextColumn col3 = new DataGridTextColumn();
+            col3.Binding = new Binding("city");
+            col3.Header = "City";
+            col3.Width = 120;
+            ReviewByFriendDataGrid.Columns.Add(col3);
+
+            DataGridTextColumn col4 = new DataGridTextColumn();
+            col4.Binding = new Binding("state");
+            col4.Header = "State";
+            col4.Width = 30;
+            ReviewByFriendDataGrid.Columns.Add(col4);
+
+            DataGridTextColumn col5 = new DataGridTextColumn();
+            col5.Binding = new Binding("distance");
+            col5.Header = "Distance";
+            col5.Width = 50;
+            ReviewByFriendDataGrid.Columns.Add(col5);
+
+            DataGridTextColumn col6 = new DataGridTextColumn();
+            col6.Binding = new Binding("stars");
+            col6.Header = "Stars";
+            col6.Width = 50;
+            ReviewByFriendDataGrid.Columns.Add(col6);
+
+            DataGridTextColumn col7 = new DataGridTextColumn();
+            col7.Binding = new Binding("numberOfTips");
+            col7.Header = "# of Tips";
+            col7.Width = 50;
+            ReviewByFriendDataGrid.Columns.Add(col7);
+
+            DataGridTextColumn col8 = new DataGridTextColumn();
+            col8.Binding = new Binding("totalCheckins");
+            col8.Header = "Total Checkins";
+            col8.Width = 50;
+            ReviewByFriendDataGrid.Columns.Add(col8);
         }
 
         private void addState()
@@ -309,27 +368,21 @@ namespace Team4_YelpProject
             CategoryListBox.Items.Add(R.GetString(0));
         }
 
-        private void addBusinessResultDataGrid()
+        private void addBusinessResultDataGrid(NpgsqlDataReader R)
         {
-
+            businessResultDataGrid.Items.Add(new BusinessResults() { businessName = R.GetString(0), address = R.GetString(1), city = R.GetString(2), state = R.GetString(3), distance = R.GetDouble(4), stars = R.GetDouble(5), numberOfTips = R.GetInt32(6), totalCheckins = R.GetInt32(7) });
         }
 
         private void addCategoriesBtn_Click(object sender, RoutedEventArgs e)
         {
-            businessResultDataGrid.Items.Clear();
             SelectListBox.Items.Add(categorySelection);
-            categorySize += 1;
+            CategoryListBox.Items.Remove(categorySelection);
+        }
 
-            if (categorySize >= 0)
-            {
-                if (categorySize == 1)
-                {
-                    queryList = string.Empty;
-                }
-                categoryList[categorySize - 1] = categorySelection;
-            }
-
-            addBusinessResultDataGrid();
+        private void removeCateoriesBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SelectListBox.Items.Remove(categorySelection);
+            CategoryListBox.Items.Add(categorySelection);
         }
 
         private void stateDropBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -371,19 +424,31 @@ namespace Team4_YelpProject
             }
         }
 
-        private void removeCateoriesBtn_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void CategoryListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            businessResultDataGrid.Items.Clear();
-
             if (CategoryListBox.SelectedIndex >= 0)
             {
                 categorySelection = CategoryListBox.SelectedItem.ToString();
             }
+        }
+
+        private void SelectListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectListBox.SelectedIndex >= 0)
+            {
+                categorySelection = SelectListBox.SelectedItem.ToString();
+            }
+        }
+
+        private void searchBtn_Click(object sender, RoutedEventArgs e)
+        {
+            businessResultDataGrid.Items.Clear();
+
+
+
+            string sqlStr = "SELECT B.name, B.address, B.city, B.state,  ,B.stars, B.review_count, B.review_count, B.numcheckins, B.latitude, B.longitude FROM business as B ";
+
+            executeQuery(sqlStr, addBusinessResultDataGrid);
         }
     }
 }
