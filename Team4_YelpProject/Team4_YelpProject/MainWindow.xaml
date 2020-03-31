@@ -172,10 +172,10 @@
                     <!--FILTER BY PRICES GROUPBOX-->
                     <GroupBox Header="Filter by Price" Margin="722,9,153,558" Grid.Column="1" Foreground="#FFFFF300">
                         <Grid>
-                            <RadioButton Content="$" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="$$" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="$$$" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="$$$$" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="$" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="$$" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="$$$" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="$$$$" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
                         </Grid>
                     </GroupBox>
 
@@ -238,16 +238,16 @@
                     <!--FILTER BY ATTRIBUTES GROUPBOX-->
                     <GroupBox Grid.Column="1" Header="Filter by Attributes" Foreground="#FFFFF300" HorizontalAlignment="Left" Height="237" Margin="722,172,0,0" VerticalAlignment="Top" Width="234">
                         <Grid>
-                            <RadioButton Content="Accepts Credit Cards" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Takes Reservations" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Wheelchair Accessible" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Outdoor Seating" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Good for Kids" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Good for Groups" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Delivery" HorizontalAlignment="Left" Margin="20,130,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Take Out" HorizontalAlignment="Left" Margin="20,150,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Free Wi-Fi" HorizontalAlignment="Left" Margin="20,170,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton Content="Bike Parking" HorizontalAlignment="Left" Margin="20,190,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Accepts Credit Cards" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Takes Reservations" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Wheelchair Accessible" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Outdoor Seating" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Good for Kids" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Good for Groups" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Delivery" HorizontalAlignment="Left" Margin="20,130,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Take Out" HorizontalAlignment="Left" Margin="20,150,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Free Wi-Fi" HorizontalAlignment="Left" Margin="20,170,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox Content="Bike Parking" HorizontalAlignment="Left" Margin="20,190,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
                         </Grid>
                     </GroupBox>
 
@@ -262,12 +262,12 @@
 
                     <GroupBox Header="Filter by Meal" Grid.Column="1" Foreground="#FFFFF300" Margin="823,9,10,515">
                         <Grid>
-                            <RadioButton x:Name="breakfastCB" Content="Breakfast" HorizontalAlignment="Left" Margin="20,10,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton x:Name="lunchCB" Content="Lunch" HorizontalAlignment="Left" Margin="20,30,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton x:Name="brunchCB" Content="Brunch" HorizontalAlignment="Left" Margin="20,50,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton x:Name="dinnerCB" Content="Dinner" HorizontalAlignment="Left" Margin="20,70,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton x:Name="dessertCB" Content="Dessert" HorizontalAlignment="Left" Margin="20,90,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <RadioButton x:Name="lateNightCB" Content="Late Night" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox x:Name="breakfastCB" Content="Breakfast" HorizontalAlignment="Left" Margin="20,10,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox x:Name="lunchCB" Content="Lunch" HorizontalAlignment="Left" Margin="20,30,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox x:Name="brunchCB" Content="Brunch" HorizontalAlignment="Left" Margin="20,50,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox x:Name="dinnerCB" Content="Dinner" HorizontalAlignment="Left" Margin="20,70,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox x:Name="dessertCB" Content="Dessert" HorizontalAlignment="Left" Margin="20,90,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
+                            <CheckBox x:Name="lateNightCB" Content="Late Night" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
                         </Grid>
                     </GroupBox>
                     <Button x:Name="showCheckinsButton" Content="ShowCheckins" Grid.Column="1" Margin="161,481,689,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00">

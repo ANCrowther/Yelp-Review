@@ -445,21 +445,105 @@ namespace Team4_YelpProject
         {
             businessResultDataGrid.Items.Clear();
 
+            StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.name, B.address, B.city, B.state, B.stars, B.review_count, B.numcheckins, B.latitude, B.longitude FROM business as B ");
             StringBuilder sqlCategory = new StringBuilder();
+            StringBuilder sqlMealFilter = new StringBuilder(", (SELECT * FROM attributes WHERE attr_name=ANY('{");
+            StringBuilder sqlMealSelection = new StringBuilder();
+            bool mealFilter = false;
 
+            /*    Appends selected Category choices to Query    */
             for (int index = 0; index < SelectListBox.Items.Count; index++)
             {
                 sqlCategory.Append(" AND category='" + SelectListBox.Items[index] + "' ");
             }
 
+            /*    Appends filter selection to Query*/
+
+            if (breakfastCB.IsChecked == true)
+            {
+                if(sqlMealSelection.Length > 0)
+                {
+                    sqlMealSelection.Append(", ");
+                }
+                sqlMealSelection.Append("breakfast ");
+                mealFilter = true;
+            }
+            if (lunchCB.IsChecked == true)
+            {
+                if (sqlMealSelection.Length > 0)
+                {
+                    sqlMealSelection.Append(", ");
+                }
+                sqlMealSelection.Append("lunch ");
+                mealFilter = true;
+            }
+            if (brunchCB.IsChecked == true)
+            {
+                if (sqlMealSelection.Length > 0)
+                {
+                    sqlMealSelection.Append(", ");
+                }
+                sqlMealSelection.Append("brunch ");
+                mealFilter = true;
+            }
+            if (dinnerCB.IsChecked == true)
+            {
+                if (sqlMealSelection.Length > 0)
+                {
+                    sqlMealSelection.Append(", ");
+                }
+                sqlMealSelection.Append("dinner ");
+                mealFilter = true;
+            }
+            if (dessertCB.IsChecked == true)
+            {
+                if (sqlMealSelection.Length > 0)
+                {
+                    sqlMealSelection.Append(", ");
+                }
+                sqlMealSelection.Append("dessert ");
+                mealFilter = true;
+            }
+            if (lateNightCB.IsChecked == true)
+            {
+                if (sqlMealSelection.Length > 0)
+                {
+                    sqlMealSelection.Append(", ");
+                }
+                sqlMealSelection.Append("lateNight ");
+                mealFilter = true;
+            }
+            if (mealFilter == true)
+            {
+                sqlMealFilter.Append(sqlMealSelection.ToString() + "}')AND value='True') AS A ");
+            }
 
 
-            StringBuilder sqlStr = new StringBuilder("SELECT B.name, B.address, B.city, B.state, B.stars, B.review_count, B.numcheckins, B.latitude, B.longitude FROM business as B ");
+            /*    Sew the queries together     */
+            //if (sqlCategory.Length > 0)
+            //{
+            //    sqlStr.Append("JOIN categories AS C ON B.business_id=C.business_id ");
+            //    sqlStr.Append(sqlCategory.ToString());
+            //}
 
-            sqlStr.Append("JOIN categories AS C ON B.business_id=C.business_id ");
-            sqlStr.Append("WHERE state='"+ stateDropBox.SelectedItem.ToString() +"' AND city='"+ cityDropBox.SelectedItem.ToString() +"' AND zipcode='"+ zipcodeDropBox.SelectedItem.ToString() +"' ");
+            //if (mealFilter == true)
+            //{
+            //    sqlStr.Append("JOIN attributes AS A ON B.business_id=A.business_id ");
+            //    sqlStr.Append(sqlFilter.ToString());
+            //}
 
-            sqlStr.Append(sqlCategory.ToString());
+            if (mealFilter == true)
+            {
+                sqlStr.Append(sqlMealFilter.ToString());
+            }
+
+            sqlStr.Append("WHERE state='" + stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' AND zipcode='" + zipcodeDropBox.SelectedItem.ToString() + "' ");
+
+            if (mealFilter == true)
+            {
+                sqlStr.Append("AND B.business_id=A.business_id");
+            }
+
             sqlStr.Append(";");
 
             executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
