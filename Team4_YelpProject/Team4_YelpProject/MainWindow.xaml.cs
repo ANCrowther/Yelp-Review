@@ -447,6 +447,7 @@ namespace Team4_YelpProject
 
             StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.name, B.address, B.city, B.state, B.stars, B.review_count, B.numcheckins, B.latitude, B.longitude FROM business as B ");
             StringBuilder sqlCategory = new StringBuilder();
+            StringBuilder sqlCategoryBackEnd = new StringBuilder(" JOIN categories AS C ON B.business_id=C.business_id ");
             StringBuilder sqlMealFilter = new StringBuilder(", (SELECT * FROM attributes WHERE attr_name=ANY('{");
             StringBuilder sqlMealSelection = new StringBuilder();
             bool mealFilter = false;
@@ -457,7 +458,7 @@ namespace Team4_YelpProject
                 sqlCategory.Append(" AND category='" + SelectListBox.Items[index] + "' ");
             }
 
-            /*    Appends filter selection to Query*/
+            /*    Appends filter selection to Query    */
 
             if (breakfastCB.IsChecked == true)
             {
@@ -516,25 +517,18 @@ namespace Team4_YelpProject
             if (mealFilter == true)
             {
                 sqlMealFilter.Append(sqlMealSelection.ToString() + "}')AND value='True') AS A ");
+                //sqlStr.Append(sqlMealFilter.ToString());
             }
-
-
-            /*    Sew the queries together     */
-            //if (sqlCategory.Length > 0)
-            //{
-            //    sqlStr.Append("JOIN categories AS C ON B.business_id=C.business_id ");
-            //    sqlStr.Append(sqlCategory.ToString());
-            //}
-
-            //if (mealFilter == true)
-            //{
-            //    sqlStr.Append("JOIN attributes AS A ON B.business_id=A.business_id ");
-            //    sqlStr.Append(sqlFilter.ToString());
-            //}
 
             if (mealFilter == true)
             {
                 sqlStr.Append(sqlMealFilter.ToString());
+            }
+
+            /*    Sew the queries together     */
+            if (sqlCategory.Length > 0)
+            {
+                sqlStr.Append(sqlCategoryBackEnd.ToString());
             }
 
             sqlStr.Append("WHERE state='" + stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' AND zipcode='" + zipcodeDropBox.SelectedItem.ToString() + "' ");
@@ -543,6 +537,8 @@ namespace Team4_YelpProject
             {
                 sqlStr.Append("AND B.business_id=A.business_id");
             }
+
+
 
             sqlStr.Append(";");
 
