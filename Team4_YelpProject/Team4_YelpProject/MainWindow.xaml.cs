@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Npgsql;
+using System;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
-using Npgsql;
 
 namespace Team4_YelpProject
 {
@@ -23,6 +23,23 @@ namespace Team4_YelpProject
         }
 
         /*    User Information Tab    */
+        public double user_lat = 0.0;
+        public double user_long = 0.0;
+
+        //public class User
+        //{
+        //    public string user_id { get; set; }
+        //    public string name { get; set; }
+        //    public double average_stars { get; set; }
+        //    public int fans { get; set; }
+        //    public int cool { get; set; }
+        //    public int funny { get; set; }
+        //    public int useful { get; set; }
+        //    public string yelping_since { get; set; }
+        //    public double user_latitude { get; set; }
+        //    public double user_longitude { get; set; }
+        //}
+
         public class FriendsList
         {
             public string name { get; set; }
@@ -44,6 +61,20 @@ namespace Team4_YelpProject
         {
             return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
         }
+
+        //private void addUserData(NpgsqlDataReader R)
+        //{
+        //    currentUser.user_id = R.GetString(0);
+        //    UserNameBox.Text = currentUser.name = R.GetString(1);
+        //    UserStarsResult.Content = currentUser.average_stars = R.GetDouble(2);
+        //    UserFansResult.Content = (int)(currentUser.fans = R.GetInt16(3));
+        //    CoolCount.Content = (int)(currentUser.cool = R.GetInt16(4));
+        //    FunnyCount.Content = currentUser.funny = R.GetInt32(5);
+        //    UsefulCount.Content = currentUser.useful = R.GetInt32(6);
+        //    UserYelpingSinceResult.Content = currentUser.yelping_since = R.GetDate(7).ToString();
+        //    LatTextBox.Text = (currentUser.user_latitude = R.GetDouble(8)).ToString();
+        //    LongTextBox.Text = (currentUser.user_longitude = R.GetDouble(9)).ToString();
+        //}
 
         private void addFriendsGridColumns()
         {
@@ -122,7 +153,7 @@ namespace Team4_YelpProject
 
         private void setUserData(NpgsqlDataReader R)
         {
-            while(R.Read())
+            while (R.Read())
             {
                 //userIDListBox.Items.Add(R.GetString(0));
                 UserNameBox.Text = R.GetString(1);
@@ -228,6 +259,26 @@ namespace Team4_YelpProject
         private void setLocationBtn_Click(object sender, RoutedEventArgs e)
         {
             /*    UNDER CONSTRUCTION    */
+            setUserLocation(LatTextBox.Text, LongTextBox.Text);
+        }
+
+        private void setUserLocation(string uLat, string uLong)
+        {
+            user_lat = Double.Parse(uLat);
+            user_long = Double.Parse(uLong);
+        }
+
+        private void setUserLocation(int pos, NpgsqlDataReader R)
+        {
+            switch (pos)
+            {
+                case 1:
+                    LatTextBox.Text = R.GetDouble(8).ToString();
+                    break;
+                case 2:
+                    LongTextBox.Text = R.GetDouble(9).ToString();
+                    break;
+            }
         }
 
 
