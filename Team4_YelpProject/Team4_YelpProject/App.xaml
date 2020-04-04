@@ -4,41 +4,31 @@
              xmlns:local="clr-namespace:Team4_YelpProject"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <!--<local:BoolVisibilityConverter x:Key="InputToVisibility"/>
+        <local:WatermarkConverter x:Key="InputToVisibility"/>
         <Style x:Key="WatermarkTextBox" TargetType="{x:Type TextBox}">
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Height" Value="25"/>
-            <Setter Property="Width" Value="300"/>
-            <Setter Property="Margin" Value="10,10,0,0"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TextBox}">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Height="{TemplateBinding Height}"
-                                Width="{TemplateBinding Width}"
-                                Margin="{TemplateBinding Margin}"
-                                HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid>
-                                <TextBlock Text="Enter Username Here...">
+                                <TextBlock Text="Enter Name Here" Margin="60,5,0,0">
                                     <TextBlock.Visibility>
                                         <MultiBinding Converter="{StaticResource InputToVisibility}">
-                                            <Binding ElementName="UserNameTextBox" Path="Text.IsEmpty"/>
-                                            <Binding ElementName="UserNameTextBox" Path="IsFocused"/>
+                                            <Binding ElementName="inputText" Path="Text.IsEmpty"/>
+                                            <Binding ElementName="inputText" Path="IsFocused"/>
                                         </MultiBinding>
                                     </TextBlock.Visibility>
                                 </TextBlock>
-                                --><!--<TextBox x:Name="UserNameTextBox" Background="Transparent"/>--><!--
+                                <TextBox x:Name="inputText" Background="Transparent"/>
                             </Grid>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>-->
+        </Style>
     </Application.Resources>
 </Application>
