@@ -26,19 +26,21 @@ namespace Team4_YelpProject
         public double user_lat = 0.0;
         public double user_long = 0.0;
 
-        //public class User
-        //{
-        //    public string user_id { get; set; }
-        //    public string name { get; set; }
-        //    public double average_stars { get; set; }
-        //    public int fans { get; set; }
-        //    public int cool { get; set; }
-        //    public int funny { get; set; }
-        //    public int useful { get; set; }
-        //    public string yelping_since { get; set; }
-        //    public double user_latitude { get; set; }
-        //    public double user_longitude { get; set; }
-        //}
+        User currentUser = new User();
+
+        public class User
+        {
+            public string user_id { get; set; }
+            public string name { get; set; }
+            public double average_stars { get; set; }
+            public int fans { get; set; }
+            public int cool { get; set; }
+            public int funny { get; set; }
+            public int useful { get; set; }
+            public string yelping_since { get; set; }
+            public double user_latitude { get; set; }
+            public double user_longitude { get; set; }
+        }
 
         public class FriendsList
         {
@@ -62,19 +64,18 @@ namespace Team4_YelpProject
             return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
         }
 
-        //private void addUserData(NpgsqlDataReader R)
-        //{
-        //    currentUser.user_id = R.GetString(0);
-        //    UserNameBox.Text = currentUser.name = R.GetString(1);
-        //    UserStarsResult.Content = currentUser.average_stars = R.GetDouble(2);
-        //    UserFansResult.Content = (int)(currentUser.fans = R.GetInt16(3));
-        //    CoolCount.Content = (int)(currentUser.cool = R.GetInt16(4));
-        //    FunnyCount.Content = currentUser.funny = R.GetInt32(5);
-        //    UsefulCount.Content = currentUser.useful = R.GetInt32(6);
-        //    UserYelpingSinceResult.Content = currentUser.yelping_since = R.GetDate(7).ToString();
-        //    LatTextBox.Text = (currentUser.user_latitude = R.GetDouble(8)).ToString();
-        //    LongTextBox.Text = (currentUser.user_longitude = R.GetDouble(9)).ToString();
-        //}
+        private void addUserData()
+        {
+            UserNameBox.Text = currentUser.name;
+            UserStarsResult.Content = currentUser.average_stars;
+            UserFansResult.Content = (int)currentUser.fans;
+            CoolCount.Content = (int)currentUser.cool;
+            FunnyCount.Content = currentUser.funny;
+            UsefulCount.Content = currentUser.useful;
+            UserYelpingSinceResult.Content = currentUser.yelping_since;
+            LatTextBox.Text = currentUser.user_latitude.ToString();
+            LongTextBox.Text = currentUser.user_longitude.ToString();
+        }
 
         private void addFriendsGridColumns()
         {
@@ -141,6 +142,22 @@ namespace Team4_YelpProject
             userIDListBox.Items.Add(R.GetString(0));
         }
 
+        private void addUser(NpgsqlDataReader R)
+        {
+            currentUser.user_id = R.GetString(0);
+            currentUser.name = R.GetString(1);
+            currentUser.average_stars = R.GetDouble(2);
+            currentUser.fans = R.GetInt32(3);
+            currentUser.cool = R.GetInt32(4);
+            currentUser.funny = R.GetInt32(5);
+            currentUser.useful = R.GetInt32(6);
+            currentUser.yelping_since = R.GetDate(7).ToString();
+            currentUser.user_latitude = R.GetDouble(8);
+            currentUser.user_longitude = R.GetDouble(9);
+            
+            addUserData();
+        }
+
         private void addTipGridRow(NpgsqlDataReader R)
         {
             ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetDate(4).ToString() });
@@ -151,22 +168,22 @@ namespace Team4_YelpProject
             FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
         }
 
-        private void setUserData(NpgsqlDataReader R)
-        {
-            while (R.Read())
-            {
-                //userIDListBox.Items.Add(R.GetString(0));
-                UserNameBox.Text = R.GetString(1);
-                UserStarsResult.Content = R.GetDouble(2).ToString();
-                UserFansResult.Content = R.GetInt16(3).ToString();
-                UserYelpingSinceResult.Content = R.GetDate(4).ToString();
-                FunnyCount.Content = R.GetInt16(5).ToString();
-                CoolCount.Content = R.GetInt16(6).ToString();
-                UsefulCount.Content = R.GetInt16(7).ToString();
-                LatTextBox.Text = R.GetDouble(8).ToString();
-                LongTextBox.Text = R.GetDouble(9).ToString();
-            }
-        }
+        //private void setUserData(NpgsqlDataReader R)
+        //{
+        //    while (R.Read())
+        //    {
+        //        userIDListBox.Items.Add(R.GetString(0));
+        //        UserNameBox.Text = R.GetString(1);
+        //        UserStarsResult.Content = R.GetDouble(2).ToString();
+        //        UserFansResult.Content = R.GetInt16(3).ToString();
+        //        UserYelpingSinceResult.Content = R.GetDate(4).ToString();
+        //        FunnyCount.Content = R.GetInt16(5).ToString();
+        //        CoolCount.Content = R.GetInt16(6).ToString();
+        //        UsefulCount.Content = R.GetInt16(7).ToString();
+        //        LatTextBox.Text = R.GetDouble(8).ToString();
+        //        LongTextBox.Text = R.GetDouble(9).ToString();
+        //    }
+        //}
 
         private void clearUserData()
         {
@@ -219,18 +236,24 @@ namespace Team4_YelpProject
             if (userIDListBox.SelectedIndex >= 0)
             {
                 /*    Run user query    */
-                using (var conn = new NpgsqlConnection(buildConnectionString()))
+                //using (var conn = new NpgsqlConnection(buildConnectionString()))
+                //{
+                //    conn.Open();
+
+                //    using (var cmd = new NpgsqlCommand())
+                //    {
+                //        cmd.Connection = conn;
+                //        cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
+                //        setUserData(cmd.ExecuteReader());
+                //    }
+
+                //    conn.Close();
+                //}
+
+                if (userIDListBox.SelectedIndex >= 0)
                 {
-                    conn.Open();
-
-                    using (var cmd = new NpgsqlCommand())
-                    {
-                        cmd.Connection = conn;
-                        cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
-                        setUserData(cmd.ExecuteReader());
-                    }
-
-                    conn.Close();
+                    string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
+                    executeQuery(sqlStr, addUser);
                 }
 
                 /*    Run friend list query    */
@@ -266,6 +289,8 @@ namespace Team4_YelpProject
         {
             user_lat = Double.Parse(uLat);
             user_long = Double.Parse(uLong);
+
+
         }
 
         private void setUserLocation(int pos, NpgsqlDataReader R)

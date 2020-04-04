@@ -61,8 +61,10 @@
                     </Grid.Background>
                     <GroupBox x:Name="SelectCurrentUserGroupBox" Header="Select Current User" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontFamily="OCR A Extended" FontSize="14" FontWeight="Bold" Foreground="#FFFFE800" Grid.ColumnSpan="2">
                         <Grid>
-                            <TextBox x:Name="UserNameTextBox" Style="{StaticResource WatermarkTextBox}"  Height="25" Width="300" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" KeyDown="UsernameTextBox_KeyDown"/>
+                            <!--<TextBox x:Name="UserNameTextBox" Style="{StaticResource WatermarkTextBox}"  Height="25" Width="300" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" KeyDown="UsernameTextBox_KeyDown"/>-->
                             <ListBox x:Name="userIDListBox" Height="154" VerticalAlignment="Bottom" Margin="10,0,10,10" SelectionChanged="userIDListBox_SelectionChanged" Grid.ColumnSpan="2" />
+                            <TextBox x:Name="UserNameTextBox" Height="25" Width="300" Margin="10,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.ColumnSpan="2" KeyDown="UsernameTextBox_KeyDown"/>
+
                         </Grid>
                     </GroupBox>
                     <GroupBox x:Name="FriendsGroupBox" Header="Friends List" HorizontalAlignment="Left" Height="426" Margin="10,245,0,0" VerticalAlignment="Top" Width="330" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
