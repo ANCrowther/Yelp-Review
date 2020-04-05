@@ -23,9 +23,6 @@ namespace Team4_YelpProject
         }
 
         /*    User Information Tab    */
-        public double user_lat = 0.0;
-        public double user_long = 0.0;
-
         User currentUser = new User();
 
         public class User
@@ -168,23 +165,6 @@ namespace Team4_YelpProject
             FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
         }
 
-        //private void setUserData(NpgsqlDataReader R)
-        //{
-        //    while (R.Read())
-        //    {
-        //        userIDListBox.Items.Add(R.GetString(0));
-        //        UserNameBox.Text = R.GetString(1);
-        //        UserStarsResult.Content = R.GetDouble(2).ToString();
-        //        UserFansResult.Content = R.GetInt16(3).ToString();
-        //        UserYelpingSinceResult.Content = R.GetDate(4).ToString();
-        //        FunnyCount.Content = R.GetInt16(5).ToString();
-        //        CoolCount.Content = R.GetInt16(6).ToString();
-        //        UsefulCount.Content = R.GetInt16(7).ToString();
-        //        LatTextBox.Text = R.GetDouble(8).ToString();
-        //        LongTextBox.Text = R.GetDouble(9).ToString();
-        //    }
-        //}
-
         private void clearUserData()
         {
             UserNameBox.Clear();
@@ -236,20 +216,6 @@ namespace Team4_YelpProject
             if (userIDListBox.SelectedIndex >= 0)
             {
                 /*    Run user query    */
-                //using (var conn = new NpgsqlConnection(buildConnectionString()))
-                //{
-                //    conn.Open();
-
-                //    using (var cmd = new NpgsqlCommand())
-                //    {
-                //        cmd.Connection = conn;
-                //        cmd.CommandText = "SELECT distinct user_id,name,average_stars,fans,date(yelping_since),funny,cool,useful,user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
-                //        setUserData(cmd.ExecuteReader());
-                //    }
-
-                //    conn.Close();
-                //}
-
                 if (userIDListBox.SelectedIndex >= 0)
                 {
                     string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
@@ -281,28 +247,41 @@ namespace Team4_YelpProject
 
         private void setLocationBtn_Click(object sender, RoutedEventArgs e)
         {
-            /*    UNDER CONSTRUCTION    */
-            setUserLocation(LatTextBox.Text, LongTextBox.Text);
-        }
-
-        private void setUserLocation(string uLat, string uLong)
-        {
-            user_lat = Double.Parse(uLat);
-            user_long = Double.Parse(uLong);
-
-
-        }
-
-        private void setUserLocation(int pos, NpgsqlDataReader R)
-        {
-            switch (pos)
+            if (!(currentUser.user_latitude == Convert.ToDouble(LatTextBox.Text) && currentUser.user_longitude == Convert.ToDouble(LongTextBox.Text)))
             {
-                case 1:
-                    LatTextBox.Text = R.GetDouble(8).ToString();
-                    break;
-                case 2:
-                    LongTextBox.Text = R.GetDouble(9).ToString();
-                    break;
+                /*  Updates the actual databse  */
+                updateQuery();
+
+                /*  Updates the UI  */
+                string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + currentUser.user_id + "';";
+                executeQuery(sqlStr, addUser);
+            }
+        }
+
+        private void updateQuery()
+        {
+            string sqlStr = "UPDATE Users SET user_latitude='" + Convert.ToDouble(LatTextBox.Text) + "', user_longitude='" + Convert.ToDouble(LongTextBox.Text) + "' WHERE user_id='" + currentUser.user_id + "';";
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = sqlStr;
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
             }
         }
 
