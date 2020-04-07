@@ -12,10 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-//using BingMapsSample.GeocodeService;
-//using BingMapsSample.SearchService;
-//using BingMapsSample.ImageryService;
-//using BingMapsSample.RouteService;
+using Microsoft.Maps.MapControl.WPF;
 
 namespace Map
 {
@@ -27,7 +24,8 @@ namespace Map
         public MainWindow()
         {
             InitializeComponent();
-           
         }
+
+
     }
 }

@@ -5,6 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:Map"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -12,10 +14,22 @@
             <ColumnDefinition Width="270*"/>
             <ColumnDefinition Width="900*"/>
         </Grid.ColumnDefinitions>
-        <m:Map Mode="Road" ZoomLevel="14" CredentialsProvider ="INSET_YOU_BING_MAPS_KEY" Center="48.0090,-122.2021" x:Name="myMap" Grid.Column="1">
-            <Canvas m:MapLayer.Position="48.0090,-122.2021" m:MapLayer.PositionOrigin="BottomCenter" Width="30" Height="30"/>
-            
+        <m:Map x:Name="myMap" ZoomLevel="14" CredentialsProvider ="INSET_YOU_BING_MAPS_KEY" Center="48.0090,-122.2021" Grid.Column="1">
+            <Canvas m:MapLayer.Position="48.0090,-122.2021" m:MapLayer.PositionOrigin="BottomCenter" Width="30" Height="30">
+                <materialDesign:PackIcon Kind="MapMarker" Width="30" Height="30" Foreground="DarkBlue"/>
+            </Canvas>
         </m:Map>
-
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Width="185">
+            <Button x:Name="centerOnMe" Content="Center On Me"></Button>
+            <Label Content="Hi"></Label>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="185">
+                <Label Content="Latitude:   " HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF000000"></Label>
+                <Label x:Name="LatLocation" Content="_____________" HorizontalAlignment="Left" FontSize ="14" VerticalAlignment="Top" Foreground="#FF000000"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Width="185">
+                <Label Content="Longitute:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF000000"></Label>
+                <Label x:Name="LongLocation" Content="_____________" HorizontalAlignment="Left" FontSize ="14" VerticalAlignment="Top" Foreground="#FF000000"></Label>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
