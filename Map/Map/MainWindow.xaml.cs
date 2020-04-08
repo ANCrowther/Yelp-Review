@@ -1,18 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Maps.MapControl.WPF;
 
 namespace Map
 {
@@ -24,8 +11,19 @@ namespace Map
         public MainWindow()
         {
             InitializeComponent();
+            myMap.Loaded += MyMap_Loaded;
         }
 
+        private void MyMap_Loaded(object sender, RoutedEventArgs e)
+        {
+            //set map to lat and long Everett
+            myMap.Center =
+            new Geopoint(new BasicGeoposition()
+            {
+                Latitude = 48.0090,
+                Longitude = -122.2021
+            });
 
+            myMap.ZoomLevel = 16;
+        }
     }
-}

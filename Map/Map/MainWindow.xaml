@@ -3,18 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-        xmlns:local="clr-namespace:Map"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"
+        xmlns:maps="using:Windows.UI.Xaml.Controls.Maps"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <sys:String x:Key="YourBingKey">TiL8nashAKDrGMxI4Y4F~i20_8cpTeHKKiAzdghzvOg~AsUdO8HqeWXszl6dTixVEOq33X4tsTLP7ODoNCHY_9My12iNiCffnM7A-eZWY0Z7</sys:String>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="270*"/>
             <ColumnDefinition Width="900*"/>
         </Grid.ColumnDefinitions>
-        <m:Map x:Name="myMap" ZoomLevel="14" CredentialsProvider ="INSET_YOU_BING_MAPS_KEY" Center="48.0090,-122.2021" Grid.Column="1">
+        <StackPanel Grid.Column="0">
+
+        </StackPanel>
+        
+        <!--<m:Map x:Name="myMap" ZoomLevel="14" CredentialsProvider ="TiL8nashAKDrGMxI4Y4F~i20_8cpTeHKKiAzdghzvOg~AsUdO8HqeWXszl6dTixVEOq33X4tsTLP7ODoNCHY_9My12iNiCffnM7A-eZWY0Z7" Center="48.0090,-122.2021" Grid.Column="1">
             <Canvas m:MapLayer.Position="48.0090,-122.2021" m:MapLayer.PositionOrigin="BottomCenter" Width="30" Height="30">
                 <materialDesign:PackIcon Kind="MapMarker" Width="30" Height="30" Foreground="DarkBlue"/>
             </Canvas>
@@ -30,6 +35,6 @@
                 <Label Content="Longitute:" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="#FF000000"></Label>
                 <Label x:Name="LongLocation" Content="_____________" HorizontalAlignment="Left" FontSize ="14" VerticalAlignment="Top" Foreground="#FF000000"></Label>
             </StackPanel>
-        </StackPanel>
+        </StackPanel>-->
     </Grid>
 </Window>
