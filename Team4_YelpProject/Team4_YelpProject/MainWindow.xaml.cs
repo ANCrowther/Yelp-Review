@@ -23,38 +23,7 @@ namespace Team4_YelpProject
         }
 
         /*    User Information Tab    */
-        User currentUser = new User();
-
-        public class User
-        {
-            public string user_id { get; set; }
-            public string name { get; set; }
-            public double average_stars { get; set; }
-            public int fans { get; set; }
-            public int cool { get; set; }
-            public int funny { get; set; }
-            public int useful { get; set; }
-            public string yelping_since { get; set; }
-            public double user_latitude { get; set; }
-            public double user_longitude { get; set; }
-        }
-
-        public class FriendsList
-        {
-            public string name { get; set; }
-            public int totalLikes { get; set; }
-            public double avgStars { get; set; }
-            public string yelpingSince { get; set; }
-        }
-
-        public class TipsList
-        {
-            public string userName { get; set; }
-            public string businessName { get; set; }
-            public string city { get; set; }
-            public string text { get; set; }
-            public string date { get; set; }
-        }
+        YelpUser currentUser = new YelpUser();
 
         private string buildConnectionString()
         {
@@ -79,25 +48,21 @@ namespace Team4_YelpProject
             DataGridTextColumn col1 = new DataGridTextColumn();
             col1.Binding = new Binding("name");
             col1.Header = "Name";
-            col1.Width = 255;
             FriendListDataGrid.Columns.Add(col1);
 
             DataGridTextColumn col2 = new DataGridTextColumn();
             col2.Binding = new Binding("totalLikes");
             col2.Header = "Total Likes";
-            col2.Width = 60;
             FriendListDataGrid.Columns.Add(col2);
 
             DataGridTextColumn col3 = new DataGridTextColumn();
             col3.Binding = new Binding("avgStars");
             col3.Header = "Avg Stars";
-            col3.Width = 150;
             FriendListDataGrid.Columns.Add(col3);
 
             DataGridTextColumn col4 = new DataGridTextColumn();
             col4.Binding = new Binding("yelpingSince");
             col4.Header = "Yelping Since";
-            col4.Width = 0;
             FriendListDataGrid.Columns.Add(col4);
         }
 
@@ -105,8 +70,7 @@ namespace Team4_YelpProject
         {
             DataGridTextColumn col1 = new DataGridTextColumn();
             col1.Binding = new Binding("userName");
-            col1.Header = "User Name";
-            //col1.Width = 100;
+            col1.Header = "Customer Name";
             ReviewByFriendDataGrid.Columns.Add(col1);
 
             DataGridTextColumn col2 = new DataGridTextColumn();
@@ -157,12 +121,12 @@ namespace Team4_YelpProject
 
         private void addTipGridRow(NpgsqlDataReader R)
         {
-            ReviewByFriendDataGrid.Items.Add(new TipsList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetDate(4).ToString() });
+            ReviewByFriendDataGrid.Items.Add(new TipList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetDate(4).ToString() });
         }
 
         private void addFriendGridRow(NpgsqlDataReader R)
         {
-            FriendListDataGrid.Items.Add(new FriendsList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2) });
+            FriendListDataGrid.Items.Add(new FriendList() { name = R.GetString(0), avgStars = R.GetDouble(1), totalLikes = R.GetInt32(2), yelpingSince = R.GetDate(3).ToString() });
         }
 
         private void clearUserData()
@@ -225,7 +189,7 @@ namespace Team4_YelpProject
                 /*    Run friend list query    */
                 if (userIDListBox.SelectedIndex >= 0)
                 {
-                    string sqlStr = "SELECT name,average_stars,totallikes FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "' ORDER BY name,average_stars,totallikes);";
+                    string sqlStr = "SELECT name,average_stars,totallikes, date(yelping_since) FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "' ORDER BY name,average_stars,totallikes);";
                     executeQuery(sqlStr, addFriendGridRow);
                 }
 

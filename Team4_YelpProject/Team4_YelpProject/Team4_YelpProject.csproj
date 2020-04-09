@@ -131,7 +131,10 @@
     <Compile Include="BusinessDetails.xaml.cs">
       <DependentUpon>BusinessDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="FriendList.cs" />
+    <Compile Include="TipList.cs" />
     <Compile Include="WatermarkConverter.cs" />
+    <Compile Include="YelpUser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
