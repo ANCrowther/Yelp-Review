@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Windows;
 using System.Collections.Generic;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Maps;
-using Windows.UI.Xaml.Navigation;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Media;
+using Microsoft.Maps.MapControl.WPF;
 
 namespace Map
 {
@@ -18,10 +13,35 @@ namespace Map
     /// </summary>
     public partial class MainWindow : Window
     {
+        public double latitude = 48.4090;
+        public double longitude = -122.4021;
+
         public MainWindow()
         {
             InitializeComponent();
+            DelegateEventHandlers();
+        }
 
+        private void DelegateEventHandlers()
+        {
+            /*    UNDER CONSTRUCTION    */
+        }
+
+        private void centerOnMe_Click(object sender, RoutedEventArgs e)
+        {
+            e.Handled = true;
+
+            LatLocation.Content = "___";
+            LongLocation.Content = "___";
+            LatLocation.Content = latitude.ToString();
+            LongLocation.Content = longitude.ToString();
+
+            Location currentLocation = new Location(latitude, longitude);
+            Pushpin pin = new Pushpin();
+            pin.Location = currentLocation;
+
+            myMap.Children.Add(pin);
+            myMap.Center = currentLocation;
         }
     }
 }
