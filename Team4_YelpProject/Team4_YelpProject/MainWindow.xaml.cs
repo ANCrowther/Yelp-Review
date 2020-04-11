@@ -477,72 +477,72 @@ namespace Team4_YelpProject
                 sqlCategory.Append(" AND category='" + SelectListBox.Items[index] + "' ");
             }
 
-            /*    Appends filter selection to Query    */
+            ///*    Appends filter selection to Query    */
 
-            if (breakfastCB.IsChecked == true)
-            {
-                if(sqlMealSelection.Length > 0)
-                {
-                    sqlMealSelection.Append(", ");
-                }
-                sqlMealSelection.Append("breakfast ");
-                mealFilter = true;
-            }
-            if (lunchCB.IsChecked == true)
-            {
-                if (sqlMealSelection.Length > 0)
-                {
-                    sqlMealSelection.Append(", ");
-                }
-                sqlMealSelection.Append("lunch ");
-                mealFilter = true;
-            }
-            if (brunchCB.IsChecked == true)
-            {
-                if (sqlMealSelection.Length > 0)
-                {
-                    sqlMealSelection.Append(", ");
-                }
-                sqlMealSelection.Append("brunch ");
-                mealFilter = true;
-            }
-            if (dinnerCB.IsChecked == true)
-            {
-                if (sqlMealSelection.Length > 0)
-                {
-                    sqlMealSelection.Append(", ");
-                }
-                sqlMealSelection.Append("dinner ");
-                mealFilter = true;
-            }
-            if (dessertCB.IsChecked == true)
-            {
-                if (sqlMealSelection.Length > 0)
-                {
-                    sqlMealSelection.Append(", ");
-                }
-                sqlMealSelection.Append("dessert ");
-                mealFilter = true;
-            }
-            if (lateNightCB.IsChecked == true)
-            {
-                if (sqlMealSelection.Length > 0)
-                {
-                    sqlMealSelection.Append(", ");
-                }
-                sqlMealSelection.Append("lateNight ");
-                mealFilter = true;
-            }
-            if (mealFilter == true)
-            {
-                sqlMealFilter.Append(sqlMealSelection.ToString() + "}')AND value='True') AS A ");
-                //sqlStr.Append(sqlMealFilter.ToString());
-            }
+            //if (breakfastCB.IsChecked == true)
+            //{
+            //    if(sqlMealSelection.Length > 0)
+            //    {
+            //        sqlMealSelection.Append(", ");
+            //    }
+            //    sqlMealSelection.Append("breakfast ");
+            //    mealFilter = true;
+            //}
+            //if (lunchCB.IsChecked == true)
+            //{
+            //    if (sqlMealSelection.Length > 0)
+            //    {
+            //        sqlMealSelection.Append(", ");
+            //    }
+            //    sqlMealSelection.Append("lunch ");
+            //    mealFilter = true;
+            //}
+            //if (brunchCB.IsChecked == true)
+            //{
+            //    if (sqlMealSelection.Length > 0)
+            //    {
+            //        sqlMealSelection.Append(", ");
+            //    }
+            //    sqlMealSelection.Append("brunch ");
+            //    mealFilter = true;
+            //}
+            //if (dinnerCB.IsChecked == true)
+            //{
+            //    if (sqlMealSelection.Length > 0)
+            //    {
+            //        sqlMealSelection.Append(", ");
+            //    }
+            //    sqlMealSelection.Append("dinner ");
+            //    mealFilter = true;
+            //}
+            //if (dessertCB.IsChecked == true)
+            //{
+            //    if (sqlMealSelection.Length > 0)
+            //    {
+            //        sqlMealSelection.Append(", ");
+            //    }
+            //    sqlMealSelection.Append("dessert ");
+            //    mealFilter = true;
+            //}
+            //if (lateNightCB.IsChecked == true)
+            //{
+            //    if (sqlMealSelection.Length > 0)
+            //    {
+            //        sqlMealSelection.Append(", ");
+            //    }
+            //    sqlMealSelection.Append("lateNight ");
+            //    mealFilter = true;
+            //}
+            //if (mealFilter == true)
+            //{
+            //    sqlMealFilter.Append(sqlMealSelection.ToString() + "}')AND value='True') AS A ");
+            //    //sqlStr.Append(sqlMealFilter.ToString());
+            //}
 
-            if (mealFilter == true)
-            {
-                sqlStr.Append(sqlMealFilter.ToString());
-            }
+            //if (mealFilter == true)
+            //{
+            //    sqlStr.Append(sqlMealFilter.ToString());
+            //}
 
             /*    Sew the queries together     */
             if (sqlCategory.Length > 0)
@@ -560,7 +560,7 @@ namespace Team4_YelpProject
 
 
             sqlStr.Append(";");
-
+            Console.WriteLine(sqlStr.ToString());
             executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
         }
     }
