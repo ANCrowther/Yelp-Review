@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Team4_YelpProject"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <local:WatermarkConverter x:Key="InputToVisibility"/>
+        <!--<local:WatermarkConverter x:Key="InputToVisibility"/>
         <Style x:Key="WatermarkTextBox" TargetType="{x:Type TextBox}">
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="BorderThickness" Value="1"/>
@@ -29,6 +29,6 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style>-->
     </Application.Resources>
 </Application>

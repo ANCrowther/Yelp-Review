@@ -5,6 +5,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using Team4_YelpProject.Model;
+using Team4_YelpProject.ViewModel;
 
 namespace Team4_YelpProject
 {
@@ -20,27 +22,29 @@ namespace Team4_YelpProject
             addLatestTipsGridColumns();
             addState();
             addBusinessResultGridColumns();
+            //DataContext = new UserViewModel();
         }
 
         /*    User Information Tab    */
-        YelpUser currentUser = new YelpUser();
+        //YelpUser currentUser = new YelpUser();
+        UserViewModel viewModel = new UserViewModel();
 
-        private string buildConnectionString()
-        {
-            return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
-        }
+        //private string buildConnectionString()
+        //{
+        //    return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
+        //}
 
         private void addUserData()
         {
-            UserNameBox.Text = currentUser.name;
-            UserStarsResult.Content = currentUser.average_stars;
-            UserFansResult.Content = (int)currentUser.fans;
-            CoolCount.Content = (int)currentUser.cool;
-            FunnyCount.Content = currentUser.funny;
-            UsefulCount.Content = currentUser.useful;
-            UserYelpingSinceResult.Content = currentUser.yelping_since;
-            LatTextBox.Text = currentUser.user_latitude.ToString();
-            LongTextBox.Text = currentUser.user_longitude.ToString();
+            UserNameBox.Text = viewModel.User.Name;
+            UserStarsResult.Content = viewModel.User.Average_stars;
+            UserFansResult.Content = (int)viewModel.User.Fans;
+            CoolCount.Content = (int)viewModel.User.Cool;
+            FunnyCount.Content = viewModel.User.Funny;
+            UsefulCount.Content = viewModel.User.Useful;
+            UserYelpingSinceResult.Content = viewModel.User.Yelping_since;
+            LatTextBox.Text = viewModel.User.User_latitude.ToString();
+            LongTextBox.Text = viewModel.User.User_longitude.ToString();
         }
 
         private void addFriendsGridColumns()
@@ -98,26 +102,28 @@ namespace Team4_YelpProject
             ReviewByFriendDataGrid.Columns.Add(col5);
         }
 
-        private void addUserIDListBox(NpgsqlDataReader R)
+        private void addUserIDListBox(/*NpgsqlDataReader R*/)
         {
-            userIDListBox.Items.Add(R.GetString(0));
+            userIDListBox.Items.Add(viewModel.User.User_id);
+            Console.Write(viewModel.User.User_id);
+            //userIDListBox.Items.Add(R.GetString(0));
         }
 
-        private void addUser(NpgsqlDataReader R)
-        {
-            currentUser.user_id = R.GetString(0);
-            currentUser.name = R.GetString(1);
-            currentUser.average_stars = R.GetDouble(2);
-            currentUser.fans = R.GetInt32(3);
-            currentUser.cool = R.GetInt32(4);
-            currentUser.funny = R.GetInt32(5);
-            currentUser.useful = R.GetInt32(6);
-            currentUser.yelping_since = R.GetDate(7).ToString();
-            currentUser.user_latitude = R.GetDouble(8);
-            currentUser.user_longitude = R.GetDouble(9);
-            
-            addUserData();
-        }
+        //private void addUser(NpgsqlDataReader R)
+        //{
+        //    User_id = R.GetString(0);
+        //    currentUser.Name = R.GetString(1);
+        //    currentUser.Average_stars = R.GetDouble(2);
+        //    currentUser.Fans = R.GetInt32(3);
+        //    currentUser.Cool = R.GetInt32(4);
+        //    currentUser.Funny = R.GetInt32(5);
+        //    currentUser.Useful = R.GetInt32(6);
+        //    currentUser.Yelping_since = R.GetDate(7).ToString();
+        //    currentUser.User_latitude = R.GetDouble(8);
+        //    currentUser.User_longitude = R.GetDouble(9);
+
+        //    addUserData();
+        //}
 
         private void addTipGridRow(NpgsqlDataReader R)
         {
@@ -144,34 +150,34 @@ namespace Team4_YelpProject
             ReviewByFriendDataGrid.Items.Clear();
         }
 
-        private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
-        {
-            using (var connection = new NpgsqlConnection(buildConnectionString()))
-            {
-                connection.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = connection;
-                    cmd.CommandText = sqlstr;
-                    try
-                    {
-                        var reader = cmd.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            myf(reader);
-                        }
-                    }
-                    catch (NpgsqlException ex)
-                    {
-                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-        }
+        //private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
+        //{
+        //    using (var connection = new NpgsqlConnection(buildConnectionString()))
+        //    {
+        //        connection.Open();
+        //        using (var cmd = new NpgsqlCommand())
+        //        {
+        //            cmd.Connection = connection;
+        //            cmd.CommandText = sqlstr;
+        //            try
+        //            {
+        //                var reader = cmd.ExecuteReader();
+        //                while (reader.Read())
+        //                {
+        //                    myf(reader);
+        //                }
+        //            }
+        //            catch (NpgsqlException ex)
+        //            {
+        //                System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+        //            }
+        //            finally
+        //            {
+        //                connection.Close();
+        //            }
+        //        }
+        //    }
+        //}
 
         private void userIDListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -179,74 +185,90 @@ namespace Team4_YelpProject
 
             if (userIDListBox.SelectedIndex >= 0)
             {
-                /*    Run user query    */
-                if (userIDListBox.SelectedIndex >= 0)
-                {
-                    string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
-                    executeQuery(sqlStr, addUser);
-                }
-
-                /*    Run friend list query    */
-                if (userIDListBox.SelectedIndex >= 0)
-                {
-                    string sqlStr = "SELECT name,average_stars,totallikes, date(yelping_since) FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "' ORDER BY name,average_stars,totallikes);";
-                    executeQuery(sqlStr, addFriendGridRow);
-                }
-
-                /*    Run Tips list query    */
-                if(userIDListBox.SelectedIndex >= 0)
-                {
-                    string sqlStr = "SELECT U.name, B.name, B.city, text, date(T.tipdate) FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id ORDER BY date(T.tipdate) DESC;";
-                    executeQuery(sqlStr, addTipGridRow);
-                }
+                this.viewModel.Search(userIDListBox.SelectedItem.ToString());
+                addUserData();
             }
+
+            //if (userIDListBox.SelectedIndex >= 0)
+            //{
+            //    /*    Run user query    */
+            //    if (userIDListBox.SelectedIndex >= 0)
+            //    {
+            //        string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
+            //        executeQuery(sqlStr, addUser);
+            //    }
+
+            //    /*    Run friend list query    */
+            //    if (userIDListBox.SelectedIndex >= 0)
+            //    {
+            //        string sqlStr = "SELECT name,average_stars,totallikes, date(yelping_since) FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "' ORDER BY name,average_stars,totallikes);";
+            //        executeQuery(sqlStr, addFriendGridRow);
+            //    }
+
+            //    /*    Run Tips list query    */
+            //    if (userIDListBox.SelectedIndex >= 0)
+            //    {
+            //        string sqlStr = "SELECT U.name, B.name, B.city, text, date(T.tipdate) FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id ORDER BY date(T.tipdate) DESC;";
+            //        executeQuery(sqlStr, addTipGridRow);
+            //    }
+            //}
         }
+
+        public string tempName = "";
 
         private void UsernameTextBox_KeyDown(object sender, KeyEventArgs e)
         {
             userIDListBox.Items.Clear();
-            string sqlStr = "SELECT distinct user_id,name FROM users WHERE name='" + UserNameTextBox.Text + "';";
-            executeQuery(sqlStr, addUserIDListBox);
+            tempName = UserNameTextBox.Text;
+            //string sqlStr = "SELECT distinct user_id,name FROM users WHERE name='" + UserNameTextBox.Text + "';";
+            // executeQuery(sqlStr, addUserIDListBox);
+            
+        }
+
+        private void UserSearch_Click(object sender, RoutedEventArgs e)
+        {
+            this.viewModel.Search(tempName);
+            addUserIDListBox();
         }
 
         private void setLocationBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!(currentUser.user_latitude == Convert.ToDouble(LatTextBox.Text) && currentUser.user_longitude == Convert.ToDouble(LongTextBox.Text)))
-            {
-                /*  Updates the actual databse  */
-                updateQuery();
+            //if (!(currentUser.User_latitude == Convert.ToDouble(LatTextBox.Text) && currentUser.User_longitude == Convert.ToDouble(LongTextBox.Text)))
+            //{
+            //    /*  Updates the actual databse  */
+            //    updateQuery();
 
-                /*  Updates the UI  */
-                string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + currentUser.user_id + "';";
-                executeQuery(sqlStr, addUser);
-            }
+            //    /*  Updates the UI  */
+            //    string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + currentUser.User_id + "';";
+            //    executeQuery(sqlStr, addUser);
+            //}
         }
 
         private void updateQuery()
         {
-            string sqlStr = "UPDATE Users SET user_latitude='" + Convert.ToDouble(LatTextBox.Text) + "', user_longitude='" + Convert.ToDouble(LongTextBox.Text) + "' WHERE user_id='" + currentUser.user_id + "';";
+            //string sqlStr = "UPDATE Users SET user_latitude='" + Convert.ToDouble(LatTextBox.Text) + "', user_longitude='" + Convert.ToDouble(LongTextBox.Text) + "' WHERE user_id='" + currentUser.User_id + "';";
 
-            using (var connection = new NpgsqlConnection(buildConnectionString()))
-            {
-                connection.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = connection;
-                    cmd.CommandText = sqlStr;
-                    try
-                    {
-                        cmd.ExecuteNonQuery();
-                    }
-                    catch (NpgsqlException ex)
-                    {
-                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
+            //using (var connection = new NpgsqlConnection(buildConnectionString()))
+            //{
+            //    connection.Open();
+            //    using (var cmd = new NpgsqlCommand())
+            //    {
+            //        cmd.Connection = connection;
+            //        cmd.CommandText = sqlStr;
+            //        try
+            //        {
+            //            cmd.ExecuteNonQuery();
+            //        }
+            //        catch (NpgsqlException ex)
+            //        {
+            //            System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+            //        }
+            //        finally
+            //        {
+            //            connection.Close();
+            //        }
+            //    }
+            //}
         }
 
 
@@ -346,31 +368,31 @@ namespace Team4_YelpProject
 
         private void addState()
         {
-            using (var conn = new NpgsqlConnection(buildConnectionString()))
-            {
-                conn.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = conn;
-                    cmd.CommandText = "SELECT DISTINCT state FROM business ORDER BY state";
-                    try
-                    {
-                        var reader = cmd.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            stateDropBox.Items.Add(reader.GetString(0));
-                        }
-                    }
-                    catch (NpgsqlException ex)
-                    {
-                        System.Windows.MessageBox.Show("SQL Error - " + ex.Message.ToString());
-                    }
-                    finally
-                    {
-                        conn.Close();
-                    }
-                }
-            }
+            //using (var conn = new NpgsqlConnection(buildConnectionString()))
+            //{
+            //    conn.Open();
+            //    using (var cmd = new NpgsqlCommand())
+            //    {
+            //        cmd.Connection = conn;
+            //        cmd.CommandText = "SELECT DISTINCT state FROM business ORDER BY state";
+            //        try
+            //        {
+            //            var reader = cmd.ExecuteReader();
+            //            while (reader.Read())
+            //            {
+            //                stateDropBox.Items.Add(reader.GetString(0));
+            //            }
+            //        }
+            //        catch (NpgsqlException ex)
+            //        {
+            //            System.Windows.MessageBox.Show("SQL Error - " + ex.Message.ToString());
+            //        }
+            //        finally
+            //        {
+            //            conn.Close();
+            //        }
+            //    }
+            //}
         }
 
         private void addCity(NpgsqlDataReader R)
@@ -415,10 +437,10 @@ namespace Team4_YelpProject
             if (stateDropBox.SelectedIndex >= 0)
             {
                 string sqlStr = "SELECT DISTINCT city FROM business WHERE state ='" + stateDropBox.SelectedItem.ToString() + "' ORDER BY city;";
-                executeQuery(sqlStr, addCity);
+                //executeQuery(sqlStr, addCity);
 
                 string sqlStr1 = "SELECT DISTINCT zipcode FROM business WHERE state ='" + stateDropBox.SelectedItem.ToString() + "' ORDER BY zipcode;";
-                executeQuery(sqlStr1, addZipcode);
+                //executeQuery(sqlStr1, addZipcode);
             }
         }
 
@@ -429,7 +451,7 @@ namespace Team4_YelpProject
             if (cityDropBox.SelectedIndex >= 0)
             {
                 string sqlStr = "SELECT DISTINCT zipcode FROM business WHERE state ='" + stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' ORDER BY zipcode;";
-                executeQuery(sqlStr, addZipcode);
+                //executeQuery(sqlStr, addZipcode);
             }
         }
 
@@ -440,7 +462,7 @@ namespace Team4_YelpProject
             if (zipcodeDropBox.SelectedIndex >= 0)
             {
                 string sqlStr = "SELECT DISTINCT C.category FROM business AS B, categories AS C WHERE B.business_id=C.business_id AND state='"+ stateDropBox.SelectedItem.ToString() + "' AND city='" + cityDropBox.SelectedItem.ToString() + "' AND zipcode='" + zipcodeDropBox.SelectedItem.ToString() + "' ORDER BY category;";
-                executeQuery(sqlStr, addCategoryItem);
+                //executeQuery(sqlStr, addCategoryItem);
             }
         }
 
@@ -561,7 +583,9 @@ namespace Team4_YelpProject
 
             sqlStr.Append(";");
             Console.WriteLine(sqlStr.ToString());
-            executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
+            //executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
         }
+
+
     }
 }

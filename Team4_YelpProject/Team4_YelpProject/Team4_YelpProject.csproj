@@ -131,10 +131,13 @@
     <Compile Include="BusinessDetails.xaml.cs">
       <DependentUpon>BusinessDetails.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Commands\UpdateUserCommand.cs" />
     <Compile Include="FriendList.cs" />
     <Compile Include="TipList.cs" />
+    <Compile Include="ViewModel\list.cs" />
+    <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="WatermarkConverter.cs" />
-    <Compile Include="YelpUser.cs" />
+    <Compile Include="Model\YelpUser.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -181,6 +184,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="EnterUsernameHere.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="View\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
