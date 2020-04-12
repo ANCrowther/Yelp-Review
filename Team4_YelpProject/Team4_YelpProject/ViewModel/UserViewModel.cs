@@ -6,35 +6,27 @@
     using System.Diagnostics;
     using System.Collections.Generic;
     using Npgsql;
+    using System.Collections.ObjectModel;
 
     internal class UserViewModel
     {
         public UserViewModel()
         {
             this.user = new YelpUser();
-            //this.userFriends = new list<string>();
-            //UpdateCommand = new UpdateUserCommand(this);
         }
 
-        //private list<string> userFriends;
-
-        //public list<string> UserFriends
-        //{
-        //    get { return this.UserFriends; }
-        //}
+        public ObservableCollection<YelpUser> User
+        {
+            get; 
+            set;
+        }
 
         private YelpUser user;
 
-        public YelpUser User
-        {
-            get { return this.user; }
-        }
-
-        public ICommand UpdateCommand
-        {
-            get;
-            private set;
-        }
+        //public YelpUser User
+        //{
+        //    get { return this.user; }
+        //}
 
         private string buildConnectionString()
         {

@@ -131,10 +131,8 @@
     <Compile Include="BusinessDetails.xaml.cs">
       <DependentUpon>BusinessDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Commands\UpdateUserCommand.cs" />
-    <Compile Include="FriendList.cs" />
-    <Compile Include="TipList.cs" />
-    <Compile Include="ViewModel\list.cs" />
+    <Compile Include="Model\FriendList.cs" />
+    <Compile Include="Model\TipList.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="WatermarkConverter.cs" />
     <Compile Include="Model\YelpUser.cs" />
