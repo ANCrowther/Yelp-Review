@@ -118,18 +118,8 @@
             }
         }
 
-        public YelpUser(/*NpgsqlDataReader R*/)
+        public YelpUser()
         {
-            //this.User_id = R.GetString(0);
-            //this.Name = R.GetString(1);
-            //this.Average_stars = R.GetDouble(2);
-            //this.Fans = R.GetInt32(3);
-            //this.Cool = R.GetInt32(4);
-            //this.Funny = R.GetInt32(5);
-            //this.Useful = R.GetInt32(6);
-            //this.Yelping_since = R.GetDate(7).ToString();
-            //this.User_latitude = R.GetDouble(8);
-            //this.User_longitude = R.GetDouble(9);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

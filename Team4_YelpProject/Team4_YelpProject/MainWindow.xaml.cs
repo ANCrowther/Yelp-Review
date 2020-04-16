@@ -585,7 +585,5 @@ namespace Team4_YelpProject
             Console.WriteLine(sqlStr.ToString());
             //executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
         }
-
-
     }
 }
