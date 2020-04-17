@@ -122,7 +122,7 @@ namespace Team4_YelpProject
 
         private void addTipGridRow(NpgsqlDataReader R)
         {
-            ReviewByFriendDataGrid.Items.Add(new TipList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetDate(4).ToString() });
+            ReviewByFriendDataGrid.Items.Add(new TipList() { UserName = R.GetString(0), BusinessName = R.GetString(1), City = R.GetString(2), Text = R.GetString(3), Date = R.GetDate(4).ToString() });
         }
 
         private void addFriendGridRow(NpgsqlDataReader R)
@@ -605,7 +605,8 @@ namespace Team4_YelpProject
                 BusinessResults B = businessResultDataGrid.Items[businessResultDataGrid.SelectedIndex] as BusinessResults;
                 if((B.BusinessID != null) && (B.BusinessID.ToString().CompareTo("") != 0))
                 {
-                    BusinessTipsView tips = new BusinessTipsView();
+                    BusinessTipsView tipsWindow = new BusinessTipsView(B.BusinessID.ToString());
+                    tipsWindow.Show();
                 }
             }
         }
