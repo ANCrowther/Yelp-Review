@@ -253,7 +253,7 @@
                     <Button x:Name="showCheckinsButton" Content="ShowCheckins" Grid.Column="1" Margin="161,481,689,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00">
 
                     </Button>
-                    <Button x:Name="showTipsButton" Content="ShowTips" Grid.Column="1" Margin="342,481,508,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00">
+                    <Button x:Name="showTipsButton" Content="ShowTips" Grid.Column="1" Margin="342,481,508,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00" Click="showTipsButton_Click">
 
                     </Button>
 

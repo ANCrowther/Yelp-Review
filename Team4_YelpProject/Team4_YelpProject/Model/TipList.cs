@@ -10,6 +10,7 @@
         public string text { get; set; }
         public string date { get; set; }
 
+
         public TipList()
         {
         }

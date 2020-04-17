@@ -137,6 +137,9 @@
     <Compile Include="Model\FriendList.cs" />
     <Compile Include="Model\TipList.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
+    <Compile Include="View\BusinessTipsView.xaml.cs">
+      <DependentUpon>BusinessTipsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WatermarkConverter.cs" />
     <Compile Include="Model\YelpUser.cs" />
     <Page Include="MainWindow.xaml">
@@ -152,6 +155,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="BusinessDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\BusinessTipsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -183,8 +190,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="View\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

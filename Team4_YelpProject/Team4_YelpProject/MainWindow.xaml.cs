@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using Team4_YelpProject.Model;
+using Team4_YelpProject.View;
 
 namespace Team4_YelpProject
 {
@@ -441,7 +442,7 @@ namespace Team4_YelpProject
             StringBuilder sqlCategoryBackEnd = new StringBuilder(" JOIN categories AS C ON B.business_id=C.business_id ");
             StringBuilder sqlMealFilter = new StringBuilder(", (SELECT * FROM attributes WHERE attr_name=ANY('{");
             StringBuilder sqlMealSelection = new StringBuilder();
-            bool mealFilter = false;
+            //bool mealFilter = false;
 
             /*    Appends selected Category choices to Query    */
             for (int index = 0; index < SelectListBox.Items.Count; index++)
@@ -595,6 +596,18 @@ namespace Team4_YelpProject
             hours.Day = R.GetString(1);
             hours.Open = R.GetValue(2).ToString();
             hours.Close = R.GetValue(3).ToString();
+        }
+
+        private void showTipsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (businessResultDataGrid.SelectedIndex >= 0)
+            {
+                BusinessResults B = businessResultDataGrid.Items[businessResultDataGrid.SelectedIndex] as BusinessResults;
+                if((B.BusinessID != null) && (B.BusinessID.ToString().CompareTo("") != 0))
+                {
+                    BusinessTipsView tips = new BusinessTipsView();
+                }
+            }
         }
     }
 }
