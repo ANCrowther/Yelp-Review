@@ -118,9 +118,7 @@
             }
         }
 
-        public YelpUser()
-        {
-        }
+        public YelpUser() {}
 
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -5,6 +5,7 @@
 
     public class BusinessResults : INotifyPropertyChanged
     {
+        private string businessID;
         private string businessName;
         private string address;
         private string city;
@@ -15,6 +16,16 @@
         private int totalCheckins;
         private double bLatitude;
         private double bLongitude;
+
+        public string BusinessID
+        {
+            get { return this.businessID; }
+            set
+            {
+                this.businessID = value;
+                this.OnPropertyChanged("BusinessID");
+            }
+        }
 
         public string BusinessName
         {
@@ -122,11 +133,13 @@
             return Math.Sqrt(Math.Pow(bLatitude - latitude, 2) + Math.Pow(bLongitude - longitude, 2));
         }
 
+        public BusinessResults() { }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void OnPropertyChanged(string v)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

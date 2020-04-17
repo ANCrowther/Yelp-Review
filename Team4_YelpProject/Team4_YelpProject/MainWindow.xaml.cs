@@ -100,7 +100,6 @@ namespace Team4_YelpProject
 
         private void addUserIDListBox(NpgsqlDataReader R)
         {
-            //userIDListBox.Items.Add(currentUser.User_id);
             userIDListBox.Items.Add(R.GetString(0));
         }
 
@@ -253,7 +252,6 @@ namespace Team4_YelpProject
 
         /*    Business Tab    */
 
-
         private string categorySelection = string.Empty;
 
         private void addBusinessResultGridColumns()
@@ -282,29 +280,29 @@ namespace Team4_YelpProject
             col4.Width = 30;
             businessResultDataGrid.Columns.Add(col4);
 
+            //DataGridTextColumn col5 = new DataGridTextColumn();
+            //col5.Binding = new Binding("distance");
+            //col5.Header = "Distance";
+            //col5.Width = 50;
+            //businessResultDataGrid.Columns.Add(col5);
+
             DataGridTextColumn col5 = new DataGridTextColumn();
-            col5.Binding = new Binding("distance");
-            col5.Header = "Distance";
+            col5.Binding = new Binding("stars");
+            col5.Header = "Stars";
             col5.Width = 50;
             businessResultDataGrid.Columns.Add(col5);
 
             DataGridTextColumn col6 = new DataGridTextColumn();
-            col6.Binding = new Binding("stars");
-            col6.Header = "Stars";
+            col6.Binding = new Binding("numberOfTips");
+            col6.Header = "# of Tips";
             col6.Width = 50;
             businessResultDataGrid.Columns.Add(col6);
 
             DataGridTextColumn col7 = new DataGridTextColumn();
-            col7.Binding = new Binding("numberOfTips");
-            col7.Header = "# of Tips";
+            col7.Binding = new Binding("totalCheckins");
+            col7.Header = "Total Checkins";
             col7.Width = 50;
             businessResultDataGrid.Columns.Add(col7);
-
-            DataGridTextColumn col8 = new DataGridTextColumn();
-            col8.Binding = new Binding("totalCheckins");
-            col8.Header = "Total Checkins";
-            col8.Width = 50;
-            businessResultDataGrid.Columns.Add(col8);
         }
 
         private void addState()
@@ -425,6 +423,11 @@ namespace Team4_YelpProject
 
         private void searchBtn_Click(object sender, RoutedEventArgs e)
         {
+            updateBusinessResults();
+        }
+
+        private void updateBusinessResults()
+        {
             businessResultDataGrid.Items.Clear();
 
             StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.name, B.address, B.city, B.state, B.stars, B.review_count, B.numcheckins, B.latitude, B.longitude FROM business as B ");
@@ -525,14 +528,9 @@ namespace Team4_YelpProject
             //    sqlStr.Append("AND B.business_id=A.business_id");
             //}
 
-
-
             sqlStr.Append(";");
-            Console.WriteLine(sqlCategory.Length.ToString());
             Console.WriteLine(sqlStr.ToString());
             executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
         }
-
-
     }
 }
