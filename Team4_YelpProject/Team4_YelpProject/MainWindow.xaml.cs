@@ -542,6 +542,7 @@ namespace Team4_YelpProject
 
         private void clearBusinessDetails()
         {
+            
             businessNameTextBox.Text = "";
             addressTextBox.Text = "";
             hoursTextBox.Text = "";
@@ -551,12 +552,7 @@ namespace Team4_YelpProject
         {
             clearBusinessDetails();
 
-            if (selected == true)
-            {
-                this.tempBusiness = null;
-                selected = false;
-            }
-            else
+            if (businessResultDataGrid.SelectedIndex >= 0)
             {
                 this.tempBusiness = (BusinessResults)businessResultDataGrid.SelectedItem;
 
