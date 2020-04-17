@@ -131,7 +131,7 @@
     <Compile Include="BusinessDetails.xaml.cs">
       <DependentUpon>BusinessDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\Business.cs" />
+    <Compile Include="Model\BusinessHours.cs" />
     <Compile Include="Model\BusinessResults.cs" />
     <Compile Include="Model\CategoryOption.cs" />
     <Compile Include="Model\FriendList.cs" />

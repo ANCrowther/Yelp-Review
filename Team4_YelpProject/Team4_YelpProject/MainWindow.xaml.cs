@@ -253,6 +253,7 @@ namespace Team4_YelpProject
         /*    Business Tab    */
 
         private string categorySelection = string.Empty;
+        private BusinessHours hours = new BusinessHours();
 
         private void addBusinessResultGridColumns()
         {
@@ -280,12 +281,6 @@ namespace Team4_YelpProject
             col4.Width = 30;
             businessResultDataGrid.Columns.Add(col4);
 
-            //DataGridTextColumn col5 = new DataGridTextColumn();
-            //col5.Binding = new Binding("distance");
-            //col5.Header = "Distance";
-            //col5.Width = 50;
-            //businessResultDataGrid.Columns.Add(col5);
-
             DataGridTextColumn col5 = new DataGridTextColumn();
             col5.Binding = new Binding("stars");
             col5.Header = "Stars";
@@ -303,6 +298,12 @@ namespace Team4_YelpProject
             col7.Header = "Total Checkins";
             col7.Width = 50;
             businessResultDataGrid.Columns.Add(col7);
+
+            DataGridTextColumn col8 = new DataGridTextColumn();
+            col8.Binding = new Binding("businessID");
+            col8.Header = "Business ID";
+            col8.Width = 50;
+            businessResultDataGrid.Columns.Add(col8);
         }
 
         private void addState()
@@ -351,7 +352,7 @@ namespace Team4_YelpProject
 
         private void addBusinessResultDataGrid(NpgsqlDataReader R)
         {
-            businessResultDataGrid.Items.Add(new BusinessResults() { BusinessName = R.GetString(0), Address = R.GetString(1), City = R.GetString(2), State = R.GetString(3), Stars = R.GetDouble(4), NumberOfTips = R.GetInt32(5), TotalCheckins = R.GetInt32(6), BLatitude = R.GetDouble(7), BLongitude = R.GetDouble(8) });
+            businessResultDataGrid.Items.Add(new BusinessResults() { BusinessName = R.GetString(0), Address = R.GetString(1), City = R.GetString(2), State = R.GetString(3), Stars = R.GetDouble(4), NumberOfTips = R.GetInt32(5), TotalCheckins = R.GetInt32(6), BLatitude = R.GetDouble(7), BLongitude = R.GetDouble(8), BusinessID = R.GetString(9) });
         }
 
         private void addCategoriesBtn_Click(object sender, RoutedEventArgs e)
@@ -421,21 +422,26 @@ namespace Team4_YelpProject
             }
         }
 
+        private bool selected = false;
+
         private void searchBtn_Click(object sender, RoutedEventArgs e)
         {
+            clearBusinessDetails();
+            businessResultDataGrid.Items.Clear();
             updateBusinessResults();
+            selected = true;
         }
 
         private void updateBusinessResults()
         {
-            businessResultDataGrid.Items.Clear();
+            
 
-            StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.name, B.address, B.city, B.state, B.stars, B.review_count, B.numcheckins, B.latitude, B.longitude FROM business as B ");
+            StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.name, B.address, B.city, B.state, B.stars, B.review_count, B.numcheckins, B.latitude, B.longitude, B.business_id FROM business as B ");
             StringBuilder sqlCategory = new StringBuilder();
             StringBuilder sqlCategoryBackEnd = new StringBuilder(" JOIN categories AS C ON B.business_id=C.business_id ");
             StringBuilder sqlMealFilter = new StringBuilder(", (SELECT * FROM attributes WHERE attr_name=ANY('{");
             StringBuilder sqlMealSelection = new StringBuilder();
-            //bool mealFilter = false;
+            bool mealFilter = false;
 
             /*    Appends selected Category choices to Query    */
             for (int index = 0; index < SelectListBox.Items.Count; index++)
@@ -444,7 +450,6 @@ namespace Team4_YelpProject
             }
 
             /*    Appends filter selection to Query    */
-
             //if (breakfastCB.IsChecked == true)
             //{
             //    if(sqlMealSelection.Length > 0)
@@ -531,6 +536,69 @@ namespace Team4_YelpProject
             sqlStr.Append(";");
             Console.WriteLine(sqlStr.ToString());
             executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
+        }
+
+        BusinessResults tempBusiness = new BusinessResults();
+
+        private void clearBusinessDetails()
+        {
+            businessNameTextBox.Text = "";
+            addressTextBox.Text = "";
+            hoursTextBox.Text = "";
+        }
+
+        private void businessResultDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            clearBusinessDetails();
+
+            if (selected == true)
+            {
+                this.tempBusiness = null;
+                selected = false;
+            }
+            else
+            {
+                this.tempBusiness = (BusinessResults)businessResultDataGrid.SelectedItem;
+
+                businessNameTextBox.Text = this.tempBusiness.BusinessName;
+                string str = this.tempBusiness.Address + ", " + this.tempBusiness.City + ", " + this.tempBusiness.State;
+                addressTextBox.Text = (str);
+
+                DayOfWeek wk = DateTime.Today.DayOfWeek;
+
+                string sqlStr = "SELECT H.business_id, H.day_of_week, H.open, H.close FROM business AS B, hours AS H WHERE B.business_id=H.business_id AND B.business_id='" + tempBusiness.BusinessID + "' AND H.day_of_week='" + wk + "';";
+
+                Console.WriteLine(sqlStr);
+                executeQuery(sqlStr, addBusinessHours);
+
+                //string sqlStr = "SELECT ";
+                string day = hours.Day;
+                string open = hours.Open;
+                string close = hours.Close;
+                string dayOfWeek = "";
+                if (open != null)
+                {
+                    dayOfWeek = day + ": Opens: " + open + "  Closes: " + close;
+
+                }
+                else
+                {
+                    dayOfWeek = day + ": Closed today.";
+                }
+                Console.WriteLine(day);
+
+
+                hoursTextBox.Text = dayOfWeek;
+            }
+        }
+
+        private void addBusinessHours(NpgsqlDataReader R)
+        {
+
+            hours.Business_id = R.GetString(0);
+            hours.Day = R.GetString(1);
+            hours.Open = R.GetValue(2).ToString();
+            hours.Close = R.GetValue(3).ToString();
         }
     }
 }
