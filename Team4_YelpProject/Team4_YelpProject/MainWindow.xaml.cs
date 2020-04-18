@@ -106,7 +106,7 @@ namespace Team4_YelpProject
 
         private void addUser(NpgsqlDataReader R)
         {
-            //User_id = R.GetString(0);
+            currentUser.User_id = R.GetString(0);
             currentUser.Name = R.GetString(1);
             currentUser.Average_stars = R.GetDouble(2);
             currentUser.Fans = R.GetInt32(3);
@@ -198,6 +198,7 @@ namespace Team4_YelpProject
                 if (userIDListBox.SelectedIndex >= 0)
                 {
                     string sqlStr = "SELECT U.name, B.name, B.city, text, date(T.tipdate) FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id ORDER BY date(T.tipdate) DESC;";
+                    Console.WriteLine(sqlStr);
                     executeQuery(sqlStr, addTipGridRow);
                 }
             }

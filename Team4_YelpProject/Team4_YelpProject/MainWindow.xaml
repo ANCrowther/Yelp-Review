@@ -134,7 +134,12 @@
                         </Grid>
                     </GroupBox>
                     <GroupBox Header="Latest Tips by my Friends?" HorizontalAlignment="Left" Height="485" Margin="118,186,0,0" VerticalAlignment="Top" Width="826" Grid.ColumnSpan="2" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.Column="1">
-                        <DataGrid x:Name="ReviewByFriendDataGrid" HorizontalAlignment="Center" Height="439" Margin="12,10,12,5" VerticalAlignment="Center" Width="790"/>
+                        <Grid>
+                            <StackPanel>
+                                <DataGrid x:Name="ReviewByFriendDataGrid" HorizontalAlignment="Center" Height="200" Margin="12,10,12,5" VerticalAlignment="Center" Width="790"/>
+                                <DataGrid x:Name="ReviewByFriendList"  HorizontalAlignment="Center" Height="200" Margin="12,10,12,5" VerticalAlignment="Center" Width="790"/>
+                            </StackPanel>
+                        </Grid>
                     </GroupBox>
                 </Grid>
             </TabItem>
