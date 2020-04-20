@@ -25,6 +25,7 @@ namespace Team4_YelpProject
 
         /*    User Information Tab    */
         YelpUser currentUser = new YelpUser();
+        TipList tips = new TipList();
 
         private string buildConnectionString()
         {
@@ -119,6 +120,18 @@ namespace Team4_YelpProject
 
             addUserData();
         }
+
+        //private void addTips(NpgsqlDataReader R)
+        //{
+        //    tips.Date = R.GetString(0);
+        //    tips.UserName = R.GetString(1);
+        //    tips.BusinessName = R.GetString(2);
+        //    tips.City = R.GetString(3);
+        //    tips.Likes = R.GetInt16(4);
+        //    tips.BusinessID = R.GetString(5);
+        //    tips.UserID = R.GetString(6);
+        //    tips.Text = R.GetString(7);
+        //}
 
         private void addTipGridRow(NpgsqlDataReader R)
         {
