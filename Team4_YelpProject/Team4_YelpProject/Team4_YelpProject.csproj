@@ -140,6 +140,9 @@
     <Compile Include="View\BusinessTipsView.xaml.cs">
       <DependentUpon>BusinessTipsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\checkins.xaml.cs">
+      <DependentUpon>checkins.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WatermarkConverter.cs" />
     <Compile Include="Model\YelpUser.cs" />
     <Page Include="MainWindow.xaml">
@@ -159,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\BusinessTipsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\checkins.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

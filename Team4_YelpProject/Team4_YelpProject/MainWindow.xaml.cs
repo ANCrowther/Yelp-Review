@@ -197,6 +197,7 @@ namespace Team4_YelpProject
                 if (userIDListBox.SelectedIndex >= 0)
                 {
                     string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + userIDListBox.SelectedItem.ToString() + "';";
+                    Console.WriteLine("1: " + sqlStr);
                     executeQuery(sqlStr, addUser);
                 }
 
@@ -204,6 +205,7 @@ namespace Team4_YelpProject
                 if (userIDListBox.SelectedIndex >= 0)
                 {
                     string sqlStr = "SELECT name,average_stars,totallikes, date(yelping_since) FROM users,friend WHERE users.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + userIDListBox.SelectedItem.ToString() + "' ORDER BY name,average_stars,totallikes);";
+                    Console.WriteLine("2: " + sqlStr);
                     executeQuery(sqlStr, addFriendGridRow);
                 }
 
@@ -211,7 +213,7 @@ namespace Team4_YelpProject
                 if (userIDListBox.SelectedIndex >= 0)
                 {
                     string sqlStr = "SELECT U.name, B.name, B.city, text, date(T.tipdate) FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + userIDListBox.SelectedItem.ToString() + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id ORDER BY date(T.tipdate) DESC;";
-                    Console.WriteLine(sqlStr);
+                    Console.WriteLine("3: " + sqlStr);
                     executeQuery(sqlStr, addTipGridRow);
                 }
             }
