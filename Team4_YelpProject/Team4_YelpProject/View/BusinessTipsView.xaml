@@ -32,19 +32,32 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
-                <TextBox x:Name="newTipInputBox" Height="50" Width="700"  Margin="5 5 5 5"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox x:Name="newTipInputBox" Height="50" Width="700"  Margin="5 5 5 5"/>
+                    <StackPanel Orientation="Vertical">
+                        <Button Content="Add Tip" Width="70" Margin="5 5 5 5" Click="addTipBtn_click"/>
+                        <Button Content="Like" Width="70" Margin="5 5 5 5" Click="likeBtn_Click"/>
+                    </StackPanel>
+                </StackPanel>
                 <GroupBox Header="Business Tips" Height="230"  Margin="5 5 0 5">
-                    <DataGrid x:Name="tipList"/>
+                    <DataGrid x:Name="tipList">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" Width="auto" 
+                                                Binding="{Binding date}"/>
+                            <DataGridTextColumn Header="User Name" Width="auto" 
+                                                Binding="{Binding userName}"/>
+                            <DataGridTextColumn Header="Likes" Width="auto" 
+                                                Binding="{Binding likes}"/>
+                            <DataGridTextColumn Header="User Text" Width="auto" 
+                                                Binding="{Binding text}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </GroupBox>
                 <GroupBox Header="Friends who reviewed this business" Height="110" Margin="5 5 0 5">
                     <DataGrid x:Name="CheckinList" Margin="5 5 5 5"/>
                 </GroupBox>
+            </StackPanel>
 
-            </StackPanel>
-            <StackPanel Orientation="Vertical">
-                <Button Content="Add Tip" Width="70" Margin="5 5 5 5" Click="BtnAddTip"/>
-                <Button Content="Like" Width="70" Margin="5 5 5 5" Click="Btn_Like"/>
-            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>

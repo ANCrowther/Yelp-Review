@@ -12,45 +12,18 @@
     public partial class BusinessTipsView : Window
     {
         private string bid = string.Empty;
+        Tips tip = new Tips();
+
         public BusinessTipsView(string bid)
         {
             InitializeComponent();
             this.bid = String.Copy(bid);
-            addTipsGridColumns();
             loadBusinessDetails();
-        }
-
-        private void addTipsGridColumns()
-        {
-            DataGridTextColumn col1 = new DataGridTextColumn();
-            col1.Binding = new Binding("date");
-            col1.Header = "Date";
-            tipList.Columns.Add(col1);
-
-            DataGridTextColumn col2 = new DataGridTextColumn();
-            col2.Binding = new Binding("userName");
-            col2.Header = "User Name";
-            tipList.Columns.Add(col2);
-
-            DataGridTextColumn col3 = new DataGridTextColumn();
-            col3.Binding = new Binding("likes");
-            col3.Header = "Likes";
-            tipList.Columns.Add(col3);
-
-            DataGridTextColumn col4 = new DataGridTextColumn();
-            col4.Binding = new Binding("text");
-            col4.Header = "Text";
-            tipList.Columns.Add(col4);
         }
 
         private string buildConnectionString()
         {
             return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
-        }
-
-        private void addTipData(NpgsqlDataReader R)
-        {
-            tipList.Items.Add(new TipList { date = R.GetDate(0).ToString(), userName = R.GetString(1), likes = R.GetInt32(2), text = R.GetString(3)});
         }
 
         private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
@@ -82,38 +55,11 @@
             }
         }
 
-        private void loadBusinessDetails()
-        {
-            string sqlStr = "SELECT date(T.tipdate), U.name, T.likes, T.text FROM users AS U, business AS B, tip AS T WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND B.business_id='" + this.bid + "'";
-            Console.WriteLine(sqlStr);
-            executeQuery(sqlStr, addTipData);
-        }
-
-        private void BtnAddTip(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void Btn_Like(object sender, RoutedEventArgs e)
-        {
-            
-            if (tipList.SelectedIndex >= 0)
-            {
-                tipList.Items.Clear();
-                updateQuery();
-
-                string sqlStr = "SELECT date(T.tipdate), U.name, T.likes, T.text FROM users AS U, business AS B, tip AS T WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND B.business_id='" + this.bid + "'";
-                executeQuery(sqlStr, addTipData);
-            }
-        }
-
-        TipList temp = new TipList();
-
         private void updateQuery()
         {
-            this.temp = (TipList)tipList.SelectedItem;
+            this.tip = (Tips)tipList.SelectedItem;
 
-            string sqlStr = "UPDATE tip SET likes=likes+1 WHERE date(tipdate)='" + this.temp.date + "' AND user_id='" + this.temp.userID + "' AND business_id='" + this.temp.businessID + "';";
+            string sqlStr = "UPDATE tip SET likes=likes+1 WHERE date(tipdate)='" + this.tip.date + "' AND user_id='" + this.tip.userID + "' AND business_id='" + this.tip.businessID + "';";
 
             using (var connection = new NpgsqlConnection(buildConnectionString()))
             {
@@ -136,6 +82,34 @@
                     }
                 }
             }
+        }
+
+        private void loadBusinessDetails()
+        {
+            string sqlStr = "SELECT date(T.tipdate), U.name, T.likes, T.text FROM users AS U, business AS B, tip AS T WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND B.business_id='" + this.bid + "'";
+            Console.WriteLine(sqlStr);
+            executeQuery(sqlStr, addTipData);
+        }
+
+        private void addTipData(NpgsqlDataReader R)
+        {
+            tipList.Items.Add(new Tips { date = R.GetDate(0).ToString(), userName = R.GetString(1), likes = R.GetInt32(2), text = R.GetString(3) });
+        }
+
+        private void likeBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (tipList.SelectedIndex >= 0)
+            {
+                tipList.Items.Clear();
+                updateQuery();
+
+                string sqlStr = "SELECT date(T.tipdate), U.name, T.likes, T.text FROM users AS U, business AS B, tip AS T WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND B.business_id='" + this.bid + "'";
+                executeQuery(sqlStr, addTipData);
+            }
+        }
+
+        private void addTipBtn_click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

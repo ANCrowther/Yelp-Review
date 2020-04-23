@@ -3,267 +3,57 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vw="clr-namespace:Team4_YelpProject.View"
         xmlns:local="clr-namespace:Team4_YelpProject"
         mc:Ignorable="d"
         Title="Team 4 Yelp App" Height="750" Width="1200" Background="#FF5F5858">
     <Window.Resources>
         <Style TargetType="GroupBox">
-            <Setter Property="FontFamily" Value="OCR A Extended"/>
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="Foreground" Value="#FFFFE800"/>
         </Style>
         <Style TargetType="DataGrid">
-            <Setter Property="FontFamily" Value="OCR A Extended"/>
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#FF000000"/>
         </Style>
         <Style TargetType="Label">
-            <Setter Property="FontFamily" Value="OCR A Extended"/>
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#FFE6FD00"/>
         </Style>
-        <Style TargetType="Label" x:Key="UserResult">
-            <Setter Property="FontFamily" Value="OCR A Extended"/>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Foreground" Value="#FFFFAE00"/>
         </Style>
+        <Style TargetType="TabItem">
+            <Setter Property="Width" Value="150"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="#FFFFAE00"/>
+        </Style>
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="#FF655168"/>
+        </Style>
     </Window.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="269*"/>
-            <ColumnDefinition Width="923*"/>
-            <ColumnDefinition Width="0*"/>
-        </Grid.ColumnDefinitions>
-
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Width="1190" Grid.ColumnSpan="2">
-            <TabControl.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF22442B" Offset="0"/>
-                    <GradientStop Color="#FF71B985" Offset="1"/>
-                </LinearGradientBrush>
-            </TabControl.Background>
-
-            <!--USER INFORMATION TAB-->
-            <TabItem x:Name="userInformationTab" Width="150" Height="30" Header="User Information">
-                <Grid Margin="0,0,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="232*"/>
-                        <ColumnDefinition Width="361*"/>
-                        <ColumnDefinition Width="592*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.Background>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF64ECEC" Offset="0"/>
-                            <GradientStop Color="#FFA1F3F7" Offset="1"/>
-                            <GradientStop Color="#FE447676"/>
-                        </LinearGradientBrush>
-                    </Grid.Background>
-                    <GroupBox x:Name="SelectCurrentUserGroupBox" Header="Select Current User" HorizontalAlignment="Left" Height="230" Margin="10,10,0,0" VerticalAlignment="Top" Width="330" FontFamily="OCR A Extended" FontSize="14" FontWeight="Bold" Foreground="#FFFFE800" Grid.ColumnSpan="2">
-                        <Grid>
-                            <ListBox x:Name="userIDListBox" Height="154" VerticalAlignment="Bottom" Margin="10,0,10,10" SelectionChanged="userIDListBox_SelectionChanged" Grid.ColumnSpan="2" />
-                            <TextBox x:Name="UserNameTextBox" Height="25" Width="280" HorizontalAlignment="Center" VerticalContentAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" TextChanged="UserNameTextBox_TextChanged"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox x:Name="FriendsGroupBox" Header="Friends List" HorizontalAlignment="Left" Height="426" Margin="10,245,0,0" VerticalAlignment="Top" Width="330" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
-                        <Grid x:Name="RemoveFriendButton">
-                            <DataGrid x:Name="FriendListDataGrid"  HorizontalAlignment="Left" Height="385" Width="300" Margin="10,10,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <!--USER INFORMATION GROUPBOX-->
-                    <GroupBox x:Name="UserInformationGroupBox" Header="User Information" HorizontalAlignment="Left" Height="160" Margin="118,10,0,0" VerticalAlignment="Top" Width="496" Grid.Column="1" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0*"/>
-                                <ColumnDefinition Width="71*"/>
-                                <ColumnDefinition Width="382*"/>
-                                <ColumnDefinition Width="32*"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBox x:Name="UserNameBox" Height="25" Width="200" BorderBrush="Transparent" Background="Transparent" HorizontalAlignment="Left" FontSize ="14" Margin="50,10,0,0" VerticalAlignment="Top" Foreground="#FFFFAE00" Grid.ColumnSpan="3"/>
-                            <Label x:Name="UserNameLabel" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Foreground="#FFE6FD00" Grid.ColumnSpan="2"/>
-                            <Label x:Name="UserStarsLabel" Content="Stars:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,35,0,0" Foreground="#FFE6FD00" Grid.ColumnSpan="2"/>
-                            <Label x:Name="UserStarsResult" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="60,35,0,0" VerticalAlignment="Top" Foreground="#FFFFAE00" Grid.ColumnSpan="3"/>
-                            <Label x:Name="UserFansLabel" Content="Fans:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="44.5,35,0,0" Foreground="#FFE6FD00" Grid.Column="2"/>
-                            <Label x:Name="UserFansResult" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="99.5,35,0,0" VerticalAlignment="Top" Foreground="#FFFFAE00" Grid.Column="2"/>
-                            <Label x:Name="UserYelpingSinceLabel" Content="Yelping Since:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="139.5,35,0,0" Foreground="#FFE6FD00" Grid.Column="2"/>
-                            <Label x:Name="UserYelpingSinceResult" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="267.5,35,0,0" VerticalAlignment="Top" Foreground="#FFFFAE00" Grid.Column="2"/>
-
-                            <!--VOTES GROUPBOX-->
-                            <GroupBox x:Name="VoteGroupBox" Margin="50,64,77,10" Header="Votes" RenderTransformOrigin="0.505,0.96" Grid.ColumnSpan="3" >
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="5*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.Background>
-                                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                            <GradientStop Color="#FF1B4426" Offset="0"/>
-                                            <GradientStop Color="#FF63C97F" Offset="1"/>
-                                        </LinearGradientBrush>
-                                    </Grid.Background>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="9"/>
-                                        <ColumnDefinition Width="0*"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label x:Name="FunnyLabel" Content="Funny:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Foreground="#FFE6FD00" Grid.ColumnSpan="3"/>
-                                    <Label x:Name="FunnyCount" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="47,10,0,0" VerticalAlignment="Top" Foreground="#FFFFAE00" Grid.Column="1" Grid.ColumnSpan="2"/>
-                                    <Label x:Name="CoolLabel" Content="Cool:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="85,10,0,0" Foreground="#FFE6FD00" Grid.Column="2"/>
-                                    <Label x:Name="CoolCount" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="135,10,0,0" VerticalAlignment="Top" Foreground="#FFFFAE00" Grid.Column="1" Grid.ColumnSpan="2"/>
-                                    <Label x:Name="UsefulLabel" Content="Useful:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,10,0,0" Foreground="#FFE6FD00" Grid.Column="2" Grid.ColumnSpan="2"/>
-                                    <Label x:Name="UsefulCount" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="244,10,0,0" VerticalAlignment="Top" Foreground="#FFFFAE00" Grid.Column="2"/>
-                                </Grid>
-                            </GroupBox>
-
-                            <!--SET USER LOCATION GROUPBOX-->
-                            <GroupBox x:Name="UserLocationGroupBox" Header="Set User Location" HorizontalAlignment="Left" Height="120" Margin="0,10,-228,0" VerticalAlignment="Top" Width="260" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.Column="3">
-                                <GroupBox.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF471919" Offset="0"/>
-                                        <GradientStop Color="#FFFB5E5E" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </GroupBox.Background>
-                                <Grid>
-                                    <Label Content="Latititude" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Foreground="#FFE6FD00"/>
-                                    <Label Content="Longitude" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,40,0,0" Foreground="#FFE6FD00"/>
-                                    <TextBox x:Name="LatTextBox" Height="25" Width="145" Margin="100,10,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
-                                    <TextBox x:Name="LongTextBox" Height="25" Width="145" Margin="100,40,0,0" TextWrapping="Wrap" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Center"/>
-                                    <Button x:Name="setLocationBtn" Content="SET LOCATION" Margin="44,70,54,0" Width="150" Height="25" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Click="setLocationBtn_Click"/>
-                                </Grid>
-                            </GroupBox>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Header="Latest Tips by my Friends?" HorizontalAlignment="Left" Height="485" Margin="118,186,0,0" VerticalAlignment="Top" Width="826" Grid.ColumnSpan="2" Foreground="#FFFFE800" FontFamily="OCR A Extended" FontSize="14" Grid.Column="1">
-                        <Grid>
-                            <StackPanel>
-                                <DataGrid x:Name="ReviewByFriendDataGrid" HorizontalAlignment="Center" Height="440" Margin="12,10,12,5" VerticalAlignment="Center" Width="790"/>
-                            </StackPanel>
-                        </Grid>
-                    </GroupBox>
+        <TabControl Background="#FF655168">
+            <TabItem Header="User Information">
+                <vw:UserView/>
+            </TabItem>
+            <TabItem Header="Business Information">
+                <Grid>
+                    <vw:BusinessView/>
                 </Grid>
             </TabItem>
-
-            <!--BUSINESS INFORMATION TAB-->
-            <TabItem Width="150" Height="30" Header="Business Information" Margin="0,-1,0,1" VerticalAlignment="Bottom">
-                <Grid Margin="0,0,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="109*"/>
-                        <ColumnDefinition Width="483*"/>
-                    </Grid.ColumnDefinitions>
-
-
-
-                    <!--FILTER BY PRICES GROUPBOX-->
-                    <GroupBox Header="Filter by Price" Margin="722,9,153,558" Grid.Column="1" Foreground="#FFFFF300">
-                        <Grid>
-                            <CheckBox Content="$" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="$$" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="$$$" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="$$$$" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <!--SELECT LOCATION GROUPBOX-->
-                    <GroupBox Header="Select Location" Margin="10,10,877,10" Foreground="#FFFFF300" FontFamily="OCR A Extended" FontSize="14" Grid.ColumnSpan="2">
-                        <Grid>
-                            <!--State Values-->
-                            <Label x:Name="State" Content="State" HorizontalAlignment="Left" FontSize ="14" Margin="43,10,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <ComboBox x:Name="stateDropBox" HorizontalAlignment="Left" Margin="115,10,0,0" VerticalAlignment="Top" Width="66" Height="26" RenderTransformOrigin="0.773,-0.615" SelectionChanged="stateDropBox_SelectionChanged"/>
-
-                            <!--City Values-->
-                            <Label x:Name="City" Content="City" HorizontalAlignment="Left" FontSize ="14" Margin="50,50,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <!--<ListBox x:Name="CityListBox" HorizontalAlignment="Left" Height="69" Margin="60,47,0,0" VerticalAlignment="Top" Width="210"/>-->
-                            <ComboBox x:Name="cityDropBox" HorizontalAlignment="Left" Margin="115,50,0,0" VerticalAlignment="Top" Width="150" Height="26" RenderTransformOrigin="0.773,-0.615" SelectionChanged="cityDropBox_SelectionChanged"/>
-
-                            <!--Zipcode Values-->
-                            <Label x:Name="Zipcode" Content="Zipcode" HorizontalAlignment="Left" FontSize ="14" Margin="25,90,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <!--<ListBox x:Name="ZipcodeListBox" HorizontalAlignment="Left" Height="67" Margin="84,138,0,0" VerticalAlignment="Top" Width="123"/>-->
-                            <ComboBox x:Name="zipcodeDropBox" HorizontalAlignment="Left" Margin="115,90,0,0" VerticalAlignment="Top" Width="129" Height="26" RenderTransformOrigin="0.773,-0.615" SelectionChanged="zipcodeDropBox_SelectionChanged"/>
-
-
-                            <Button x:Name="addButton" Content="Add" HorizontalAlignment="Left" Margin="22,325,0,0" VerticalAlignment="Top" Width="58" Height="27" Click="addCategoriesBtn_Click"/>
-                            <Button x:Name="removeButton" Content="Remove" HorizontalAlignment="Left" Margin="22,370,0,0" VerticalAlignment="Top" Width="58" Height="27" Click="removeCateoriesBtn_Click"/>
-                            <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Left" Margin="13,603,0,0" VerticalAlignment="Top" Width="58" Height="27" RenderTransformOrigin="0.397,-1.222" Click="searchBtn_Click"/>
-                            <Label x:Name="Category" Content="Category" HorizontalAlignment="Left" FontSize ="14" Margin="10,226,0,0" VerticalAlignment="Top" Foreground="#FFE6FD00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <ListBox x:Name="CategoryListBox" HorizontalAlignment="Left" Height="170" Margin="91,227,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="CategoryListBox_SelectionChanged"/>
-                            <Label x:Name="Select" Content="Select" HorizontalAlignment="Left" FontSize ="14" Margin="10,429,0,0" VerticalAlignment="Top" Foreground="#FFE8FF00" RenderTransformOrigin="-1.024,-1.552"/>
-                            <ListBox x:Name="SelectListBox" HorizontalAlignment="Left" Height="201" Margin="91,429,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="SelectListBox_SelectionChanged"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <!--SEARCH RESULTS GROUPBOX-->
-                    <GroupBox Header="Search Results" Margin="104,11,253,401" Foreground="#FFFFF300" FontFamily="OCR A Extended" FontSize="14" Grid.Column="1">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="568*"/>
-                                <ColumnDefinition Width="29*"/>
-                            </Grid.ColumnDefinitions>
-                            <DataGrid x:Name="businessResultDataGrid" HorizontalAlignment="Left" Height="215" Margin="10,25,0,0" VerticalAlignment="Top" Width="575" Grid.ColumnSpan="2" SelectionChanged="businessResultDataGrid_SelectionChanged"/>
-                            <Label x:Name="businessCount" Content="# of Businesses " FontSize ="14" Margin="395,-15,28,0" VerticalAlignment="Top" Foreground="#FFE8FF00" RenderTransformOrigin="-1.024,-1.552" FontFamily="OCR A Extended">
-                                <Label.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF3A204F" Offset="0"/>
-                                        <GradientStop Color="#FFB762FD" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Label.Background>
-                            </Label>
-                            <Label x:Name="businessCountResult" Content="_____" HorizontalAlignment="Left" FontSize ="14" Margin="535,-15,0,0" VerticalAlignment="Top" Foreground="#FFE8FF00" RenderTransformOrigin="-1.024,-1.552" FontFamily="OCR A Extended" Grid.ColumnSpan="2">
-                                <Label.Background>
-                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                        <GradientStop Color="#FF3A204F" Offset="0"/>
-                                        <GradientStop Color="#FFB762FD" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Label.Background>
-                            </Label>
-
-                        </Grid>
-                    </GroupBox>
-
-                    <!--FILTER BY ATTRIBUTES GROUPBOX-->
-                    <GroupBox Grid.Column="1" Header="Filter by Attributes" Foreground="#FFFFF300" HorizontalAlignment="Left" Height="237" Margin="722,172,0,0" VerticalAlignment="Top" Width="234">
-                        <Grid>
-                            <CheckBox Content="Accepts Credit Cards" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Takes Reservations" HorizontalAlignment="Left" Margin="20,30,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Wheelchair Accessible" HorizontalAlignment="Left" Margin="20,50,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Outdoor Seating" HorizontalAlignment="Left" Margin="20,70,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Good for Kids" HorizontalAlignment="Left" Margin="20,90,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Good for Groups" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Delivery" HorizontalAlignment="Left" Margin="20,130,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Take Out" HorizontalAlignment="Left" Margin="20,150,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Free Wi-Fi" HorizontalAlignment="Left" Margin="20,170,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox Content="Bike Parking" HorizontalAlignment="Left" Margin="20,190,0,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <!--SELECTED BUSINESS GROUPBOX-->
-                    <GroupBox Grid.Column="1" Header="Selected Business" Foreground="#FFFFF300" HorizontalAlignment="Left" Height="155" Margin="117,284,0,0" VerticalAlignment="Top" Width="440">
-                        <Grid HorizontalAlignment="Left" Width="274">
-                            <TextBox x:Name="businessNameTextBox"  HorizontalAlignment="Left" Height="25" Margin="10,10,-141,0" TextWrapping="Wrap" Text="Business Name" VerticalAlignment="Top" Width="405" FontFamily="OCR A Extended" FontSize="14" VerticalContentAlignment="Center"/>
-                            <TextBox x:Name="addressTextBox"  HorizontalAlignment="Left" Height="25" Margin="10,50,-141,0" TextWrapping="Wrap" Text="Address" VerticalAlignment="Top" Width="405" FontFamily="OCR A Extended" FontSize="14" VerticalContentAlignment="Center"/>
-                            <TextBox x:Name="hoursTextBox"  HorizontalAlignment="Left" Height="25" Margin="10,90,-141,0" TextWrapping="Wrap" Text="Today: Opens / Closes" VerticalAlignment="Top" Width="405" FontFamily="OCR A Extended" FontSize="14" VerticalContentAlignment="Center"/>
-                        </Grid>
-                    </GroupBox>
-
-                    <GroupBox Header="Filter by Meal" Grid.Column="1" Foreground="#FFFFF300" Margin="823,9,10,515">
-                        <Grid>
-                            <CheckBox x:Name="breakfastCB" Content="Breakfast" HorizontalAlignment="Left" Margin="20,10,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="lunchCB" Content="Lunch" HorizontalAlignment="Left" Margin="20,30,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="brunchCB" Content="Brunch" HorizontalAlignment="Left" Margin="20,50,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="dinnerCB" Content="Dinner" HorizontalAlignment="Left" Margin="20,70,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="dessertCB" Content="Dessert" HorizontalAlignment="Left" Margin="20,90,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                            <CheckBox x:Name="lateNightCB" Content="Late Night" HorizontalAlignment="Left" Margin="20,110,00,0" VerticalAlignment="Top" Foreground="#FFFFF300"/>
-                        </Grid>
-                    </GroupBox>
-                    <Button x:Name="showCheckinsButton" Content="ShowCheckins" Grid.Column="1" Margin="161,481,689,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00">
-
-                    </Button>
-                    <Button x:Name="showTipsButton" Content="ShowTips" Grid.Column="1" Margin="342,481,508,144" Background="#FF5BC3FF" FontFamily="OCR A Extended" FontSize="14" Foreground="#FFF3FF00" Click="showTipsButton_Click">
-
-                    </Button>
-
-                </Grid>
-            </TabItem>
-            <Canvas Height="100" Width="100"/>
         </TabControl>
     </Grid>
 </Window>

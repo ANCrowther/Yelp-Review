@@ -132,15 +132,19 @@
       <DependentUpon>BusinessDetails.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\BusinessHours.cs" />
-    <Compile Include="Model\BusinessResults.cs" />
-    <Compile Include="Model\CategoryOption.cs" />
-    <Compile Include="Model\FriendList.cs" />
-    <Compile Include="Model\TipList.cs" />
+    <Compile Include="Model\Business.cs" />
+    <Compile Include="Model\Tips.cs" />
     <Compile Include="View\BusinessTipsView.xaml.cs">
       <DependentUpon>BusinessTipsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\BusinessView.xaml.cs">
+      <DependentUpon>BusinessView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\checkins.xaml.cs">
       <DependentUpon>checkins.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\UserView.xaml.cs">
+      <DependentUpon>UserView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WatermarkConverter.cs" />
     <Compile Include="Model\YelpUser.cs" />
@@ -164,7 +168,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\BusinessView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\checkins.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\UserView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
