@@ -1,6 +1,6 @@
 ﻿namespace Team4_YelpProject
 {
-    public class TipList
+    public class Tips
     {
         public string date { get; set; }
         public string userName { get; set; }
@@ -11,6 +11,6 @@
         public string userID { get; set; }
         public string text { get; set; }
 
-        public TipList() { }
+        public Tips() { }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Team4_YelpProject.Model
 {
-    public class BusinessResults
+    public class Business
     {
         public string businessID { get; set; }
         public string businessName { get; set; }
@@ -14,6 +14,6 @@
         public double bLatitude { get; set; }
         public double bLongitude { get; set; }
 
-        public BusinessResults() { }
+        public Business() { }
     }
 }

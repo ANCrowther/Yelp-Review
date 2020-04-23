@@ -357,7 +357,7 @@ namespace Team4_YelpProject
 
         private void addBusinessResultDataGrid(NpgsqlDataReader R)
         {
-            businessResultDataGrid.Items.Add(new BusinessResults() { businessName = R.GetString(0), address = R.GetString(1), city = R.GetString(2), state = R.GetString(3), stars = R.GetDouble(4), numberOfTips = R.GetInt32(5), totalCheckins = R.GetInt32(6), bLatitude = R.GetDouble(7), bLongitude = R.GetDouble(8), businessID = R.GetString(9) });
+            businessResultDataGrid.Items.Add(new Business() { businessName = R.GetString(0), address = R.GetString(1), city = R.GetString(2), state = R.GetString(3), stars = R.GetDouble(4), numberOfTips = R.GetInt32(5), totalCheckins = R.GetInt32(6), bLatitude = R.GetDouble(7), bLongitude = R.GetDouble(8), businessID = R.GetString(9) });
         }
 
         private void addCategoriesBtn_Click(object sender, RoutedEventArgs e)
@@ -543,7 +543,7 @@ namespace Team4_YelpProject
             executeQuery(sqlStr.ToString(), addBusinessResultDataGrid);
         }
 
-        BusinessResults tempBusiness = new BusinessResults();
+        Business tempBusiness = new Business();
 
         private void clearBusinessDetails()
         { 
@@ -558,7 +558,7 @@ namespace Team4_YelpProject
 
             if (businessResultDataGrid.SelectedIndex >= 0)
             {
-                this.tempBusiness = (BusinessResults)businessResultDataGrid.SelectedItem;
+                this.tempBusiness = (Business)businessResultDataGrid.SelectedItem;
 
                 businessNameTextBox.Text = this.tempBusiness.businessName;
                 string str = this.tempBusiness.address + ", " + this.tempBusiness.city + ", " + this.tempBusiness.state;
@@ -604,7 +604,7 @@ namespace Team4_YelpProject
         {
             if (businessResultDataGrid.SelectedIndex >= 0)
             {
-                BusinessResults B = businessResultDataGrid.Items[businessResultDataGrid.SelectedIndex] as BusinessResults;
+                Business B = businessResultDataGrid.Items[businessResultDataGrid.SelectedIndex] as Business;
                 if((B.businessID != null) && (B.businessID.ToString().CompareTo("") != 0))
                 {
                     BusinessTipsView tipsWindow = new BusinessTipsView(B.businessID.ToString());
