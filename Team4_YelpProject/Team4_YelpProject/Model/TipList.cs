@@ -2,14 +2,14 @@
 {
     public class TipList
     {
-        public string Date { get; set; }
-        public string UserName { get; set; }
-        public string BusinessName { get; set; }
-        public string City { get; set; }
-        public int Likes { get; set; }
-        public string BusinessID { get; set; }
-        public string UserID { get; set; }
-        public string Text { get; set; }
+        public string date { get; set; }
+        public string userName { get; set; }
+        public string businessName { get; set; }
+        public string city { get; set; }
+        public int likes { get; set; }
+        public string businessID { get; set; }
+        public string userID { get; set; }
+        public string text { get; set; }
 
         public TipList() { }
     }

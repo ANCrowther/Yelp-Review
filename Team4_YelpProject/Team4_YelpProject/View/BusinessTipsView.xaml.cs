@@ -50,7 +50,7 @@
 
         private void addTipData(NpgsqlDataReader R)
         {
-            tipList.Items.Add(new TipList { Date = R.GetDate(0).ToString(), UserName = R.GetString(1), Likes = R.GetInt32(2), Text = R.GetString(3)});
+            tipList.Items.Add(new TipList { date = R.GetDate(0).ToString(), userName = R.GetString(1), likes = R.GetInt32(2), text = R.GetString(3)});
         }
 
         private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
@@ -113,7 +113,7 @@
         {
             this.temp = (TipList)tipList.SelectedItem;
 
-            string sqlStr = "UPDATE tip SET likes=likes+1 WHERE date(tipdate)='" + this.temp.Date + "' AND user_id='" + this.temp.UserID + "' AND business_id='" + this.temp.BusinessID + "';";
+            string sqlStr = "UPDATE tip SET likes=likes+1 WHERE date(tipdate)='" + this.temp.date + "' AND user_id='" + this.temp.userID + "' AND business_id='" + this.temp.businessID + "';";
 
             using (var connection = new NpgsqlConnection(buildConnectionString()))
             {

@@ -34,15 +34,15 @@ namespace Team4_YelpProject
 
         private void addUserData()
         {
-            UserNameBox.Text = currentUser.Name;
-            UserStarsResult.Content = currentUser.Average_stars;
-            UserFansResult.Content = (int)currentUser.Fans;
-            CoolCount.Content = (int)currentUser.Cool;
-            FunnyCount.Content = currentUser.Funny;
-            UsefulCount.Content = currentUser.Useful;
-            UserYelpingSinceResult.Content = currentUser.Yelping_since;
-            LatTextBox.Text = currentUser.User_latitude.ToString();
-            LongTextBox.Text = currentUser.User_longitude.ToString();
+            UserNameBox.Text = currentUser.name;
+            UserStarsResult.Content = currentUser.average_stars;
+            UserFansResult.Content = (int)currentUser.fans;
+            CoolCount.Content = (int)currentUser.cool;
+            FunnyCount.Content = currentUser.funny;
+            UsefulCount.Content = currentUser.useful;
+            UserYelpingSinceResult.Content = currentUser.yelping_since;
+            LatTextBox.Text = currentUser.user_latitude.ToString();
+            LongTextBox.Text = currentUser.user_longitude.ToString();
         }
 
         private void addFriendsGridColumns()
@@ -107,35 +107,23 @@ namespace Team4_YelpProject
 
         private void addUser(NpgsqlDataReader R)
         {
-            currentUser.User_id = R.GetString(0);
-            currentUser.Name = R.GetString(1);
-            currentUser.Average_stars = R.GetDouble(2);
-            currentUser.Fans = R.GetInt32(3);
-            currentUser.Cool = R.GetInt32(4);
-            currentUser.Funny = R.GetInt32(5);
-            currentUser.Useful = R.GetInt32(6);
-            currentUser.Yelping_since = R.GetDate(7).ToString();
-            currentUser.User_latitude = R.GetDouble(8);
-            currentUser.User_longitude = R.GetDouble(9);
+            currentUser.user_id = R.GetString(0);
+            currentUser.name = R.GetString(1);
+            currentUser.average_stars = R.GetDouble(2);
+            currentUser.fans = R.GetInt32(3);
+            currentUser.cool = R.GetInt32(4);
+            currentUser.funny = R.GetInt32(5);
+            currentUser.useful = R.GetInt32(6);
+            currentUser.yelping_since = R.GetDate(7).ToString();
+            currentUser.user_latitude = R.GetDouble(8);
+            currentUser.user_longitude = R.GetDouble(9);
 
             addUserData();
         }
 
-        //private void addTips(NpgsqlDataReader R)
-        //{
-        //    tips.Date = R.GetString(0);
-        //    tips.UserName = R.GetString(1);
-        //    tips.BusinessName = R.GetString(2);
-        //    tips.City = R.GetString(3);
-        //    tips.Likes = R.GetInt16(4);
-        //    tips.BusinessID = R.GetString(5);
-        //    tips.UserID = R.GetString(6);
-        //    tips.Text = R.GetString(7);
-        //}
-
         private void addTipGridRow(NpgsqlDataReader R)
         {
-            ReviewByFriendDataGrid.Items.Add(new TipList() { UserName = R.GetString(0), BusinessName = R.GetString(1), City = R.GetString(2), Text = R.GetString(3), Date = R.GetDate(4).ToString() });
+            ReviewByFriendDataGrid.Items.Add(new TipList() { userName = R.GetString(0), businessName = R.GetString(1), city = R.GetString(2), text = R.GetString(3), date = R.GetDate(4).ToString() });
         }
 
         private void addFriendGridRow(NpgsqlDataReader R)
@@ -228,20 +216,20 @@ namespace Team4_YelpProject
 
         private void setLocationBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (!(currentUser.User_latitude == Convert.ToDouble(LatTextBox.Text) && currentUser.User_longitude == Convert.ToDouble(LongTextBox.Text)))
+            if (!(currentUser.user_latitude == Convert.ToDouble(LatTextBox.Text) && currentUser.user_longitude == Convert.ToDouble(LongTextBox.Text)))
             {
                 /*  Updates the actual databse  */
                 updateQuery();
 
                 /*  Updates the UI  */
-                string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + currentUser.User_id + "';";
+                string sqlStr = "SELECT distinct user_id,name,average_stars,fans,funny,cool,useful,date(yelping_since),user_latitude,user_longitude FROM users WHERE user_id='" + currentUser.user_id + "';";
                 executeQuery(sqlStr, addUser);
             }
         }
 
         private void updateQuery()
         {
-            string sqlStr = "UPDATE Users SET user_latitude='" + Convert.ToDouble(LatTextBox.Text) + "', user_longitude='" + Convert.ToDouble(LongTextBox.Text) + "' WHERE user_id='" + currentUser.User_id + "';";
+            string sqlStr = "UPDATE Users SET user_latitude='" + Convert.ToDouble(LatTextBox.Text) + "', user_longitude='" + Convert.ToDouble(LongTextBox.Text) + "' WHERE user_id='" + currentUser.user_id + "';";
 
             using (var connection = new NpgsqlConnection(buildConnectionString()))
             {
@@ -369,7 +357,7 @@ namespace Team4_YelpProject
 
         private void addBusinessResultDataGrid(NpgsqlDataReader R)
         {
-            businessResultDataGrid.Items.Add(new BusinessResults() { BusinessName = R.GetString(0), Address = R.GetString(1), City = R.GetString(2), State = R.GetString(3), Stars = R.GetDouble(4), NumberOfTips = R.GetInt32(5), TotalCheckins = R.GetInt32(6), BLatitude = R.GetDouble(7), BLongitude = R.GetDouble(8), BusinessID = R.GetString(9) });
+            businessResultDataGrid.Items.Add(new BusinessResults() { businessName = R.GetString(0), address = R.GetString(1), city = R.GetString(2), state = R.GetString(3), stars = R.GetDouble(4), numberOfTips = R.GetInt32(5), totalCheckins = R.GetInt32(6), bLatitude = R.GetDouble(7), bLongitude = R.GetDouble(8), businessID = R.GetString(9) });
         }
 
         private void addCategoriesBtn_Click(object sender, RoutedEventArgs e)
@@ -558,8 +546,7 @@ namespace Team4_YelpProject
         BusinessResults tempBusiness = new BusinessResults();
 
         private void clearBusinessDetails()
-        {
-            
+        { 
             businessNameTextBox.Text = "";
             addressTextBox.Text = "";
             hoursTextBox.Text = "";
@@ -573,13 +560,13 @@ namespace Team4_YelpProject
             {
                 this.tempBusiness = (BusinessResults)businessResultDataGrid.SelectedItem;
 
-                businessNameTextBox.Text = this.tempBusiness.BusinessName;
-                string str = this.tempBusiness.Address + ", " + this.tempBusiness.City + ", " + this.tempBusiness.State;
+                businessNameTextBox.Text = this.tempBusiness.businessName;
+                string str = this.tempBusiness.address + ", " + this.tempBusiness.city + ", " + this.tempBusiness.state;
                 addressTextBox.Text = (str);
 
                 DayOfWeek wk = DateTime.Today.DayOfWeek;
 
-                string sqlStr = "SELECT H.business_id, H.day_of_week, H.open, H.close FROM business AS B, hours AS H WHERE B.business_id=H.business_id AND B.business_id='" + tempBusiness.BusinessID + "' AND H.day_of_week='" + wk + "';";
+                string sqlStr = "SELECT H.business_id, H.day_of_week, H.open, H.close FROM business AS B, hours AS H WHERE B.business_id=H.business_id AND B.business_id='" + tempBusiness.businessID + "' AND H.day_of_week='" + wk + "';";
 
                 Console.WriteLine(sqlStr);
                 executeQuery(sqlStr, addBusinessHours);
@@ -592,7 +579,6 @@ namespace Team4_YelpProject
                 if (open != null)
                 {
                     dayOfWeek = day + ": Opens: " + open + "  Closes: " + close;
-
                 }
                 else
                 {
@@ -619,9 +605,9 @@ namespace Team4_YelpProject
             if (businessResultDataGrid.SelectedIndex >= 0)
             {
                 BusinessResults B = businessResultDataGrid.Items[businessResultDataGrid.SelectedIndex] as BusinessResults;
-                if((B.BusinessID != null) && (B.BusinessID.ToString().CompareTo("") != 0))
+                if((B.businessID != null) && (B.businessID.ToString().CompareTo("") != 0))
                 {
-                    BusinessTipsView tipsWindow = new BusinessTipsView(B.BusinessID.ToString());
+                    BusinessTipsView tipsWindow = new BusinessTipsView(B.businessID.ToString());
                     tipsWindow.Show();
                 }
             }
