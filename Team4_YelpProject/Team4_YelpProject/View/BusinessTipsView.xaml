@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Team4_YelpProject.View"
         mc:Ignorable="d"
-        Title="BusinessTipsView" Height="450" Width="800" Background="#FF5F5858">
+        Title="BusinessTipsView" Height="470" Width="820" Background="#FF5F5858">
     <Window.Resources>
         <Style TargetType="GroupBox">
             <Setter Property="FontFamily" Value="OCR A Extended"/>
@@ -40,7 +40,7 @@
                     </StackPanel>
                 </StackPanel>
                 <GroupBox Header="Business Tips" Height="230"  Margin="5 5 0 5">
-                    <DataGrid x:Name="tipList">
+                    <DataGrid x:Name="tipList" Margin="5 5 5 5">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" Width="auto" 
                                                 Binding="{Binding date}"/>
