@@ -128,12 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="BusinessDetails.xaml.cs">
-      <DependentUpon>BusinessDetails.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Model\BusinessHours.cs" />
     <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Tips.cs" />
+    <Compile Include="ViewModel\BusinessViewModel.cs" />
     <Compile Include="View\BusinessTipsView.xaml.cs">
       <DependentUpon>BusinessTipsView.xaml</DependentUpon>
     </Compile>
@@ -160,10 +158,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="BusinessDetails.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\BusinessTipsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -208,8 +202,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

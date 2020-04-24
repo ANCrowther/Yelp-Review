@@ -88,7 +88,7 @@
 
         private void addBusinessGridRow(NpgsqlDataReader R)
         {
-            businessDG.Items.Add(new Business() { businessName = R.GetString(0), address = R.GetString(1), city = R.GetString(2), state = R.GetString(3), stars = R.GetDouble(4), numberOfTips = R.GetInt32(5), totalCheckins = R.GetInt32(6), bLatitude = R.GetDouble(7), bLongitude = R.GetDouble(8), businessID = R.GetString(9) });
+            businessDG.Items.Add(new Business() { BusinessName = R.GetString(0), Address = R.GetString(1), City = R.GetString(2), State = R.GetString(3), Stars = R.GetDouble(4), NumberOfTips = R.GetInt32(5), TotalCheckins = R.GetInt32(6), Latitude = R.GetDouble(7), Longitude = R.GetDouble(8), BusinessID = R.GetString(9) });
         }
 
         private void addBusinessHours(NpgsqlDataReader R)
@@ -173,6 +173,7 @@
             clearBusinessDetails();
             businessDG.Items.Clear();
             updateBusinessResults();
+            BusinessCountTB.Text = businessDG.Items.Count.ToString();
         }
 
         private void updateBusinessResults()
@@ -189,6 +190,9 @@
                 sqlCategory.Append(" AND category='" + selectedLB.Items[index] + "' ");
             }
 
+
+
+            /*    Append Category JOIN statement    */
             if (sqlCategory.Length > 0)
             {
                 sqlStr.Append(sqlCategoryBackEnd);
@@ -215,13 +219,13 @@
             {
                 this.tempBusiness = (Business)businessDG.SelectedItem;
 
-                businessNameTB.Text = this.tempBusiness.businessName;
-                string str = this.tempBusiness.address + ", " + this.tempBusiness.city + ", " + this.tempBusiness.state;
+                businessNameTB.Text = this.tempBusiness.BusinessName;
+                string str = this.tempBusiness.Address + ", " + this.tempBusiness.City + ", " + this.tempBusiness.State;
                 addressTB.Text = (str);
 
                 DayOfWeek wk = DateTime.Today.DayOfWeek;
 
-                string sqlStr = "SELECT H.business_id, H.day_of_week, H.open, H.close FROM business AS B, hours AS H WHERE B.business_id=H.business_id AND B.business_id='" + tempBusiness.businessID + "' AND H.day_of_week='" + wk + "';";
+                string sqlStr = "SELECT H.business_id, H.day_of_week, H.open, H.close FROM business AS B, hours AS H WHERE B.business_id=H.business_id AND B.business_id='" + tempBusiness.BusinessID + "' AND H.day_of_week='" + wk + "';";
 
                 Console.WriteLine(sqlStr);
                 executeQuery(sqlStr, addBusinessHours);
@@ -250,9 +254,9 @@
             if (businessDG.SelectedIndex >= 0)
             {
                 Business B = businessDG.Items[businessDG.SelectedIndex] as Business;
-                if ((B.businessID != null) && (B.businessID.ToString().CompareTo("") != 0))
+                if ((B.BusinessID != null) && (B.BusinessID.ToString().CompareTo("") != 0))
                 {
-                    BusinessTipsView tipsWindow = new BusinessTipsView(B.businessID.ToString());
+                    BusinessTipsView tipsWindow = new BusinessTipsView(B.BusinessID.ToString());
                     tipsWindow.Show();
                 }
             }
