@@ -20,23 +20,45 @@
             <RowDefinition Height="450"/>
             <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
-        <GroupBox Header="Select Location" Grid.Column="0" Margin="5 5 5 5" Padding="3">
+        <GroupBox Header="Select Location" 
+                  Grid.Column="0" 
+                  Margin="5 5 5 5" 
+                  Padding="3">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <Button x:Name="initialStates" Content="!" Click="btnLoadStates_click"/>
-                    <Label Content="State" HorizontalContentAlignment="Right" Width="73" Margin="5 5 5 5" Padding="3"/>
+                    <Label Content="State"
+                           HorizontalContentAlignment="Right" 
+                           Width="80" Margin="5 5 5 5" 
+                           Padding="3"/>
                     <ComboBox x:Name="StateCB" 
-                                          Width="65" Margin="5 5 5 5" 
-                                          Padding="3" 
-                                          SelectionChanged="StateCB_SelectionChanged"/>
+                              Width="65"
+                              Margin="5 5 5 5" 
+                              Padding="3"
+                              SelectionChanged="StateCB_SelectionChanged" 
+                              Loaded="StateCB_Loaded"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
-                    <Label Content="City" HorizontalContentAlignment="Right" Width="80" Margin="5 5 5 5" Padding="3"/>
-                    <ComboBox x:Name="CityCB" Width="150" Margin="5 5 5 5" Padding="3" SelectionChanged="CityCB_SelectionChanged"/>
+                    <Label Content="City" 
+                           HorizontalContentAlignment="Right" 
+                           Width="80" 
+                           Margin="5 5 5 5" 
+                           Padding="3"/>
+                    <ComboBox x:Name="CityCB" 
+                              Width="150" 
+                              Margin="5 5 5 5" 
+                              Padding="3" 
+                              SelectionChanged="CityCB_SelectionChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
-                    <Label Content="Zipcode" HorizontalContentAlignment="Right" Width="80" Margin="5 8 5 8" Padding="3"/>
-                    <ComboBox x:Name="ZipcodeCB" Width="120" Margin="5 8 5 8" Padding="3" SelectionChanged="ZipcodeCB_SelectionChanged"/>
+                    <Label Content="Zipcode" 
+                           HorizontalContentAlignment="Right" 
+                           Width="80" Margin="5 8 5 8" 
+                           Padding="3"/>
+                    <ComboBox x:Name="ZipcodeCB" 
+                              Width="120" 
+                              Margin="5 8 5 8" 
+                              Padding="3" 
+                              SelectionChanged="ZipcodeCB_SelectionChanged"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Category" HorizontalContentAlignment="Right" Width="80" Margin="5 5 5 5" Padding="3"/>

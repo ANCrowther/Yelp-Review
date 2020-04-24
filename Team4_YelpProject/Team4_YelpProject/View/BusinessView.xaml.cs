@@ -26,15 +26,15 @@
             return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
         }
 
+        private void StateCB_Loaded(object sender, RoutedEventArgs e)
+        {
+            loadState();
+        }
+
         private void loadState()
         {
             string sqlStr = "SELECT DISTINCT state FROM business ORDER BY state";
             executeQuery(sqlStr, addState);
-        }
-
-        private void btnLoadStates_click(object sender, RoutedEventArgs e)
-        {
-            loadState();
         }
 
         private void executeQuery(string sqlstr, Action<NpgsqlDataReader> myf)
