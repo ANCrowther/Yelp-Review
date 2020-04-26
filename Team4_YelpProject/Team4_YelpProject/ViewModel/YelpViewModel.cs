@@ -80,6 +80,13 @@
 
         public void SearchUser()
         {
+            //    if (UserList != null || FriendsList != null || TipList != null)
+            //    {
+            //        UserList.Clear();
+            //        FriendsList.Clear();
+            //        TipList.Clear();
+            //    }
+
             UserList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUser(currentUser.Name));
         }
         #endregion
@@ -110,7 +117,14 @@
 
         private void SearchUserFriends()
         {
-            FriendsList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUserFriends(SelectedUser.User_id));
+            try
+            {
+                FriendsList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUserFriends(SelectedUser.User_id));
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+            }
         }
         #endregion
 
@@ -125,7 +139,14 @@
 
         private void SearchFriendTips()
         {
-            TipList = new ObservableCollection<Tips>(ObjYelpService.SearchFriendTips(SelectedUser.User_id));
+            try
+            {
+                TipList = new ObservableCollection<Tips>(ObjYelpService.SearchFriendTips(SelectedUser.User_id));
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+            }
         }
         #endregion
 
