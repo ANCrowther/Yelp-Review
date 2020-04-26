@@ -14,45 +14,87 @@
         <StackPanel Grid.Column="0" Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
                 <!--User Information Group Box-->
-                <GroupBox Header="Set Current User" VerticalAlignment="Center" HorizontalAlignment="Center" Width="205" Height="300" Margin="5 5 5 0">
+                <GroupBox Header="Set Current User" 
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Center" 
+                          Width="205" Height="300" 
+                          Margin="5 5 5 0">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <TextBox x:Name="UserNameTB" Height="25" Width="110" Margin="5 5 5 5"
-                                     />
-                            <Button Name="BtnSearch" Content="SEARCH" Margin="5 8" Padding="3" Click="BtnSearch_Click"
-                                        />
+                            <TextBox x:Name="UserNameTB"
+                                     VerticalAlignment="Center"
+                                     Height="25" 
+                                     Width="110" 
+                                     Margin="5 5 5 5"
+                                     Text="{Binding Path=CurrentUser.Name, 
+                                            Mode=TwoWay,
+                                            UpdateSourceTrigger=LostFocus}"/>
+                            <Button Name="BtnSearch" 
+                                    Content="SEARCH" 
+                                    Margin="5 8" 
+                                    Padding="3"
+                                    Command="{Binding Path=SearchUserCommand}"/>
                         </StackPanel>
-                        <ListBox x:Name="userIDLB" Height="230" Margin="5 5 5 5" SelectionChanged="userIDLB_SelectionChanged"
-                                     />
+                        <ListBox x:Name="userIDLB" 
+                                 Height="230" 
+                                 Margin="5 5 5 5"
+                                 ItemsSource="{Binding Path=UserList,
+                                               Mode=TwoWay}"
+                                 DisplayMemberPath="User_id"
+                                 SelectedItem="{Binding SelectedUser}"/>
                     </StackPanel>
                 </GroupBox>
                 <GroupBox Header="User Information" VerticalAlignment="Center" HorizontalAlignment="Center" Width="220" Height="300" Margin="5 5 5 0">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
-                            <Label x:Name="UserNameLabel" Content="Name:"/>
-                            <TextBlock x:Name="UserNameBlock" Margin="5 6 5 5 "/>
+                            <Label x:Name="UserNameLabel" 
+                                   Content="Name:"/>
+                            <TextBlock x:Name="UserNameBlock" 
+                                       Margin="5 6 5 5 "
+                                       Text="{Binding SelectedUser.Name, 
+                                              Mode=OneWay}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Label x:Name="UserYelpingSinceLabel" Content="Yelping Since:"/>
-                            <TextBlock x:Name="YelpingSinceBlock" Margin="5 6 5 5 "/>
+                            <Label x:Name="UserYelpingSinceLabel" 
+                                   Content="Yelping Since:"/>
+                            <TextBlock x:Name="YelpingSinceBlock" 
+                                       Margin="5 6 5 5 "
+                                       Text="{Binding SelectedUser.Yelping_since, 
+                                              Mode=OneWay}"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
-                                    <Label x:Name="UserStarsLabel" Content="Stars:"/>
-                                    <TextBlock x:Name="UserStarsBlock" Margin="5 6 30 5 "/>
+                                    <Label x:Name="UserStarsLabel" 
+                                           Content="Stars:"/>
+                                    <TextBlock x:Name="UserStarsBlock" 
+                                               Margin="5 6 30 5 "
+                                               Text="{Binding SelectedUser.AvgStars, 
+                                                      Mode=OneWay}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label x:Name="UserFansLabel" Content="Fans: "/>
-                                    <TextBlock x:Name="UserFansBlock" Margin="5 6 5 5 "/>
+                                    <Label x:Name="UserFansLabel" 
+                                           Content="Fans: "/>
+                                    <TextBlock x:Name="UserFansBlock" 
+                                               Margin="5 6 5 5 "
+                                               Text="{Binding SelectedUser.Fans, 
+                                                      Mode=OneWay}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label x:Name="UserTipCountLabel" Content="Tip Count:  "/>
-                                    <TextBlock x:Name="UserTipCountBlock" Margin="5 6 5 5 "/>
+                                    <Label x:Name="UserTipCountLabel" 
+                                           Content="Tip Count:  "/>
+                                    <TextBlock x:Name="UserTipCountBlock" 
+                                               Margin="5 6 5 5 "
+                                    Text="{Binding SelectedUser.Tipcount, 
+                                                      Mode=OneWay}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
-                                    <Label x:Name="UserLikeLabel" Content="Total Likes: "/>
-                                    <TextBlock x:Name="UserLikeBlock"  Margin="5 6 15 5 "/>
+                                    <Label x:Name="UserLikeLabel" 
+                                           Content="Total Likes: "/>
+                                    <TextBlock x:Name="UserLikeBlock"  
+                                               Margin="5 6 15 5 "
+                                               Text="{Binding SelectedUser.Totallikes, 
+                                                      Mode=OneWay}"/>
                                 </StackPanel>
                             </StackPanel>
                             <StackPanel Orientation="Vertical">
@@ -60,16 +102,28 @@
                                     <Grid>
                                         <StackPanel Orientation="Vertical">
                                             <StackPanel Orientation="Horizontal">
-                                                <Label x:Name="UserFunnyLabel" Content="Funny:"/>
-                                                <TextBlock x:Name="UserFunnyBlock" Margin="5 6 5 5 "/>
+                                                <Label x:Name="UserFunnyLabel" 
+                                                       Content="Funny:"/>
+                                                <TextBlock x:Name="UserFunnyBlock" 
+                                                           Margin="5 6 5 5 "
+                                                           Text="{Binding SelectedUser.Funny, 
+                                                                  Mode=OneWay}"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label x:Name="UserCoolLabel" Content="Cool:   "/>
-                                                <TextBlock x:Name="UserCoolBlock" Margin="5 6 5 5 "/>
+                                                <Label x:Name="UserCoolLabel" 
+                                                       Content="Cool:   "/>
+                                                <TextBlock x:Name="UserCoolBlock" 
+                                                           Margin="5 6 5 5 "
+                                                           Text="{Binding SelectedUser.Cool, 
+                                                                  Mode=OneWay}"/>
                                             </StackPanel>
                                             <StackPanel Orientation="Horizontal">
-                                                <Label x:Name="UserUsefulLabel" Content="Useful:"/>
-                                                <TextBlock x:Name="UserUsefulBlock" Margin="5 6 5 5 "/>
+                                                <Label x:Name="UserUsefulLabel" 
+                                                       Content="Useful:"/>
+                                                <TextBlock x:Name="UserUsefulBlock" 
+                                                           Margin="5 6 5 5 "
+                                                           Text="{Binding SelectedUser.Useful, 
+                                                                  Mode=OneWay}"/>
                                             </StackPanel>
                                         </StackPanel>
                                     </Grid>
@@ -80,13 +134,21 @@
                             <StackPanel Orientation="Vertical">
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Latitude:    "/>
-                                    <TextBox x:Name="UserLatitudeTB" Width="120" Margin="5 5 5 5 "/>
+                                    <TextBox x:Name="UserLatitudeTB" 
+                                             Width="120" 
+                                             Margin="5 5 5 5 "
+                                             Text="{Binding SelectedUser.Latitude, 
+                                                    Mode=OneWay}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Longitude: "/>
-                                    <TextBox x:Name="UserLongitudeTB" Width="120" Margin="5 5 5 5 "/>
+                                    <TextBox x:Name="UserLongitudeTB" 
+                                             Width="120" 
+                                             Margin="5 5 5 5 "
+                                             Text="{Binding SelectedUser.Longitude, 
+                                                    Mode=OneWay}"/>
                                 </StackPanel>
-                                <Button Content="Update Location" Width="150" Background="#FF30F2FB" Click="updateLocation_Click"/>
+                                <Button Content="Update Location" Width="150" Background="#FF30F2FB"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
@@ -94,16 +156,17 @@
             </StackPanel>
             <!--Friends Group Box-->
             <GroupBox Header="Friends" VerticalAlignment="Center" HorizontalAlignment="Center" Width="440" Height="370" Margin="0 0 5 5">
-                <DataGrid x:Name="FriendListDataGrid" Margin="5 5 5 5">
+                <DataGrid x:Name="FriendListDataGrid" 
+                          Margin="5 5 5 5">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Width="auto" 
-                                                Binding="{Binding name}"/>
+                        <DataGridTextColumn Header="Name" Width="auto"
+                                            Binding="{Binding FriendsList.Name}"/>
                         <DataGridTextColumn Header="Total Likes" Width="auto" 
-                                                Binding="{Binding totallikes}"/>
+                                                Binding="{Binding FriendsList.Totallikes}"/>
                         <DataGridTextColumn Header="Avg Stars" Width="auto" 
-                                                Binding="{Binding avgStars}"/>
+                                                Binding="{Binding FriendsList.AvgStars}"/>
                         <DataGridTextColumn Header="Yelping Since" Width="auto" 
-                                                Binding="{Binding yelping_since}"/>
+                                                Binding="{Binding FriendsList.Yelping_since}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
@@ -124,6 +187,7 @@
                                                 Binding="{Binding city}"/>
                         <DataGridTextColumn Header="Text" Width="auto" 
                                                 Binding="{Binding text}"/>
+
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>

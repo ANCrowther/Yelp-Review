@@ -1,29 +1,120 @@
 ﻿namespace Team4_YelpProject.ViewModel
 {
-    using System.Collections.ObjectModel;
+    using Team4_YelpProject.Commands;
     using Team4_YelpProject.Model;
+    using System.Collections.ObjectModel;
+    using System.ComponentModel;
+    using System.Collections.Generic;
+    using System;
 
-    public class BusinessViewModel
+    public class YelpViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Business> ObjBusinesses
+        YelpServices ObjYelpService;
+
+        public YelpViewModel()
         {
-            get;
-            set;
+            ObjYelpService = new YelpServices();
+            LoadStates();
+            CurrentUser = new YelpUser();
+            CurrentBusiness = new Business();
+            searchUserCommand = new RelayCommand(SearchUser);
         }
 
-        public void LoadStates()
+        private string message;
+        public string Message
         {
-            ObservableCollection<Business> objBusinesses = new ObservableCollection<Business>();
-
-            ObjBusinesses = objBusinesses;
+            get { return message; }
+            set { message = value; OnPropertyChanged("Message"); }
         }
 
-        public Business ObjBusiness
+        private YelpUser currentUser;
+        public YelpUser CurrentUser
         {
-            get;
-            set;
+            get { return currentUser; }
+            set { currentUser = value; OnPropertyChanged("CurrentUser"); }
         }
 
+        private Business currentBusiness;
+        public Business CurrentBusiness
+        {
+            get { return currentBusiness; }
+            set { currentBusiness = value; OnPropertyChanged("CurrentBusiness"); }
+        }
 
+        #region Load StateList
+        private ObservableCollection<Business> statesList;
+        public ObservableCollection<Business> StatesList
+        {
+            get { return statesList; }
+            set { statesList = value; OnPropertyChanged("StatesList"); }
+        }
+
+        private void LoadStates()
+        {
+            StatesList = new ObservableCollection<Business>(ObjYelpService.GetStates());
+        }
+        #endregion
+
+        #region Load CityList
+        /*    UNDER CONSTRUCTION    */
+
+        private ObservableCollection<Business> cityList;
+        public ObservableCollection<Business> CityList
+        {
+            get { return cityList; }
+            set { cityList = value; OnPropertyChanged("CityList"); }
+        }
+        #endregion
+
+        #region Search User by Name
+        private RelayCommand searchUserCommand;
+        public RelayCommand SearchUserCommand { get { return searchUserCommand; } }
+
+        private ObservableCollection<YelpUser> userList;
+        public ObservableCollection<YelpUser> UserList
+        {
+            get { return userList; }
+            set { userList = value; OnPropertyChanged("UserList"); }
+        }
+
+        public void SearchUser()
+        {
+            UserList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUser(currentUser.Name));
+        }
+        #endregion
+
+        #region Search User by ID
+        private YelpUser selectedUser;
+        public YelpUser SelectedUser
+        {
+            get { return selectedUser; }
+            set
+            {
+                selectedUser = value;
+                OnPropertyChanged("SelectedUser");
+                SearchUserFriends();
+            }
+        }
+        #endregion
+
+        #region Search for User's Friend's
+        private ObservableCollection<YelpUser> friendsList;
+        public ObservableCollection<YelpUser> FriendsList
+        {
+            get { return friendsList; }
+            set { friendsList = value; OnPropertyChanged("FriendsList"); }
+        }
+
+        private void SearchUserFriends()
+        {
+            FriendsList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUserFriends(SelectedUser.User_id));
+        }
+        #endregion
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string v)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
+        }
     }
 }

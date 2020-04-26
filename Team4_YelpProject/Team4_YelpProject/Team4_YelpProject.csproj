@@ -128,9 +128,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Model\BusinessHours.cs" />
     <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Tips.cs" />
+    <Compile Include="Model\YelpService.cs" />
     <Compile Include="ViewModel\BusinessViewModel.cs" />
     <Compile Include="View\BusinessTipsView.xaml.cs">
       <DependentUpon>BusinessTipsView.xaml</DependentUpon>

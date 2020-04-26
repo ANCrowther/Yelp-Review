@@ -1,11 +1,5 @@
-﻿using Npgsql;
-using System;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using Team4_YelpProject.Model;
-using Team4_YelpProject.View;
+﻿using System.Windows;
+using Team4_YelpProject.ViewModel;
 
 namespace Team4_YelpProject
 {
@@ -14,9 +8,13 @@ namespace Team4_YelpProject
     /// </summary>
     public partial class MainWindow : Window
     {
+        YelpViewModel ViewModel;
+
         public MainWindow()
         {
             InitializeComponent();
+            ViewModel = new YelpViewModel();
+            this.DataContext = ViewModel;
         }
     }
 }

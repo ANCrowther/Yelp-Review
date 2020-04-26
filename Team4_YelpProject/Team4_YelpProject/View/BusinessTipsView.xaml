@@ -35,8 +35,8 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBox x:Name="newTipInputBox" Height="50" Width="700"  Margin="5 5 5 5"/>
                     <StackPanel Orientation="Vertical">
-                        <Button Content="Add Tip" Width="70" Margin="5 5 5 5" Click="addTipBtn_click"/>
-                        <Button Content="Like" Width="70" Margin="5 5 5 5" Click="likeBtn_Click"/>
+                        <Button Content="Add Tip" Width="70" Margin="5 5 5 5"/>
+                        <Button Content="Like" Width="70" Margin="5 5 5 5"/>
                     </StackPanel>
                 </StackPanel>
                 <GroupBox Header="Business Tips" Height="230"  Margin="5 5 0 5">
