@@ -157,16 +157,18 @@
             <!--Friends Group Box-->
             <GroupBox Header="Friends" VerticalAlignment="Center" HorizontalAlignment="Center" Width="440" Height="370" Margin="0 0 5 5">
                 <DataGrid x:Name="FriendListDataGrid" 
-                          Margin="5 5 5 5">
+                          Margin="5 5 5 5"
+                          ItemsSource="{Binding Path=FriendsList, 
+                                        Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name" Width="auto"
-                                            Binding="{Binding FriendsList.Name}"/>
+                                            Binding="{Binding Path=Name}"/>
                         <DataGridTextColumn Header="Total Likes" Width="auto" 
-                                                Binding="{Binding FriendsList.Totallikes}"/>
+                                            Binding="{Binding Path=Totallikes}"/>
                         <DataGridTextColumn Header="Avg Stars" Width="auto" 
-                                                Binding="{Binding FriendsList.AvgStars}"/>
+                                            Binding="{Binding Path=AvgStars}"/>
                         <DataGridTextColumn Header="Yelping Since" Width="auto" 
-                                                Binding="{Binding FriendsList.Yelping_since}"/>
+                                            Binding="{Binding Path=Yelping_since}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>

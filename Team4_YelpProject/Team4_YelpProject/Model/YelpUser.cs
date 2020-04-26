@@ -4,18 +4,25 @@
 
     public class YelpUser : INotifyPropertyChanged
     {
-        private string user_id;
-        public string User_id
-        {
-            get { return this.user_id; }
-            set { this.user_id = value; RaisePropertyChanged("User_id"); }
-        }
-
         private string name;
         public string Name
         {
             get { return this.name; }
             set { this.name = value; RaisePropertyChanged("Name"); }
+        }
+
+        private int totallikes;
+        public int Totallikes
+        {
+            get { return this.totallikes; }
+            set { this.totallikes = value; RaisePropertyChanged("Totallikes"); }
+        }
+
+        private string yelping_since;
+        public string Yelping_since
+        {
+            get { return this.yelping_since; }
+            set { this.yelping_since = value; RaisePropertyChanged("Yelping_since"); }
         }
 
         private double avgStars;
@@ -53,25 +60,11 @@
             set { this.useful = value; RaisePropertyChanged("Useful"); }
         }
 
-        private int totallikes;
-        public int Totallikes
-        {
-            get { return this.totallikes; }
-            set { this.totallikes = value; RaisePropertyChanged("Totallikes"); }
-        }
-
         private int tipcount;
         public int Tipcount
         {
             get { return this.tipcount; }
             set { this.tipcount = value; RaisePropertyChanged("Tipcount"); }
-        }
-
-        private string yelping_since;
-        public string Yelping_since
-        {
-            get { return this.yelping_since; }
-            set { this.yelping_since = value; RaisePropertyChanged("Yelping_since"); }
         }
 
         private double latitude;
@@ -86,6 +79,13 @@
         {
             get { return this.longitude; }
             set { this.longitude = value; RaisePropertyChanged("Longitude"); }
+        }
+
+        private string user_id;
+        public string User_id
+        {
+            get { return this.user_id; }
+            set { this.user_id = value; RaisePropertyChanged("User_id"); }
         }
 
         public YelpUser() { }

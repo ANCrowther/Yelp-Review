@@ -6,6 +6,7 @@
     using System.ComponentModel;
     using System.Collections.Generic;
     using System;
+    using System.Collections.Specialized;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
