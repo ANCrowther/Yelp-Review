@@ -141,5 +141,49 @@
             }
             return ObjUser;
         }
+
+        public List<Tips> SearchFriendTips(string id)
+        {
+            List<Tips> ObjUser = new List<Tips>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT DISTINCT date(T.tipdate), U.name, B.name, B.city, T.likes, T.business_id, T.user_id, T.text FROM tip AS t, users AS u, business AS b WHERE t.business_id=B.business_id AND T.user_id=U.user_id AND T.user_id='" + id + "';";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjUser.Add(new Tips
+                            {
+                                Date = R.GetDate(0).ToString(),
+                                UserName = R.GetString(1),
+                                BusinessName = R.GetString(2),
+                                City = R.GetString(3),
+                                Likes = R.GetInt32(4),
+                                BusinessID = R.GetString(5),
+                                UserID = R.GetString(6),
+                                Text = R.GetString(7)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjUser;
+        }
     }
 }

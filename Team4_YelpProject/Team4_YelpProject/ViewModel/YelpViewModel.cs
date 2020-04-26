@@ -94,11 +94,13 @@
                 selectedUser = value;
                 OnPropertyChanged("SelectedUser");
                 SearchUserFriends();
+                SearchFriendTips();
             }
         }
         #endregion
 
         #region Search for User's Friend's
+        // SelectUser under Search User by ID region calls the SearchUserFriends()
         private ObservableCollection<YelpUser> friendsList;
         public ObservableCollection<YelpUser> FriendsList
         {
@@ -109,6 +111,21 @@
         private void SearchUserFriends()
         {
             FriendsList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUserFriends(SelectedUser.User_id));
+        }
+        #endregion
+
+        #region Search for Friends' Recent Tips
+        // SelectUser under Search User by ID region calls the SearchFriendTips()
+        private ObservableCollection<Tips> tipList;
+        public ObservableCollection<Tips> TipList
+        {
+            get { return tipList; }
+            set { tipList = value; OnPropertyChanged("TipList"); }
+        }
+
+        private void SearchFriendTips()
+        {
+            TipList = new ObservableCollection<Tips>(ObjYelpService.SearchFriendTips(SelectedUser.User_id));
         }
         #endregion
 

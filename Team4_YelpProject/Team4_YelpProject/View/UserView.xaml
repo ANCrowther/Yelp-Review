@@ -177,18 +177,19 @@
             <!--Latest Tips by my Friends? Group Box-->
             <GroupBox Header="Latest Tips by my Friends?" VerticalAlignment="Center" HorizontalAlignment="Center" Width="700" Height="670" Margin="5 5 5 5">
                 <DataGrid x:Name="ReviewByFriendDataGrid" Margin="5 5 5 5"
-                          >
+                          ItemsSource="{Binding Path=TipList, 
+                                        Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Date" Width="auto" 
-                                                Binding="{Binding date}"/>
+                                                Binding="{Binding Date}"/>
                         <DataGridTextColumn Header="User Name" Width="auto" 
-                                                Binding="{Binding userName}"/>
+                                                Binding="{Binding UserName}"/>
                         <DataGridTextColumn Header="Business" Width="auto" 
-                                                Binding="{Binding businessName}"/>
+                                                Binding="{Binding BusinessName}"/>
                         <DataGridTextColumn Header="City" Width="auto" 
-                                                Binding="{Binding city}"/>
+                                                Binding="{Binding City}"/>
                         <DataGridTextColumn Header="Text" Width="auto" 
-                                                Binding="{Binding text}"/>
+                                                Binding="{Binding Text}"/>
 
                     </DataGrid.Columns>
                 </DataGrid>

@@ -32,6 +32,13 @@
             set { this.city = value; RaisePropertyChanged("City"); }
         }
 
+        private string text;
+        public string Text
+        {
+            get { return this.text; }
+            set { this.text = value; RaisePropertyChanged("Text"); }
+        }
+
         private int likes;
         public int Likes
         {
@@ -51,13 +58,6 @@
         {
             get { return this.userID; }
             set { this.userID = value; RaisePropertyChanged("UserID"); }
-        }
-
-        private string text;
-        public string Text
-        {
-            get { return this.text; }
-            set { this.text = value; RaisePropertyChanged("Text"); }
         }
 
         public Tips() { }
