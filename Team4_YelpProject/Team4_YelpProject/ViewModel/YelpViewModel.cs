@@ -80,13 +80,6 @@
 
         public void SearchUser()
         {
-            //    if (UserList != null || FriendsList != null || TipList != null)
-            //    {
-            //        UserList.Clear();
-            //        FriendsList.Clear();
-            //        TipList.Clear();
-            //    }
-
             UserList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUser(currentUser.Name));
         }
         #endregion
@@ -100,8 +93,10 @@
             {
                 selectedUser = value;
                 OnPropertyChanged("SelectedUser");
-                SearchUserFriends();
-                SearchFriendTips();
+
+                FriendsList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUserFriends(SelectedUser.User_id));
+                TipList = new ObservableCollection<Tips>(ObjYelpService.SearchFriendTips(SelectedUser.User_id));
+
             }
         }
         #endregion
@@ -114,18 +109,6 @@
             get { return friendsList; }
             set { friendsList = value; OnPropertyChanged("FriendsList"); }
         }
-
-        private void SearchUserFriends()
-        {
-            try
-            {
-                FriendsList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUserFriends(SelectedUser.User_id));
-            }
-            catch (Exception ex)
-            {
-                //System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
-            }
-        }
         #endregion
 
         #region Search for Friends' Recent Tips
@@ -135,18 +118,6 @@
         {
             get { return tipList; }
             set { tipList = value; OnPropertyChanged("TipList"); }
-        }
-
-        private void SearchFriendTips()
-        {
-            try
-            {
-                TipList = new ObservableCollection<Tips>(ObjYelpService.SearchFriendTips(SelectedUser.User_id));
-            }
-            catch (Exception ex)
-            {
-                //System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
-            }
         }
         #endregion
 
