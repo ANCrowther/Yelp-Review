@@ -1,5 +1,6 @@
 ﻿namespace Team4_YelpProject.Model
 {
+    using System;
     using System.ComponentModel;
 
     public class BusinessHours : INotifyPropertyChanged
@@ -15,7 +16,11 @@
         public string Day
         {
             get { return this.day; }
-            set { this.day = value; RaisePropertyChanged("Day"); }
+            set { 
+                this.day = value; 
+                RaisePropertyChanged("Day");
+                RaisePropertyChanged("FullHours");
+            }
         }
 
         private string open;
@@ -30,6 +35,22 @@
         {
             get { return this.close; }
             set { this.close = value; RaisePropertyChanged("Close"); }
+        }
+
+        private string fullHours;
+        public string FullHours
+        {
+            get 
+            {
+                if (open != null)
+                {
+                    return day + ": Opens: " + open + "  Closes: " + close; ;
+                }
+                else
+                {
+                    return DateTime.Today.DayOfWeek + ": Closed today.";
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

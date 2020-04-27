@@ -16,6 +16,7 @@
             LoadStates();
             CurrentUser = new YelpUser();
             CurrentBusiness = new Business();
+            Hours = new BusinessHours();
             searchUserCommand = new RelayCommand(SearchUser);
             updateUserLocationCommand = new RelayCommand(UpdateUserLocation);
             addCommand = new RelayCommand(AddSelectedCategories);
@@ -46,7 +47,22 @@
             get { return currentBusiness; }
             set 
             { 
-                currentBusiness = value; OnPropertyChanged("CurrentBusiness");
+                currentBusiness = value; 
+                OnPropertyChanged("CurrentBusiness");
+                if(currentBusiness.BusinessID != null)
+                {
+                    Hours = ObjYelpService.SearchForHours(currentBusiness);
+                }
+            }
+        }
+
+        private BusinessHours hours;
+        public BusinessHours Hours
+        {
+            get { return hours; }
+            set
+            {
+                hours = value; OnPropertyChanged("Hours");
             }
         }
         #endregion
@@ -198,10 +214,6 @@
             {
                 selectedZipcode = value;
                 CurrentBusiness.Zipcode = SelectedZipcode.Zipcode;
-                Console.WriteLine(CurrentBusiness.State);
-                Console.WriteLine(CurrentBusiness.City);
-                Console.WriteLine(CurrentBusiness.Zipcode);
-
                 OnPropertyChanged("SelectedZipcode");
                 CategoryList = new ObservableCollection<Business>(ObjYelpService.SearchCategoryList(CurrentBusiness));
             }

@@ -197,7 +197,9 @@
                                         Mode=OneWay}"/>
                         <TextBox x:Name="hoursTB" 
                                  Margin="5 5" 
-                                 Padding="3"/>
+                                 Padding="3"
+                                 Text="{Binding Path=Hours.FullHours, 
+                                        Mode=OneWay}"/>
                     </StackPanel>
                 </GroupBox>
                 <StackPanel Orientation="Vertical" 

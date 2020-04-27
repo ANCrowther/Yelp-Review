@@ -396,5 +396,42 @@
 
             return ObjBusinesses;
         }
+
+        public BusinessHours SearchForHours(Business B)
+        {
+            BusinessHours ObjHours = new BusinessHours();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT H.business_id, H.day_of_week, H.open, H.close FROM business AS B, hours AS H WHERE B.business_id=H.business_id AND B.business_id='" + B.BusinessID + "' AND H.day_of_week='" + DateTime.Today.DayOfWeek + "';";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjHours.BusinessID = R.GetString(0);
+                            ObjHours.Day = R.GetString(1);
+                            ObjHours.Open = R.GetValue(2).ToString();
+                            ObjHours.Close = R.GetValue(3).ToString();
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjHours;
+        }
     }
 }
