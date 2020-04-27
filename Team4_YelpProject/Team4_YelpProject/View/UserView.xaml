@@ -137,18 +137,21 @@
                                     <TextBox x:Name="UserLatitudeTB" 
                                              Width="120" 
                                              Margin="5 5 5 5 "
-                                             Text="{Binding SelectedUser.Latitude, 
-                                                    Mode=OneWay}"/>
+                                             Text="{Binding Path=SelectedUser.Latitude, 
+                                                    Mode=TwoWay}"/>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Content="Longitude: "/>
                                     <TextBox x:Name="UserLongitudeTB" 
                                              Width="120" 
                                              Margin="5 5 5 5 "
-                                             Text="{Binding SelectedUser.Longitude, 
-                                                    Mode=OneWay}"/>
+                                             Text="{Binding Path=SelectedUser.Longitude, 
+                                                    Mode=TwoWay}"/>
                                 </StackPanel>
-                                <Button Content="Update Location" Width="150" Background="#FF30F2FB"/>
+                                <Button Content="Update Location" 
+                                        Width="150" 
+                                        Background="#FF30F2FB"
+                                        Command="{Binding Path=UpdateUserLocationCommand}"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>

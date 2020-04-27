@@ -4,6 +4,7 @@
     using Team4_YelpProject.Model;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
@@ -16,6 +17,7 @@
             CurrentUser = new YelpUser();
             CurrentBusiness = new Business();
             searchUserCommand = new RelayCommand(SearchUser);
+            updateUserLocationCommand = new RelayCommand(UpdateUserLocation);
         }
 
         private string message;
@@ -78,6 +80,23 @@
         public void SearchUser()
         {
             UserList = new ObservableCollection<YelpUser>(ObjYelpService.SearchUser(currentUser.Name));
+        }
+        #endregion
+
+        #region Update User Location
+        private RelayCommand updateUserLocationCommand;
+        public RelayCommand UpdateUserLocationCommand { get { return updateUserLocationCommand; } }
+
+        public void UpdateUserLocation()
+        {
+            try
+            {
+                var IsUpdate = ObjYelpService.UpdateLocation(SelectedUser);
+            }
+            catch(Exception ex)
+            {
+                Message = ex.Message;
+            }
         }
         #endregion
 

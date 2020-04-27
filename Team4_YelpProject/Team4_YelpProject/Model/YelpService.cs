@@ -185,5 +185,36 @@
 
             return ObjUser;
         }
+
+        public bool UpdateLocation(YelpUser ObjUser)
+        {
+            bool IsUpdated = false;
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    try
+                    {
+                        cmd.Connection = connection;
+                        cmd.CommandText = "UPDATE users SET user_latitude='" + ObjUser.Latitude + "', user_longitude='" + ObjUser.Longitude + "' WHERE user_id='" + ObjUser.User_id + "';";
+                        Console.WriteLine(cmd.CommandText);
+                        cmd.ExecuteNonQuery();
+                        IsUpdated = true;
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return IsUpdated;
+        }
     }
 }
