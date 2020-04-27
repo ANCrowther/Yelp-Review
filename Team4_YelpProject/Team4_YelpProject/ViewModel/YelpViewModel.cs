@@ -38,33 +38,11 @@
         public Business CurrentBusiness
         {
             get { return currentBusiness; }
-            set { currentBusiness = value; OnPropertyChanged("CurrentBusiness"); }
+            set 
+            { 
+                currentBusiness = value; OnPropertyChanged("CurrentBusiness");
+            }
         }
-
-        #region Load StateList
-        private ObservableCollection<Business> statesList;
-        public ObservableCollection<Business> StatesList
-        {
-            get { return statesList; }
-            set { statesList = value; OnPropertyChanged("StatesList"); }
-        }
-
-        private void LoadStates()
-        {
-            StatesList = new ObservableCollection<Business>(ObjYelpService.GetStates());
-        }
-        #endregion
-
-        #region Load CityList
-        /*    UNDER CONSTRUCTION    */
-
-        private ObservableCollection<Business> cityList;
-        public ObservableCollection<Business> CityList
-        {
-            get { return cityList; }
-            set { cityList = value; OnPropertyChanged("CityList"); }
-        }
-        #endregion
 
         #region Search User by Name
         private RelayCommand searchUserCommand;
@@ -134,6 +112,67 @@
         {
             get { return tipList; }
             set { tipList = value; OnPropertyChanged("TipList"); }
+        }
+        #endregion
+
+        #region Load StateList
+        private ObservableCollection<Business> statesList;
+        public ObservableCollection<Business> StatesList
+        {
+            get { return statesList; }
+            set { statesList = value; OnPropertyChanged("StatesList"); }
+        }
+
+        private void LoadStates()
+        {
+            StatesList = new ObservableCollection<Business>(ObjYelpService.GetStates());
+        }
+        #endregion
+
+        #region Load CityList
+        private Business selectedState;
+        public Business SelectedState
+        {
+            get { return selectedState; }
+            set
+            {
+                selectedState = value;
+                OnPropertyChanged("SelectedState");
+                CurrentBusiness.State = SelectedState.State;
+                CityList = new ObservableCollection<Business>(ObjYelpService.SearchCities(SelectedState.State));
+            }
+        }
+
+        private ObservableCollection<Business> cityList;
+        public ObservableCollection<Business> CityList
+        {
+            get { return cityList; }
+            set { cityList = value; OnPropertyChanged("CityList"); }
+        }
+        #endregion
+
+        #region Load ZipcodeList
+        private Business selectedCity;
+        public Business SelectedCity
+        {
+            get { return selectedCity; }
+            set
+            {
+                selectedCity = value;
+                OnPropertyChanged("SelectedCity");
+                ZipcodeList = new ObservableCollection<Business>(ObjYelpService.SearchZipcodes(SelectedState.State, SelectedCity.City));
+            }
+        }
+
+        private ObservableCollection<Business> zipcodeList;
+        public ObservableCollection<Business> ZipcodeList
+        {
+            get { return zipcodeList; }
+            set
+            { 
+                zipcodeList = value; 
+                OnPropertyChanged("ZipcodeList");
+            }
         }
         #endregion
 

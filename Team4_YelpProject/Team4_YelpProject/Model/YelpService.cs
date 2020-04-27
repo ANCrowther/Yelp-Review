@@ -15,39 +15,6 @@
             return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
         }
 
-        public List<Business> GetStates()
-        {
-            List<Business> ObjStateList = new List<Business>();
-
-            using (var connection = new NpgsqlConnection(buildConnectionString()))
-            {
-                connection.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = connection;
-                    cmd.CommandText = "SELECT DISTINCT state FROM business ORDER BY state";
-                    try
-                    {
-                        var reader = cmd.ExecuteReader();
-                        while (reader.Read())
-                        {
-                            ObjStateList.Add(new Business { State = reader.GetString(0) });
-                        }
-                    }
-                    catch (NpgsqlException ex)
-                    {
-                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-
-            return ObjStateList;
-        }
-
         public List<YelpUser> SearchUser(string name)
         {
             List<YelpUser> ObjUser = new List<YelpUser>();
@@ -215,6 +182,106 @@
             }
 
             return IsUpdated;
+        }
+
+        public List<Business> GetStates()
+        {
+            List<Business> ObjStateList = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT DISTINCT state FROM business ORDER BY state";
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            ObjStateList.Add(new Business { State = reader.GetString(0) });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjStateList;
+        }
+
+        public List<Business> SearchCities(string state)
+        {
+            List<Business> ObjCities = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT DISTINCT city FROM business WHERE state='" + state + "' ORDER BY city";
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            ObjCities.Add(new Business { City = reader.GetString(0) });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjCities;
+        }
+
+        public List<Business> SearchZipcodes(string State, string City)
+        {
+            List<Business> ObjCities = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT DISTINCT state, city, zipcode FROM business WHERE state='" + State + "' AND city='" + City + "' ORDER BY zipcode";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                        {
+                            ObjCities.Add(new Business { State = reader.GetString(0), City = reader.GetString(1), Zipcode = reader.GetInt32(2) });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjCities;
         }
     }
 }

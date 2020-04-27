@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Team4_YelpProject.View"
              mc:Ignorable="d" 
-             d:DesignHeight="740" d:DesignWidth="1200">
+             d:DesignHeight="740" 
+             d:DesignWidth="1200">
     <UserControl.Resources>
     </UserControl.Resources>
     <Grid>
@@ -18,10 +19,17 @@
             <RowDefinition Height="450"/>
             <RowDefinition Height="300"/>
         </Grid.RowDefinitions>
-        <GroupBox Header="Select Location" Grid.Column="0" Margin="5 5 5 5" Padding="3">
+        <GroupBox Header="Select Location" 
+                  Grid.Column="0" 
+                  Margin="5 5 5 5" 
+                  Padding="3">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal" >
-                    <Label Content="State" HorizontalContentAlignment="Right" Width="80" Margin="5 5 5 5" Padding="3"/>
+                    <Label Content="State" 
+                           HorizontalContentAlignment="Right" 
+                           Width="80" 
+                           Margin="5 5 5 5" 
+                           Padding="3"/>
                     <ComboBox x:Name="StateCB" 
                               Width="65" 
                               Margin="5 5 5 5" 
@@ -30,21 +38,36 @@
                                             Mode=TwoWay}"
                               DisplayMemberPath="State"
                               SelectedValuePath="State"
-                              SelectedValue="{Binding Path=currentBusiness}"/>
+                              SelectedItem="{Binding Path=SelectedState}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
-                    <Label Content="City" HorizontalContentAlignment="Right" Width="80" Margin="5 5 5 5" Padding="3"/>
+                    <Label Content="City" 
+                           HorizontalContentAlignment="Right" 
+                           Width="80" Margin="5 5 5 5" 
+                           Padding="3"/>
                     <ComboBox x:Name="CityCB" 
                               Width="150" 
                               Margin="5 5 5 5" 
                               Padding="3"
-                              ItemsSource="{Binding Path=currentBusiness,
+                              ItemsSource="{Binding Path=CityList,
                                             Mode=TwoWay}"
-                              DisplayMemberPath="City"/>
+                              DisplayMemberPath="City"
+                              SelectedValuePath="City"
+                              SelectedValue="{Binding Path=SelectedCity}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
-                    <Label Content="Zipcode" HorizontalContentAlignment="Right" Width="80" Margin="5 8 5 8" Padding="3"/>
-                    <ComboBox x:Name="ZipcodeCB" Width="120" Margin="5 8 5 8" Padding="3"/>
+                    <Label Content="Zipcode" 
+                           HorizontalContentAlignment="Right" 
+                           Width="80" Margin="5 8 5 8" 
+                           Padding="3"/>
+                    <ComboBox x:Name="ZipcodeCB" 
+                              Width="120" 
+                              Margin="5 8 5 8" 
+                              Padding="3"
+                              ItemsSource="{Binding Path=ZipcodeList,
+                                            Mode=TwoWay}"
+                              
+                              SelectedValue="{Binding Path=CurrentBusiness}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Category" HorizontalContentAlignment="Right" Width="80" Margin="5 5 5 5" Padding="3"/>
