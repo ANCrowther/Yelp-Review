@@ -18,6 +18,8 @@
             CurrentBusiness = new Business();
             searchUserCommand = new RelayCommand(SearchUser);
             updateUserLocationCommand = new RelayCommand(UpdateUserLocation);
+            addCommand = new RelayCommand(AddSelectedCategories);
+            removeCommand = new RelayCommand(RemoveSelectedCategories);
         }
 
         /*    GENERAL USE    */
@@ -215,6 +217,58 @@
             }
         }
         #endregion
+
+        #region Choosing Categories
+        private RelayCommand addCommand;
+        public RelayCommand AddCommand { get { return addCommand; } }
+
+        private void AddSelectedCategories()
+        {
+            if(SelectionList == null)
+            {
+                SelectionList = new ObservableCollection<Business>();
+            }
+
+            SelectionList.Add(SelectedItem);
+            CategoryList.Remove(SelectedItem);
+        }
+
+        private RelayCommand removeCommand;
+        public RelayCommand RemoveCommand { get { return removeCommand; } }
+
+        private void RemoveSelectedCategories()
+        {
+            if (CategoryList == null)
+            {
+                CategoryList = new ObservableCollection<Business>();
+            }
+
+            CategoryList.Add(SelectedItem);
+            SelectionList.Remove(SelectedItem);
+        }
+
+        private Business selectedItem;
+        public Business SelectedItem
+        {
+            get { return selectedItem; }
+            set
+            {
+                selectedItem = value;
+            }
+        }
+
+        private ObservableCollection<Business> selectionList;
+        public ObservableCollection<Business> SelectionList
+        {
+            get { return selectionList; }
+            set
+            {
+                selectionList = value;
+                OnPropertyChanged("SelectionList");
+            }
+        }
+        #endregion
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string v)

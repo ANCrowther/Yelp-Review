@@ -82,7 +82,8 @@
                              ItemsSource="{Binding Path=CategoryList,
                                            Mode=TwoWay}"
                              DisplayMemberPath="Category"
-                             />
+                             SelectedValuePath="Category"
+                             SelectedItem="{Binding Path=SelectedItem}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="addBtn" 
@@ -90,13 +91,15 @@
                             Height="30" 
                             Width="70" 
                             Margin="100 8 0 8" 
-                            Padding="3"/>
+                            Padding="3"
+                            Command="{Binding Path=AddCommand}"/>
                     <Button x:Name="RemoveBtn" 
                             Content="Remove" 
                             Height="30" 
                             Width="70" 
                             Margin="10 8 0 8" 
-                            Padding="3"/>
+                            Padding="3"
+                            Command="{Binding Path=RemoveCommand}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical">
@@ -114,7 +117,12 @@
                     <ListBox x:Name="selectedLB" 
                              Height="110" 
                              Width="170" 
-                             Margin="5 5 5 5"/>
+                             Margin="5 5 5 5"
+                             ItemsSource="{Binding Path=SelectionList,
+                                           Mode=TwoWay}"
+                             DisplayMemberPath="Category"
+                             SelectedValuePath="Category"
+                             SelectedItem="{Binding Path=SelectedItem}"/>
                 </StackPanel>
             </StackPanel>
         </GroupBox>
