@@ -3,6 +3,8 @@
     using Npgsql;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Text;
 
     public class YelpServices
     {
@@ -316,6 +318,83 @@
             }
 
             return ObjZipcodes;
+        }
+
+        public List<Business> SearchBusinesses(ObservableCollection<Business> BList, Business location)
+        {
+            List<Business> ObjBusinesses = new List<Business>();
+
+            StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.business_id,B.name,B.state,B.city,B.address,B.zipcode,B.latitude,B.longitude,B.stars,B.is_open,B.review_count,B.numtips,B.numcheckins FROM business as B ");
+            StringBuilder sqlCategory = new StringBuilder();
+            StringBuilder sqlCategoryBackEnd = new StringBuilder(" JOIN categories AS C ON B.business_id=C.business_id ");
+
+            /*    Appends selected Category choices to Query    */
+            if (BList != null)
+            {
+                foreach (Business item in BList)
+                {
+                    sqlCategory.Append(" AND category='" + item.Category + "' ");
+                }
+            }
+
+            /*    Append Category JOIN statement    */
+            if (BList != null)
+            {
+                sqlStr.Append(sqlCategoryBackEnd);
+            }
+
+            sqlStr.Append("WHERE state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' ");
+
+            /*    Sew the queries together     */
+            if(sqlCategory != null)
+            {
+                sqlStr.Append(sqlCategory);
+            }
+
+            sqlStr.Append(";");
+            Console.WriteLine(sqlStr.ToString());
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = sqlStr.ToString();
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjBusinesses.Add(new Business { BusinessID=R.GetString(0), 
+                                BusinessName=R.GetString(1), 
+                                State=R.GetString(2), 
+                                City=R.GetString(3), 
+                                Address=R.GetString(4), 
+                                Zipcode = R.GetInt32(5),
+                                Latitude = R.GetDouble(6),
+                                Longitude = R.GetDouble(7),
+                                Stars = R.GetDouble(8),
+                                IsOpen = R.GetBoolean(9),
+                                ReviewCount = R.GetInt32(10),
+                                NumberOfTips = R.GetInt32(11),
+                                TotalCheckins = R.GetInt32(12)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjBusinesses;
         }
     }
 }

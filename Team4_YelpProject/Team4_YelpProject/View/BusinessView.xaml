@@ -108,11 +108,12 @@
                                Width="80" 
                                Margin="5 5 5 5" 
                                Padding="3"/>
-                        <Button Content="Push Me!" 
+                        <Button Content="SEARCH" 
                                 Height="70" 
                                 Width="70" 
                                 Background="#FF309719" 
-                                Foreground="#FFFDF200"/>
+                                Foreground="#FFFDF200"
+                                Command="{Binding Path=SearchBusinessesCommand}"/>
                     </StackPanel>
                     <ListBox x:Name="selectedLB" 
                              Height="110" 
@@ -150,29 +151,32 @@
                     </StackPanel>
                     <DataGrid x:Name="businessDG" 
                               Height="230" 
-                              Margin="5 5 5 5">
+                              Margin="5 5 5 5"
+                              ItemsSource="{Binding Path=BusinessList, 
+                                        Mode=TwoWay}"
+                              SelectedItem="{Binding Path=CurrentBusiness}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Name"
                                                 Width="auto" 
-                                                Binding="{Binding businessName}"/>
+                                                Binding="{Binding Path=BusinessName}"/>
                             <DataGridTextColumn Header="Address" 
                                                 Width="auto" 
-                                                Binding="{Binding address}"/>
+                                                Binding="{Binding Path=Address}"/>
                             <DataGridTextColumn Header="City"
                                                 Width="auto" 
-                                                Binding="{Binding city}"/>
+                                                Binding="{Binding Path=City}"/>
                             <DataGridTextColumn Header="State" 
                                                 Width="auto" 
-                                                Binding="{Binding state}"/>
+                                                Binding="{Binding Path=State}"/>
                             <DataGridTextColumn Header="Stars" 
                                                 Width="auto" 
-                                                Binding="{Binding stars}"/>
+                                                Binding="{Binding Path=Stars}"/>
                             <DataGridTextColumn Header="# of tips" 
                                                 Width="auto" 
-                                                Binding="{Binding numberOfTips}"/>
+                                                Binding="{Binding Path=NumberOfTips}"/>
                             <DataGridTextColumn Header="# of checkins" 
                                                 Width="auto" 
-                                                Binding="{Binding totalCheckins}"/>
+                                                Binding="{Binding Path=TotalCheckins}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </StackPanel>
@@ -183,10 +187,14 @@
                     <StackPanel>
                         <TextBox x:Name="businessNameTB" 
                                  Margin="5 5" 
-                                 Padding="3"/>
+                                 Padding="3"
+                                 Text="{Binding Path=CurrentBusiness.BusinessName,
+                                        Mode=OneWay}"/>
                         <TextBox x:Name="addressTB" 
                                  Margin="5 5" 
-                                 Padding="3"/>
+                                 Padding="3"
+                                 Text="{Binding Path=CurrentBusiness.FullAddress, 
+                                        Mode=OneWay}"/>
                         <TextBox x:Name="hoursTB" 
                                  Margin="5 5" 
                                  Padding="3"/>

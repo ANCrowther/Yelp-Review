@@ -20,6 +20,7 @@
             updateUserLocationCommand = new RelayCommand(UpdateUserLocation);
             addCommand = new RelayCommand(AddSelectedCategories);
             removeCommand = new RelayCommand(RemoveSelectedCategories);
+            searchBusinessesCommand = new RelayCommand(SearchBusinesses);
         }
 
         /*    GENERAL USE    */
@@ -269,6 +270,26 @@
         }
         #endregion
 
+        #region Search for Businesses
+        private RelayCommand searchBusinessesCommand;
+        public RelayCommand SearchBusinessesCommand { get { return searchBusinessesCommand; } }
+
+        private ObservableCollection<Business> businessList;
+        public ObservableCollection<Business> BusinessList
+        {
+            get { return businessList; }
+            set
+            {
+                businessList = value;
+                OnPropertyChanged("BusinessList");
+            }
+        }
+
+        public void SearchBusinesses()
+        {
+            BusinessList = new ObservableCollection<Business>(ObjYelpService.SearchBusinesses(SelectionList, CurrentBusiness));
+        }
+        #endregion
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string v)
