@@ -11,9 +11,12 @@
             <ColumnDefinition Width="450"/>
             <ColumnDefinition Width="710"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="0" Orientation="Vertical">
+        <StackPanel Grid.Column="0" 
+                    Orientation="Vertical">
             <StackPanel Orientation="Horizontal">
+                
                 <!--User Information Group Box-->
+                
                 <GroupBox Header="Set Current User" 
                           VerticalAlignment="Center" 
                           HorizontalAlignment="Center" 
@@ -44,7 +47,12 @@
                                  SelectedItem="{Binding SelectedUser}"/>
                     </StackPanel>
                 </GroupBox>
-                <GroupBox Header="User Information" VerticalAlignment="Center" HorizontalAlignment="Center" Width="220" Height="300" Margin="5 5 5 0">
+                <GroupBox Header="User Information" 
+                          VerticalAlignment="Center" 
+                          HorizontalAlignment="Center" 
+                          Width="220" 
+                          Height="300" 
+                          Margin="5 5 5 0">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Horizontal">
                             <Label x:Name="UserNameLabel" 
@@ -157,8 +165,14 @@
                     </StackPanel>
                 </GroupBox>
             </StackPanel>
+            
             <!--Friends Group Box-->
-            <GroupBox Header="Friends" VerticalAlignment="Center" HorizontalAlignment="Center" Width="440" Height="370" Margin="0 0 5 5">
+            
+            <GroupBox Header="Friends" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Center" 
+                      Width="440" Height="370" 
+                      Margin="0 0 5 5">
                 <DataGrid x:Name="FriendListDataGrid" 
                           Margin="5 5 5 5"
                           ItemsSource="{Binding Path=FriendsList, 
@@ -177,9 +191,16 @@
             </GroupBox>
         </StackPanel>
         <StackPanel Grid.Column="1">
+            
             <!--Latest Tips by my Friends? Group Box-->
-            <GroupBox Header="Latest Tips by my Friends?" VerticalAlignment="Center" HorizontalAlignment="Center" Width="700" Height="670" Margin="5 5 5 5">
-                <DataGrid x:Name="ReviewByFriendDataGrid" Margin="5 5 5 5"
+            
+            <GroupBox Header="Latest Tips by my Friends?" 
+                      VerticalAlignment="Center" 
+                      HorizontalAlignment="Center" 
+                      Width="700" Height="670" 
+                      Margin="5 5 5 5">
+                <DataGrid x:Name="ReviewByFriendDataGrid" 
+                          Margin="5 5 5 5"
                           ItemsSource="{Binding Path=TipList, 
                                         Mode=TwoWay}">
                     <DataGrid.Columns>

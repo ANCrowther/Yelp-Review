@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         Title="Team 4 Yelp App" Height="750" Width="1200" Background="#FF5F5858">
     <Window.Resources>
+        <!--The style settings sit here as they do not work correctly when they are in
+        the app xaml. Not sure why, not as important as the rest of the project, so
+        here they stay.-->
         <Style TargetType="GroupBox">
             <Setter Property="FontFamily" Value="Paletino Linotype"/>
             <Setter Property="FontSize" Value="14"/>
