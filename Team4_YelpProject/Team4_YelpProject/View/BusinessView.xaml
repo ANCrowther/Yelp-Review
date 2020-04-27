@@ -53,7 +53,7 @@
                                             Mode=TwoWay}"
                               DisplayMemberPath="City"
                               SelectedValuePath="City"
-                              SelectedValue="{Binding Path=SelectedCity}"/>
+                              SelectedItem="{Binding Path=SelectedCity}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" >
                     <Label Content="Zipcode" 
@@ -66,8 +66,9 @@
                               Padding="3"
                               ItemsSource="{Binding Path=ZipcodeList,
                                             Mode=TwoWay}"
-                              
-                              SelectedValue="{Binding Path=CurrentBusiness}"/>
+                              DisplayMemberPath="Zipcode"
+                              SelectedValuePath="Zipcode"
+                              SelectedItem="{Binding Path=CurrentBusiness}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Category" HorizontalContentAlignment="Right" Width="80" Margin="5 5 5 5" Padding="3"/>

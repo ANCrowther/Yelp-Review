@@ -139,6 +139,7 @@
                 selectedState = value;
                 OnPropertyChanged("SelectedState");
                 CurrentBusiness.State = SelectedState.State;
+                Console.WriteLine(CurrentBusiness.State);
                 CityList = new ObservableCollection<Business>(ObjYelpService.SearchCities(SelectedState.State));
             }
         }
@@ -160,6 +161,9 @@
             {
                 selectedCity = value;
                 OnPropertyChanged("SelectedCity");
+                CurrentBusiness.City = SelectedCity.City;
+                Console.WriteLine(CurrentBusiness.State); 
+                Console.WriteLine(CurrentBusiness.City);
                 ZipcodeList = new ObservableCollection<Business>(ObjYelpService.SearchZipcodes(SelectedState.State, SelectedCity.City));
             }
         }
