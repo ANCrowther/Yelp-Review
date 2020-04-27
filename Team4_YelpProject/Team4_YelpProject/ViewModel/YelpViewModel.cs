@@ -20,6 +20,9 @@
             updateUserLocationCommand = new RelayCommand(UpdateUserLocation);
         }
 
+        /*    GENERAL USE    */
+
+        #region General Use Objects
         private string message;
         public string Message
         {
@@ -43,6 +46,9 @@
                 currentBusiness = value; OnPropertyChanged("CurrentBusiness");
             }
         }
+        #endregion
+
+        /*    USER VIEW    */
 
         #region Search User by Name
         private RelayCommand searchUserCommand;
@@ -115,6 +121,8 @@
         }
         #endregion
 
+        /*    BUSINESS VIEW    */
+
         #region Load StateList
         private ObservableCollection<Business> statesList;
         public ObservableCollection<Business> StatesList
@@ -162,8 +170,6 @@
                 selectedCity = value;
                 OnPropertyChanged("SelectedCity");
                 CurrentBusiness.City = SelectedCity.City;
-                Console.WriteLine(CurrentBusiness.State); 
-                Console.WriteLine(CurrentBusiness.City);
                 ZipcodeList = new ObservableCollection<Business>(ObjYelpService.SearchZipcodes(SelectedState.State, SelectedCity.City));
             }
         }
@@ -174,8 +180,38 @@
             get { return zipcodeList; }
             set
             { 
-                zipcodeList = value; 
+                zipcodeList = value;
                 OnPropertyChanged("ZipcodeList");
+            }
+        }
+        #endregion
+
+        #region Load Categories
+        private Business selectedZipcode;
+        public Business SelectedZipcode
+        {
+            get { return selectedZipcode; }
+            set
+            {
+                selectedZipcode = value;
+                CurrentBusiness.Zipcode = SelectedZipcode.Zipcode;
+                Console.WriteLine(CurrentBusiness.State);
+                Console.WriteLine(CurrentBusiness.City);
+                Console.WriteLine(CurrentBusiness.Zipcode);
+
+                OnPropertyChanged("SelectedZipcode");
+                CategoryList = new ObservableCollection<Business>(ObjYelpService.SearchCategoryList(CurrentBusiness));
+            }
+        }
+
+        private ObservableCollection<Business> categoryList;
+        public ObservableCollection<Business> CategoryList
+        {
+            get { return categoryList; }
+            set
+            {
+                categoryList = value;
+                OnPropertyChanged("CategoryList");
             }
         }
         #endregion

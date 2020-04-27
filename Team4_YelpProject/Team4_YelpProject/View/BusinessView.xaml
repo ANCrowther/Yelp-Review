@@ -68,7 +68,7 @@
                                             Mode=TwoWay}"
                               DisplayMemberPath="Zipcode"
                               SelectedValuePath="Zipcode"
-                              SelectedItem="{Binding Path=CurrentBusiness}"/>
+                              SelectedItem="{Binding Path=SelectedZipcode}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Category" 
@@ -78,7 +78,11 @@
                     <ListBox x:Name="CategoryLB" 
                              Height="140" 
                              Width="170" 
-                             Margin="5 5 5 5"/>
+                             Margin="5 5 5 5"
+                             ItemsSource="{Binding Path=CategoryList,
+                                           Mode=TwoWay}"
+                             DisplayMemberPath="Category"
+                             />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Button x:Name="addBtn" 

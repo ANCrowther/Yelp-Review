@@ -283,5 +283,39 @@
 
             return ObjCities;
         }
+
+        public List<Business> SearchCategoryList(Business B)
+        {
+            List<Business> ObjZipcodes = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT DISTINCT C.category FROM business AS B, categories AS C WHERE B.business_id=C.business_id AND state='" + B.State + "' AND city='" + B.City + "' AND zipcode='" + B.Zipcode + "' ORDER BY category;";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjZipcodes.Add(new Business { Category = R.GetString(0) });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjZipcodes;
+        }
     }
 }

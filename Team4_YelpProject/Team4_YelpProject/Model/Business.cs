@@ -1,6 +1,7 @@
 ﻿namespace Team4_YelpProject.Model
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
 
     public class Business : INotifyPropertyChanged
@@ -82,9 +83,11 @@
             set { this.longitude = value; RaisePropertyChanged("Longitude"); }
         }
 
-        public string ZipcodeString()
+        private string category;
+        public string Category
         {
-            return Zipcode.ToString();
+            get { return category; }
+            set { category = value;RaisePropertyChanged("Category"); }
         }
 
         public Business() { }
