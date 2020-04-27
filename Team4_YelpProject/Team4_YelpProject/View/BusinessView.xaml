@@ -211,7 +211,8 @@
                     <Button Content="Show Tips" 
                             Margin="5 5" 
                             Padding="3" 
-                            Background="#FF30F2FB"/>
+                            Background="#FF30F2FB"
+                            Command="{Binding Path=SearchTipsCommand}"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>

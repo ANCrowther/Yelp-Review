@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Team4_YelpProject.View"
         mc:Ignorable="d"
-        Title="BusinessTipsView" Height="470" Width="820" Background="#FF5F5858">
+        Title="BusinessTipsView" 
+        Height="470" 
+        Width="820" 
+        Background="#FF5F5858">
     <Window.Resources>
         <Style TargetType="GroupBox">
             <Setter Property="FontFamily" Value="OCR A Extended"/>
@@ -30,31 +33,54 @@
         </Style>
     </Window.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="800"/>
+        </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal">
             <StackPanel Orientation="Vertical">
                 <StackPanel Orientation="Horizontal">
-                    <TextBox x:Name="newTipInputBox" Height="50" Width="700"  Margin="5 5 5 5"/>
+                    <TextBox x:Name="newTipInputBox"
+                             Height="50" 
+                             Width="700"  
+                             Margin="5 5 5 5"/>
                     <StackPanel Orientation="Vertical">
-                        <Button Content="Add Tip" Width="70" Margin="5 5 5 5"/>
-                        <Button Content="Like" Width="70" Margin="5 5 5 5"/>
+                        <Button Content="Add Tip" 
+                                Width="70" 
+                                Margin="5 5 5 5"/>
+                        <Button Content="Like" 
+                                Width="70" 
+                                Margin="5 5 5 5"/>
                     </StackPanel>
                 </StackPanel>
-                <GroupBox Header="Business Tips" Height="230"  Margin="5 5 0 5">
-                    <DataGrid x:Name="tipList" Margin="5 5 5 5">
+                <GroupBox Header="Business Tips" 
+                          Height="230"  
+                          Margin="5 5 0 5">
+                    <DataGrid x:Name="tipList" 
+                              Margin="5 5 5 5"
+                              ItemsSource="{Binding Path=TipsList, 
+                                        Mode=TwoWay}"
+                              DataContext="TipsViewModel">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Date" Width="auto" 
-                                                Binding="{Binding date}"/>
-                            <DataGridTextColumn Header="User Name" Width="auto" 
-                                                Binding="{Binding userName}"/>
-                            <DataGridTextColumn Header="Likes" Width="auto" 
-                                                Binding="{Binding likes}"/>
-                            <DataGridTextColumn Header="User Text" Width="auto" 
-                                                Binding="{Binding text}"/>
+                            <DataGridTextColumn Header="Date" 
+                                                Width="auto" 
+                                                Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="User Name" 
+                                                Width="auto" 
+                                                Binding="{Binding UserName}"/>
+                            <DataGridTextColumn Header="Likes" 
+                                                Width="auto" 
+                                                Binding="{Binding Likes}"/>
+                            <DataGridTextColumn Header="User Text" 
+                                                Width="auto" 
+                                                Binding="{Binding Text}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
-                <GroupBox Header="Friends who reviewed this business" Height="110" Margin="5 5 0 5">
-                    <DataGrid x:Name="CheckinList" Margin="5 5 5 5"/>
+                <GroupBox Header="Friends who reviewed this business" 
+                          Height="130"
+                          Margin="5 5 0 5">
+                    <DataGrid x:Name="CheckinList" 
+                              Margin="5 5 5 5"/>
                 </GroupBox>
             </StackPanel>
 

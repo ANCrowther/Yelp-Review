@@ -433,5 +433,49 @@
 
             return ObjHours;
         }
+
+        public List<Tips> GetTips(string bid)
+        {
+            List<Tips> ObjTipsList = new List<Tips>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM Business AS B, tip AS T, users AS U WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND T.business_id='" + bid +"' ORDER BY date(T.tipdate) DESC;";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjTipsList.Add(new Tips
+                            {
+                                Date = R.GetDate(0).ToString(),
+                                UserName = R.GetString(1),
+                                BusinessName = R.GetString(2),
+                                City = R.GetString(3),
+                                Text = R.GetString(4),
+                                Likes = R.GetInt32(5),
+                                BusinessID = R.GetString(6),
+                                UserID = R.GetString(7)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjTipsList;
+        }
     }
 }

@@ -5,6 +5,7 @@
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System;
+    using Team4_YelpProject.View;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
@@ -22,6 +23,13 @@
             addCommand = new RelayCommand(AddSelectedCategories);
             removeCommand = new RelayCommand(RemoveSelectedCategories);
             searchBusinessesCommand = new RelayCommand(SearchBusinesses);
+            searchTipsCommand = new RelayCommand(SearchTips);
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string v)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
         }
 
         /*    GENERAL USE    */
@@ -303,10 +311,20 @@
         }
         #endregion
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string v)
+        /*    LOAD BUSINESS TIPS WINDOW    */
+
+        #region Load the Business Tips window
+        private RelayCommand searchTipsCommand;
+        public RelayCommand SearchTipsCommand { get { return searchTipsCommand; } }
+
+        public void SearchTips()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
+            BusinessTipsView tipWindow = new BusinessTipsView(CurrentBusiness, CurrentUser);
+            tipWindow.DataContext = this;
+            tipWindow.Show();
         }
+        #endregion
+
+
     }
 }

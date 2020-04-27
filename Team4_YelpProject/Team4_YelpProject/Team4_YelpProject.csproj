@@ -133,6 +133,7 @@
     <Compile Include="Model\Business.cs" />
     <Compile Include="Model\Tips.cs" />
     <Compile Include="Model\YelpService.cs" />
+    <Compile Include="ViewModel\TipsViewModel.cs" />
     <Compile Include="ViewModel\YelpViewModel.cs" />
     <Compile Include="View\BusinessTipsView.xaml.cs">
       <DependentUpon>BusinessTipsView.xaml</DependentUpon>
