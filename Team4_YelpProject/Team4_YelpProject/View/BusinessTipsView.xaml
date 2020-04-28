@@ -9,6 +9,9 @@
         Height="470" 
         Width="820" 
         Background="#FF5F5858">
+    <!--<Window.DataContext>
+        <vm:TipsViewModel />
+    </Window.DataContext>-->
     <Window.Resources>
         <Style TargetType="GroupBox">
             <Setter Property="FontFamily" Value="OCR A Extended"/>
@@ -58,7 +61,8 @@
                     <DataGrid x:Name="tipList" 
                               Margin="5 5 5 5"
                               DataContext="TipsViewModel"
-                              ItemsSource="{Binding Path=TipsList, 
+                              ItemsSource="{Binding Path=TipsList,
+                                            UpdateSourceTrigger=PropertyChanged,
                                             Mode=TwoWay}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" 

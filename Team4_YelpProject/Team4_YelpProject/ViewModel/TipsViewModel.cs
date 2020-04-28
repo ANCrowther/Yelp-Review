@@ -1,11 +1,13 @@
 ﻿namespace Team4_YelpProject.ViewModel
 {
-    using System;
+    using Team4_YelpProject.Commands;
+    using Team4_YelpProject.Model;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
-    using Team4_YelpProject.Model;
+    using System;
+    using Team4_YelpProject.View;
 
-    class TipsViewModel : INotifyPropertyChanged
+    public class TipsViewModel : INotifyPropertyChanged
     {
         YelpServices ObjYelpService;
         private Business ObjBusiness;

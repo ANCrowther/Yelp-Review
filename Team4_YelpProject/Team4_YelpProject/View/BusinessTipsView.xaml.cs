@@ -9,13 +9,13 @@
     /// </summary>
     public partial class BusinessTipsView : Window
     {
-        TipsViewModel ViewModel;
+        TipsViewModel tipsViewModel;
 
         public BusinessTipsView(Business B, YelpUser U)
         {
             InitializeComponent();
-            ViewModel = new TipsViewModel(B, U);
-            this.DataContext = ViewModel;
+            tipsViewModel = new TipsViewModel(B, U);
+            this.DataContext = tipsViewModel;
         }
     }
 }
