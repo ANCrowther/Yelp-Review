@@ -39,6 +39,7 @@
         private void LoadBusinessTips()
         {
             TipsList = new ObservableCollection<Tips>(ObjYelpService.GetTips(ObjBusiness.BusinessID));
+            Console.WriteLine(TipsList.Count);
         }
 
         #endregion
@@ -54,6 +55,7 @@
         private void LoadFriendsList()
         {
             FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(ObjBusiness.BusinessID, ObjUser.User_id));
+            Console.WriteLine(FriendTipsList.Count);
         }
         #endregion
     }

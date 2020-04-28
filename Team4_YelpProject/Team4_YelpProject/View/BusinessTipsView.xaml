@@ -59,7 +59,7 @@
                               Margin="5 5 5 5"
                               DataContext="TipsViewModel"
                               ItemsSource="{Binding Path=TipsList, 
-                                        Mode=TwoWay}">
+                                            Mode=TwoWay}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" 
                                                 Width="auto"
@@ -83,7 +83,22 @@
                               Margin="5 5 5 5"
                               DataContext="TipsViewModel"
                               ItemsSource="{Binding Path=FriendTipsList, 
-                                            Mode=TwoWay}"/>
+                                            Mode=TwoWay}">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Date" 
+                                                Width="auto"
+                                                Binding="{Binding Path=Date}"/>
+                            <DataGridTextColumn Header="User Name" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=UserName}"/>
+                            <DataGridTextColumn Header="Likes" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=Likes}"/>
+                            <DataGridTextColumn Header="User Text" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=Text}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </GroupBox>
             </StackPanel>
 

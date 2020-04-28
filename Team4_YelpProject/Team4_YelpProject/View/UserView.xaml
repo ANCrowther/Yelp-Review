@@ -5,7 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Team4_YelpProject.View"
              mc:Ignorable="d" 
-             d:DesignHeight="750" d:DesignWidth="1200">
+             d:DesignHeight="750" 
+             d:DesignWidth="1200">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="450"/>
@@ -178,13 +179,17 @@
                           ItemsSource="{Binding Path=FriendsList, 
                                         Mode=TwoWay}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Name" Width="auto"
+                        <DataGridTextColumn Header="Name" 
+                                            Width="auto"
                                             Binding="{Binding Path=Name}"/>
-                        <DataGridTextColumn Header="Total Likes" Width="auto" 
+                        <DataGridTextColumn Header="Total Likes" 
+                                            Width="auto" 
                                             Binding="{Binding Path=Totallikes}"/>
-                        <DataGridTextColumn Header="Avg Stars" Width="auto" 
+                        <DataGridTextColumn Header="Avg Stars" 
+                                            Width="auto" 
                                             Binding="{Binding Path=AvgStars}"/>
-                        <DataGridTextColumn Header="Yelping Since" Width="auto" 
+                        <DataGridTextColumn Header="Yelping Since" 
+                                            Width="auto" 
                                             Binding="{Binding Path=Yelping_since}"/>
                     </DataGrid.Columns>
                 </DataGrid>

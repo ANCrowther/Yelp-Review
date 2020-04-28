@@ -297,11 +297,7 @@
         public ObservableCollection<Business> BusinessList
         {
             get { return businessList; }
-            set
-            {
-                businessList = value;
-                OnPropertyChanged("BusinessList");
-            }
+            set { businessList = value; OnPropertyChanged("BusinessList"); }
         }
 
         public void SearchBusinesses()
