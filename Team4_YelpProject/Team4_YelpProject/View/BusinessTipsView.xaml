@@ -56,8 +56,8 @@
                           Height="230"  
                           Margin="5 5 0 5">
                     <DataGrid x:Name="tipList" 
+                              Width="760"
                               Margin="5 5 5 5"
-                              DataContext="YelpViewModel"
                               ItemsSource="{Binding Path=TipsList,
                                             Mode=TwoWay}">
                         <DataGrid.Columns>
@@ -80,8 +80,8 @@
                           Height="130"
                           Margin="5 5 0 5">
                     <DataGrid x:Name="CheckinList" 
+                              Width="760"
                               Margin="5 5 5 5"
-                              DataContext="YelpViewModel"
                               ItemsSource="{Binding Path=FriendTipsList, 
                                             Mode=TwoWay}">
                         <DataGrid.Columns>
@@ -91,9 +91,6 @@
                             <DataGridTextColumn Header="User Name" 
                                                 Width="auto" 
                                                 Binding="{Binding Path=UserName}"/>
-                            <DataGridTextColumn Header="Likes" 
-                                                Width="auto" 
-                                                Binding="{Binding Path=Likes}"/>
                             <DataGridTextColumn Header="User Text" 
                                                 Width="auto" 
                                                 Binding="{Binding Path=Text}"/>
@@ -101,7 +98,6 @@
                     </DataGrid>
                 </GroupBox>
             </StackPanel>
-
         </StackPanel>
     </Grid>
 </Window>

@@ -349,9 +349,7 @@
         {
             TipsList = new ObservableCollection<Tips>(ObjYelpService.GetTips(CurrentBusiness.BusinessID));
             Console.WriteLine(TipsList.Count);
-            //Console.WriteLine(TipsList[0].BusinessName);
         }
-
         #endregion
 
         #region Load Friends Grid
