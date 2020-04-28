@@ -53,9 +53,7 @@
                 <vw:UserView/>
             </TabItem>
             <TabItem Header="Business Information">
-                <Grid>
-                    <vw:BusinessView/>
-                </Grid>
+                <vw:BusinessView/>
             </TabItem>
         </TabControl>
     </Grid>

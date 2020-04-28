@@ -10,6 +10,7 @@
     public class YelpViewModel : INotifyPropertyChanged
     {
         YelpServices ObjYelpService;
+        BusinessTipsView tipWindow;
 
         public YelpViewModel()
         {
@@ -24,6 +25,8 @@
             removeCommand = new RelayCommand(RemoveSelectedCategories);
             searchBusinessesCommand = new RelayCommand(SearchBusinesses);
             searchTipsCommand = new RelayCommand(SearchTips);
+
+            tipWindow = new BusinessTipsView();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -304,7 +307,6 @@
             set { businessList = value; 
                 OnPropertyChanged("BusinessList"); 
                 OnPropertyChanged("ItemCount");
-                
             }
         }
 
@@ -328,9 +330,42 @@
 
         public void SearchTips()
         {
-            BusinessTipsView tipWindow = new BusinessTipsView(CurrentBusiness, CurrentUser);
             tipWindow.DataContext = this;
+            LoadBusinessTips();
+            LoadFriendsList();
             tipWindow.Show();
+        }
+        #endregion
+
+        #region Load Business Tips Grid
+        private ObservableCollection<Tips> tipsList;
+        public ObservableCollection<Tips> TipsList
+        {
+            get { return tipsList; }
+            set { tipsList = value; OnPropertyChanged("TipsList"); }
+        }
+
+        private void LoadBusinessTips()
+        {
+            TipsList = new ObservableCollection<Tips>(ObjYelpService.GetTips(CurrentBusiness.BusinessID));
+            Console.WriteLine(TipsList.Count);
+            //Console.WriteLine(TipsList[0].BusinessName);
+        }
+
+        #endregion
+
+        #region Load Friends Grid
+        private ObservableCollection<Tips> friendTipsList;
+        public ObservableCollection<Tips> FriendTipsList
+        {
+            get { return friendTipsList; }
+            set { friendTipsList = value; OnPropertyChanged("FriendTipsList"); }
+        }
+
+        private void LoadFriendsList()
+        {
+            FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(CurrentBusiness.BusinessID, CurrentUser.User_id));
+            Console.WriteLine(FriendTipsList.Count);
         }
         #endregion
     }
