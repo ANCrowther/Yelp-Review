@@ -139,7 +139,8 @@
                         <Label Content="# of Businesses:" 
                                Margin="10 5 5 5" 
                                Padding="3"/>
-                        <TextBlock Text="##" 
+                        <TextBlock Text="{Binding Path=ItemCount,
+                                          Mode=OneWay}"
                                    Margin="0 5 25 5" 
                                    Padding="3"/>
                         <Label Content="Sort By:" 

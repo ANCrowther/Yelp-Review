@@ -68,10 +68,14 @@
         public BusinessHours Hours
         {
             get { return hours; }
-            set
-            {
-                hours = value; OnPropertyChanged("Hours");
-            }
+            set { hours = value; OnPropertyChanged("Hours"); }
+        }
+
+        private string itemCount;
+        public string ItemCount
+        {
+            get { return itemCount; }
+            set { itemCount = value;OnPropertyChanged("itemCount"); }
         }
         #endregion
 
@@ -297,12 +301,22 @@
         public ObservableCollection<Business> BusinessList
         {
             get { return businessList; }
-            set { businessList = value; OnPropertyChanged("BusinessList"); }
+            set { businessList = value; 
+                OnPropertyChanged("BusinessList"); 
+                OnPropertyChanged("ItemCount");
+                
+            }
         }
 
         public void SearchBusinesses()
         {
             BusinessList = new ObservableCollection<Business>(ObjYelpService.SearchBusinesses(SelectionList, CurrentBusiness));
+            ItemCounter();
+        }
+
+        public void ItemCounter()
+        {
+            ItemCount = BusinessList.Count.ToString();
         }
         #endregion
 
