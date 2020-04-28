@@ -57,22 +57,22 @@
                           Margin="5 5 0 5">
                     <DataGrid x:Name="tipList" 
                               Margin="5 5 5 5"
+                              DataContext="TipsViewModel"
                               ItemsSource="{Binding Path=TipsList, 
-                                        Mode=TwoWay}"
-                              DataContext="TipsViewModel">
+                                        Mode=TwoWay}">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Date" 
-                                                Width="auto" 
-                                                Binding="{Binding Date}"/>
+                                                Width="auto"
+                                                Binding="{Binding Path=Date}"/>
                             <DataGridTextColumn Header="User Name" 
                                                 Width="auto" 
-                                                Binding="{Binding UserName}"/>
+                                                Binding="{Binding Path=UserName}"/>
                             <DataGridTextColumn Header="Likes" 
                                                 Width="auto" 
-                                                Binding="{Binding Likes}"/>
+                                                Binding="{Binding Path=Likes}"/>
                             <DataGridTextColumn Header="User Text" 
                                                 Width="auto" 
-                                                Binding="{Binding Text}"/>
+                                                Binding="{Binding Path=Text}"/>
                         </DataGrid.Columns>
                     </DataGrid>
                 </GroupBox>
@@ -80,7 +80,10 @@
                           Height="130"
                           Margin="5 5 0 5">
                     <DataGrid x:Name="CheckinList" 
-                              Margin="5 5 5 5"/>
+                              Margin="5 5 5 5"
+                              DataContext="TipsViewModel"
+                              ItemsSource="{Binding Path=FriendTipsList, 
+                                            Mode=TwoWay}"/>
                 </GroupBox>
             </StackPanel>
 

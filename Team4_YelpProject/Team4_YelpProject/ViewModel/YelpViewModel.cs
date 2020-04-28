@@ -174,7 +174,6 @@
                 selectedState = value;
                 OnPropertyChanged("SelectedState");
                 CurrentBusiness.State = SelectedState.State;
-                Console.WriteLine(CurrentBusiness.State);
                 CityList = new ObservableCollection<Business>(ObjYelpService.SearchCities(SelectedState.State));
             }
         }
@@ -324,7 +323,5 @@
             tipWindow.Show();
         }
         #endregion
-
-
     }
 }

@@ -16,14 +16,19 @@
             ObjYelpService = new YelpServices();
             ObjBusiness = B;
             ObjUser = U;
-            Console.WriteLine(B.BusinessName);
-            Console.WriteLine(U.Name);
+            Console.WriteLine(ObjBusiness.BusinessName);
+            Console.WriteLine(ObjUser.Name);
             LoadBusinessTips();
             LoadFriendsList();
         }
 
-        #region Load Business Tips Grid
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string v)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
+        }
 
+        #region Load Business Tips Grid
         private ObservableCollection<Tips> tipsList;
         public ObservableCollection<Tips> TipsList
         {
@@ -39,16 +44,17 @@
         #endregion
 
         #region Load Friends Grid
+        private ObservableCollection<Tips> friendTipsList;
+        public ObservableCollection<Tips> FriendTipsList
+        {
+            get { return friendTipsList; }
+            set { friendTipsList = value; OnPropertyChanged("FriendTipsList"); }
+        }
+
         private void LoadFriendsList()
         {
-
+            FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(ObjBusiness.BusinessID, ObjUser.User_id));
         }
         #endregion
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnPropertyChanged(string v)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(v));
-        }
     }
 }

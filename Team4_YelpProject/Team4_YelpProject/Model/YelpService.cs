@@ -266,10 +266,15 @@
                     Console.WriteLine(cmd.CommandText);
                     try
                     {
-                        var reader = cmd.ExecuteReader();
-                        while (reader.Read())
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
                         {
-                            ObjCities.Add(new Business { State = reader.GetString(0), City = reader.GetString(1), Zipcode = reader.GetInt32(2) });
+                            ObjCities.Add(new Business 
+                            {
+                                State = R.GetString(0), 
+                                City = R.GetString(1), 
+                                Zipcode = R.GetInt32(2) 
+                            });
                         }
                     }
                     catch (NpgsqlException ex)
@@ -445,6 +450,50 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM Business AS B, tip AS T, users AS U WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND T.business_id='" + bid +"' ORDER BY date(T.tipdate) DESC;";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjTipsList.Add(new Tips
+                            {
+                                Date = R.GetDate(0).ToString(),
+                                UserName = R.GetString(1),
+                                BusinessName = R.GetString(2),
+                                City = R.GetString(3),
+                                Text = R.GetString(4),
+                                Likes = R.GetInt32(5),
+                                BusinessID = R.GetString(6),
+                                UserID = R.GetString(7)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjTipsList;
+        }
+
+        public List<Tips> GetFriendTips(string B, string U)
+        {
+            List<Tips> ObjTipsList = new List<Tips>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM business AS B, tip AS T, users AS U, (SELECT  F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + U + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id AND B.business_id='" + B + "' ORDER BY date(T.tipdate) DESC;";
                     Console.WriteLine(cmd.CommandText);
                     try
                     {
