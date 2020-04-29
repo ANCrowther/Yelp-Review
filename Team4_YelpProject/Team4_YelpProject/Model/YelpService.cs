@@ -539,7 +539,7 @@
                     try
                     {
                         cmd.Connection = connection;
-                        cmd.CommandText = "UPDATE tip SET likes=likes+1 WHERE user_id='" + T.UserID + "' AND business_id='" + T.BusinessID + "';";
+                        cmd.CommandText = "UPDATE tip SET likes=likes+1 WHERE user_id='" + T.UserID + "' AND business_id='" + T.BusinessID + "' AND text='" + T.Text +"';";
                         Console.WriteLine(cmd.CommandText);
                         cmd.ExecuteNonQuery();
                         IsUpdated = true;

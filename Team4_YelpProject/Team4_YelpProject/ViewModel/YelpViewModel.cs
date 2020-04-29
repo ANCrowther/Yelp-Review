@@ -391,7 +391,10 @@
             try
             {
                 var IsUpdate = ObjYelpService.UpdateLikeTips(SelectedTip);
-                OnPropertyChanged("TipsList");
+                if (IsUpdate)
+                {
+                    TipsList = new ObservableCollection<Tips>(ObjYelpService.GetTips(CurrentBusiness.BusinessID));
+                }
             }
             catch (Exception ex)
             {
