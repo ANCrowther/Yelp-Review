@@ -449,7 +449,7 @@
                 using (var cmd = new NpgsqlCommand())
                 {
                     cmd.Connection = connection;
-                    cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM Business AS B, tip AS T, users AS U WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND T.business_id='" + bid +"' ORDER BY date(T.tipdate) DESC;";
+                    cmd.CommandText = "SELECT T.tipdate, U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM Business AS B, tip AS T, users AS U WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND T.business_id='" + bid +"' ORDER BY date(T.tipdate) DESC;";
                     Console.WriteLine(cmd.CommandText);
                     try
                     {
@@ -458,7 +458,7 @@
                         {
                             ObjTipsList.Add(new Tips
                             {
-                                Date = R.GetDate(0).ToString(),
+                                Date = R.GetTimeStamp(0).ToString(),
                                 UserName = R.GetString(1),
                                 BusinessName = R.GetString(2),
                                 City = R.GetString(3),
@@ -539,7 +539,7 @@
                     try
                     {
                         cmd.Connection = connection;
-                        cmd.CommandText = "UPDATE tip SET likes=likes+1 WHERE user_id='" + T.UserID + "' AND business_id='" + T.BusinessID + "' AND text='" + T.Text +"';";
+                        cmd.CommandText = "UPDATE tip SET likes=likes+1 WHERE user_id='" + T.UserID + "' AND business_id='" + T.BusinessID + "' AND tipdate='" + T.Date +"';";
                         Console.WriteLine(cmd.CommandText);
                         cmd.ExecuteNonQuery();
                         IsUpdated = true;
