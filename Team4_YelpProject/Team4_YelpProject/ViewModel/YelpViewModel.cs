@@ -18,6 +18,7 @@
             CurrentUser = new YelpUser();
             CurrentBusiness = new Business();
             Hours = new BusinessHours();
+            NewTip = new Tips();
 
             LoadStates();
 
@@ -28,6 +29,7 @@
             searchBusinessesCommand = new RelayCommand(SearchBusinesses);
             searchTipsCommand = new RelayCommand(SearchTips);
             likeCommand = new RelayCommand(UpdateLikeTips);
+            addTipCommand = new RelayCommand(AddToTips);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -80,6 +82,13 @@
         {
             get { return selectedTip; }
             set { selectedTip = value; OnPropertyChanged("SelectedTip"); }
+        }
+
+        private Tips newTip;
+        public Tips NewTip
+        {
+            get { return newTip; }
+            set { newTip = value; OnPropertyChanged("NewTip"); }
         }
 
         private string itemCount;
@@ -357,7 +366,6 @@
         private void LoadBusinessTips()
         {
             TipsList = new ObservableCollection<Tips>(ObjYelpService.GetTips(CurrentBusiness.BusinessID));
-            Console.WriteLine(TipsList.Count);
         }
         #endregion
 
@@ -395,6 +403,30 @@
                 {
                     TipsList = new ObservableCollection<Tips>(ObjYelpService.GetTips(CurrentBusiness.BusinessID));
                 }
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
+        }
+        #endregion
+
+        #region Add a tip Command
+        private RelayCommand addTipCommand;
+        public RelayCommand AddTipCommand { get { return addTipCommand; } }
+
+        public void AddToTips()
+        {
+            try
+            {
+                NewTip.BusinessID = currentBusiness.BusinessID;
+                NewTip.UserID = SelectedUser.User_id;
+                var IsUpdate = ObjYelpService.AddToTips(NewTip);
+                if (IsUpdate)
+                {
+                    TipsList = new ObservableCollection<Tips>(ObjYelpService.GetTips(CurrentBusiness.BusinessID));
+                }
+
             }
             catch (Exception ex)
             {

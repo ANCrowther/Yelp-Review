@@ -557,5 +557,36 @@
 
             return IsUpdated;
         }
+
+        public bool AddToTips(Tips T)
+        {
+            bool IsUpdated = false;
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    try
+                    {
+                        cmd.Connection = connection;
+                        cmd.CommandText = "INSERT INTO tip(tipdate, business_id, user_id, text, likes) VALUES(current_timestamp, '" + T.BusinessID + "', '" + T.UserID + "', '" + T.Text + "', 0);";
+                        Console.WriteLine(cmd.CommandText);
+                        cmd.ExecuteNonQuery();
+                        IsUpdated = true;
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return IsUpdated;
+        }
     }
 }
