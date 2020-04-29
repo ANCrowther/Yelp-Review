@@ -526,5 +526,36 @@
 
             return ObjTipsList;
         }
+
+        public bool UpdateLikeTips(Tips T)
+        {
+            bool IsUpdated = false;
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    try
+                    {
+                        cmd.Connection = connection;
+                        cmd.CommandText = "UPDATE tip SET likes=likes+1 WHERE user_id='" + T.UserID + "' AND business_id='" + T.BusinessID + "';";
+                        Console.WriteLine(cmd.CommandText);
+                        cmd.ExecuteNonQuery();
+                        IsUpdated = true;
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return IsUpdated;
+        }
     }
 }

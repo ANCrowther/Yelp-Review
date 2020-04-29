@@ -15,18 +15,19 @@
         public YelpViewModel()
         {
             ObjYelpService = new YelpServices();
-            LoadStates();
             CurrentUser = new YelpUser();
             CurrentBusiness = new Business();
             Hours = new BusinessHours();
+
+            LoadStates();
+
             searchUserCommand = new RelayCommand(SearchUser);
             updateUserLocationCommand = new RelayCommand(UpdateUserLocation);
             addCommand = new RelayCommand(AddSelectedCategories);
             removeCommand = new RelayCommand(RemoveSelectedCategories);
             searchBusinessesCommand = new RelayCommand(SearchBusinesses);
             searchTipsCommand = new RelayCommand(SearchTips);
-
-            tipWindow = new BusinessTipsView();
+            likeCommand = new RelayCommand(UpdateLikeTips);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -72,6 +73,13 @@
         {
             get { return hours; }
             set { hours = value; OnPropertyChanged("Hours"); }
+        }
+
+        private Tips selectedTip;
+        public Tips SelectedTip
+        {
+            get { return selectedTip; }
+            set { selectedTip = value; OnPropertyChanged("SelectedTip"); }
         }
 
         private string itemCount;
@@ -330,6 +338,7 @@
 
         public void SearchTips()
         {
+            tipWindow = new BusinessTipsView();
             tipWindow.DataContext = this;
             LoadBusinessTips();
             LoadFriendsList();
@@ -362,10 +371,32 @@
 
         private void LoadFriendsList()
         {
-            FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(CurrentBusiness.BusinessID, SelectedUser.User_id));
-            Console.WriteLine(FriendTipsList.Count);
-            Console.WriteLine(CurrentBusiness.BusinessID);
-            Console.WriteLine(SelectedUser.User_id);
+            if (SelectedUser != null)
+            {
+                FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(CurrentBusiness.BusinessID, SelectedUser.User_id));
+            }
+            else
+            {
+                FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(CurrentBusiness.BusinessID, ""));
+            }
+        }
+        #endregion
+
+        #region Like tips Command
+        private RelayCommand likeCommand;
+        public RelayCommand LikeCommand { get { return likeCommand; } }
+
+        public void UpdateLikeTips()
+        {
+            try
+            {
+                var IsUpdate = ObjYelpService.UpdateLikeTips(SelectedTip);
+                OnPropertyChanged("TipsList");
+            }
+            catch (Exception ex)
+            {
+                Message = ex.Message;
+            }
         }
         #endregion
     }
