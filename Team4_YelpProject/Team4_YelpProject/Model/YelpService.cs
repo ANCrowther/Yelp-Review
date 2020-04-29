@@ -588,5 +588,72 @@
 
             return IsUpdated;
         }
+
+        public List<KeyValuePair<string, int>> GetCheckins(string bid)
+        {
+            List<KeyValuePair<string, int>> ObjCheckins = new List<KeyValuePair<string, int>>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT month, count(month) FROM checkins where business_id = '" + bid + "' group by month;" ;
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjCheckins.Add(new KeyValuePair<string, int>(GetMonth(R.GetInt32(0)), R.GetInt32(1)));
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjCheckins;
+        }
+
+        private string GetMonth(int mo)
+        {
+            switch (mo)
+            {
+                case 1:
+                    return "January";
+                case 2:
+                    return "February";
+                case 3:
+                    return "March";
+                case 4:
+                    return "April";
+                case 5:
+                    return "May";
+                case 6:
+                    return "June";
+                case 7:
+                    return "July";
+                case 8:
+                    return "August";
+                case 9:
+                    return "September";
+                case 10:
+                    return "October";
+                case 11:
+                    return "November";
+                case 12:
+                    return "December";
+                default:
+                    return "Fail";
+            }
+        }
     }
 }

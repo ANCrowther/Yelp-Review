@@ -6,11 +6,13 @@
     using System.ComponentModel;
     using System;
     using Team4_YelpProject.View;
+    using System.Collections.Generic;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
         YelpServices ObjYelpService;
         BusinessTipsView tipWindow;
+        CheckinView checkinWindow;
 
         public YelpViewModel()
         {
@@ -30,6 +32,7 @@
             searchTipsCommand = new RelayCommand(SearchTips);
             likeCommand = new RelayCommand(UpdateLikeTips);
             addTipCommand = new RelayCommand(AddToTips);
+            checkinCommand = new RelayCommand(checkinSearch);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -431,6 +434,38 @@
             catch (Exception ex)
             {
                 Message = ex.Message;
+            }
+        }
+        #endregion
+
+        /*    LOAD CHECKINS WINDOW    */
+
+        #region Load the Checkins Window
+        private RelayCommand checkinCommand;
+        public RelayCommand CheckinCommand { get { return checkinCommand; } }
+
+        public void checkinSearch()
+        {
+            checkinWindow = new CheckinView();
+            checkinWindow.DataContext = this;
+            LoadCheckinsAtBusiness();
+            checkinWindow.Show();
+        }
+
+        private ObservableCollection<KeyValuePair<string, int>> checkins;
+        public ObservableCollection<KeyValuePair<string, int>> Checkins
+        {
+            get { return checkins; }
+            set { checkins = value; OnPropertyChanged("Checkins"); }
+        }
+
+        private void LoadCheckinsAtBusiness()
+        {
+            Checkins = new ObservableCollection<KeyValuePair<string, int>>(ObjYelpService.GetCheckins(CurrentBusiness.BusinessID));
+            Console.WriteLine(Checkins.Count);
+            foreach(KeyValuePair<string, int> key in Checkins)
+            {
+                Console.WriteLine($"Pair here: {key.Key}, {key.Value}");
             }
         }
         #endregion
