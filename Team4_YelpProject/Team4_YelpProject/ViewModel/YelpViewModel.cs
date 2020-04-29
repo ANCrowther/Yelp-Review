@@ -362,8 +362,10 @@
 
         private void LoadFriendsList()
         {
-            FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(CurrentBusiness.BusinessID, CurrentUser.User_id));
+            FriendTipsList = new ObservableCollection<Tips>(ObjYelpService.GetFriendTips(CurrentBusiness.BusinessID, SelectedUser.User_id));
             Console.WriteLine(FriendTipsList.Count);
+            Console.WriteLine(CurrentBusiness.BusinessID);
+            Console.WriteLine(SelectedUser.User_id);
         }
         #endregion
     }

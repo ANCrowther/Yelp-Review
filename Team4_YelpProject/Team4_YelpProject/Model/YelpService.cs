@@ -493,7 +493,7 @@
                 using (var cmd = new NpgsqlCommand())
                 {
                     cmd.Connection = connection;
-                    cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM business AS B, tip AS T, users AS U, (SELECT  F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + U + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id AND B.business_id='" + B + "' ORDER BY date(T.tipdate) DESC;";
+                    cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + U + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id AND T.business_id='" + B + "' ORDER BY date(T.tipdate) DESC;";
                     Console.WriteLine(cmd.CommandText);
                     try
                     {
