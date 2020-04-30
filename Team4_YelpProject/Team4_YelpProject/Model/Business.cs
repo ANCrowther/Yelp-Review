@@ -132,11 +132,11 @@
             get { return address + ", " + city + ", " + state + ", " + zipcode ; }
         }
 
-        /*    UNDER CONSTRUCTION    */
         private double distance;
         public double Distance
         {
             get { return distance; }
+            set { distance = value; RaisePropertyChanged("Distance"); }
         }
 
         public Business() { }

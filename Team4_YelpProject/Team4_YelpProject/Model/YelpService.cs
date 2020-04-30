@@ -325,6 +325,40 @@
             return ObjZipcodes;
         }
 
+        public double DetermineDistance(Business location, YelpUser uLoc)
+        {
+            Business ObjBusiness = new Business();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT mydistance (" + location.Latitude + ", "+ location.Longitude + ", "+ uLoc.Latitude + ", " + uLoc.Longitude + ");";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjBusiness.Distance = R.GetDouble(0);
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjBusiness.Distance;
+        }
+
         public List<Business> SearchBusinesses(ObservableCollection<Business> BList, Business location)
         {
             List<Business> ObjBusinesses = new List<Business>();
@@ -351,7 +385,7 @@
             sqlStr.Append("WHERE state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' ");
 
             /*    Sew the queries together     */
-            if(sqlCategory != null)
+            if (sqlCategory != null)
             {
                 sqlStr.Append(sqlCategory);
             }
@@ -372,11 +406,13 @@
                         var R = cmd.ExecuteReader();
                         while (R.Read())
                         {
-                            ObjBusinesses.Add(new Business { BusinessID=R.GetString(0), 
-                                BusinessName=R.GetString(1), 
-                                State=R.GetString(2), 
-                                City=R.GetString(3), 
-                                Address=R.GetString(4), 
+                            ObjBusinesses.Add(new Business
+                            {
+                                BusinessID = R.GetString(0),
+                                BusinessName = R.GetString(1),
+                                State = R.GetString(2),
+                                City = R.GetString(3),
+                                Address = R.GetString(4),
                                 Zipcode = R.GetInt32(5),
                                 Latitude = R.GetDouble(6),
                                 Longitude = R.GetDouble(7),

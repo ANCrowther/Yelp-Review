@@ -335,6 +335,15 @@
         public void SearchBusinesses()
         {
             BusinessList = new ObservableCollection<Business>(ObjYelpService.SearchBusinesses(SelectionList, CurrentBusiness));
+
+            if (SelectedUser != null)
+            {
+                foreach (Business bus in BusinessList)
+                {
+                    bus.Distance = ObjYelpService.DetermineDistance(bus, SelectedUser);
+                }
+            }
+
             ItemCounter();
         }
 

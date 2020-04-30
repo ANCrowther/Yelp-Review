@@ -148,7 +148,9 @@
                                Padding="3"/>
                         <ComboBox Width="150"  
                                   Margin="5 5" 
-                                  Padding="3"/>
+                                  Padding="3">
+                            <ComboBoxItem Content="Business"/>
+                        </ComboBox>
                     </StackPanel>
                     <DataGrid x:Name="businessDG" 
                               Height="230" 
