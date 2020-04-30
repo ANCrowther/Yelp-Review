@@ -368,6 +368,10 @@
         }
         #endregion
 
+        #region Sort Results By
+
+        #endregion
+
         /*    LOAD BUSINESS TIPS WINDOW    */
 
         #region Load the Business Tips window

@@ -116,7 +116,7 @@
         public string Category
         {
             get { return category; }
-            set { category = value;RaisePropertyChanged("Category"); }
+            set { category = value; RaisePropertyChanged("Category"); }
         }
 
         private string attribute;
@@ -130,6 +130,13 @@
         public string FullAddress
         {
             get { return address + ", " + city + ", " + state + ", " + zipcode ; }
+        }
+
+        /*    UNDER CONSTRUCTION    */
+        private double distance;
+        public double Distance
+        {
+            get { return distance; }
         }
 
         public Business() { }
