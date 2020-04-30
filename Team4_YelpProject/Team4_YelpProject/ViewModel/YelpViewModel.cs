@@ -69,6 +69,8 @@
                 if(currentBusiness.BusinessID != null)
                 {
                     Hours = ObjYelpService.SearchForHours(currentBusiness);
+                    BusinessCategories = new ObservableCollection<Business>(ObjYelpService.GetCategories(CurrentBusiness.BusinessID));
+                    BusinessAttributes = new ObservableCollection<Business>(ObjYelpService.GetAttributes(CurrentBusiness.BusinessID));
                 }
             }
         }
@@ -339,6 +341,30 @@
         public void ItemCounter()
         {
             ItemCount = BusinessList.Count.ToString();
+        }
+        #endregion
+
+        #region Load Business Attributes and Categories
+        private ObservableCollection<Business> businessAttributes;
+        public ObservableCollection<Business> BusinessAttributes
+        {
+            get { return businessAttributes; }
+            set
+            {
+                businessAttributes = value;
+                OnPropertyChanged("BusinessAttributes");
+            }
+        }
+
+        private ObservableCollection<Business> businessCategories;
+        public ObservableCollection<Business> BusinessCategories
+        {
+            get { return businessCategories; }
+            set
+            {
+                businessCategories = value;
+                OnPropertyChanged("BusinessCategories");
+            }
         }
         #endregion
 

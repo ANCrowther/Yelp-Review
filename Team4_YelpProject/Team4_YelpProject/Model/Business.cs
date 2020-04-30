@@ -119,6 +119,13 @@
             set { category = value;RaisePropertyChanged("Category"); }
         }
 
+        private string attribute;
+        public string Attribute
+        {
+            get { return attribute; }
+            set { attribute = value; RaisePropertyChanged("Attribute"); }
+        }
+
         private string fullAddress;
         public string FullAddress
         {

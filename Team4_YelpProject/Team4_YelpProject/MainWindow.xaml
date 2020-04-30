@@ -46,6 +46,14 @@
         <Style TargetType="TabControl">
             <Setter Property="Background" Value="#FF655168"/>
         </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="ListBox">
+            <Setter Property="FontFamily" Value="Paletino Linotype"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <TabControl Background="#FF655168">

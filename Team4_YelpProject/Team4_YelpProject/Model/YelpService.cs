@@ -655,5 +655,81 @@
                     return "Fail";
             }
         }
+
+        public List<Business> GetCategories(string bid)
+        {
+            List<Business> ObjCatList = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT category, business_id FROM categories WHERE business_id='" + bid + "';";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjCatList.Add(new Business
+                            {
+                                Category = R.GetString(0),
+                                BusinessID = R.GetString(1)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjCatList;
+        }
+
+        public List<Business> GetAttributes(string bid)
+        {
+            List<Business> ObjCatList = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT attr_name, business_id FROM attributes WHERE business_id='" + bid + "' AND value='True';";
+                    Console.WriteLine(cmd.CommandText);
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjCatList.Add(new Business
+                            {
+                                Attribute = R.GetString(0),
+                                BusinessID = R.GetString(1)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjCatList;
+        }
     }
 }
