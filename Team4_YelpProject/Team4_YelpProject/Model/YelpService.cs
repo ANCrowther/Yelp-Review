@@ -767,5 +767,36 @@
 
             return ObjCatList;
         }
+
+        public bool AddCheckin(string bid)
+        {
+            bool IsUpdated = false;
+            
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    try
+                    {
+                        cmd.Connection = connection;
+                        cmd.CommandText = "INSERT INTO checkins(business_id, year, month, day, time) VALUES ('"+bid+ "', date_part('year', current_timestamp), date_part('month', current_timestamp), date_part('day', current_timestamp), current_time);";
+                        Console.WriteLine(cmd.CommandText);
+                        cmd.ExecuteNonQuery();
+                        IsUpdated = true;
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return IsUpdated;
+        }
     }
 }

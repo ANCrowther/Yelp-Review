@@ -33,6 +33,7 @@
             likeCommand = new RelayCommand(UpdateLikeTips);
             addTipCommand = new RelayCommand(AddToTips);
             checkinCommand = new RelayCommand(checkinSearch);
+            checkinWindowCommand = new RelayCommand(addCheckin);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -505,6 +506,20 @@
             foreach(KeyValuePair<string, int> key in Checkins)
             {
                 Console.WriteLine($"Pair here: {key.Key}, {key.Value}");
+            }
+        }
+        #endregion
+
+        #region Check-in
+        private RelayCommand checkinWindowCommand;
+        public RelayCommand CheckinWindowCommand { get { return checkinWindowCommand; } }
+
+        private void addCheckin()
+        {
+            var IsUpdate = ObjYelpService.AddCheckin(CurrentBusiness.BusinessID);
+            if (IsUpdate)
+            {
+                LoadCheckinsAtBusiness();
             }
         }
         #endregion

@@ -10,7 +10,7 @@
         Title="CheckinView" Height="450" Width="700">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="550"/>
             <ColumnDefinition Width="100"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -39,5 +39,15 @@
                 </chartingToolkit:Chart.Series>
             </chartingToolkit:Chart>
         </ScrollViewer>
+        <Button Content="Check-In"
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="5 5"
+                Padding="3"
+                Height="70" 
+                Width="70" 
+                Background="#FF309719" 
+                Foreground="#FFFDF200"
+                Command="{Binding Path=CheckinWindowCommand}"/>
     </Grid>
 </Window>
