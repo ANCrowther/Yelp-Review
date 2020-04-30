@@ -502,6 +502,7 @@
         private void LoadCheckinsAtBusiness()
         {
             Checkins = new ObservableCollection<KeyValuePair<string, int>>(ObjYelpService.GetCheckins(CurrentBusiness.BusinessID));
+
             Console.WriteLine(Checkins.Count);
             foreach(KeyValuePair<string, int> key in Checkins)
             {

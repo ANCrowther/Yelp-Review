@@ -26,17 +26,15 @@
             <chartingToolkit:Chart Title="Year of Check-ins"
                                    Name="CheckinChart"
                                    Margin="5 5 5 5"
-                                   Padding="10"
-                                   DataContext="{Binding}">
-                <chartingToolkit:Chart.Series>
+                                   Padding="10">
+
                     <chartingToolkit:ColumnSeries Title="# of Check-ins"
                                           HorizontalAlignment="Left"
                                           VerticalAlignment="Top"
-                                          DependentValueBinding="{Binding Value}"
-                                          IndependentValueBinding="{Binding Key}"
-                                          ItemsSource="{Binding Path=Checkins,
-                                                        Mode=OneWay}"/>
-                </chartingToolkit:Chart.Series>
+                                          DependentValuePath="Value"
+                                          IndependentValuePath="Key"
+                                          ItemsSource="{Binding Path=Checkins}"/>
+
             </chartingToolkit:Chart>
         </ScrollViewer>
         <Button Content="Check-In"
