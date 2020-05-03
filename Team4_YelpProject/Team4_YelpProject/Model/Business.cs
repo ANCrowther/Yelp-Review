@@ -1,5 +1,6 @@
 ﻿namespace Team4_YelpProject.Model
 {
+    using Microsoft.Maps.MapControl.WPF;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -137,6 +138,12 @@
         {
             get { return distance; }
             set { distance = value; RaisePropertyChanged("Distance"); }
+        }
+
+        private Location bLocation;
+        public Location BLocation
+        {
+            get { return new Location(latitude, longitude); }
         }
 
         public Business() { }

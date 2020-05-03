@@ -411,7 +411,6 @@
 
         #endregion
 
-
         /*    LOAD BUSINESS TIPS WINDOW    */
 
         #region Load the Business Tips window
