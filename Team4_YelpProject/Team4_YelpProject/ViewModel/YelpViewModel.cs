@@ -1,13 +1,14 @@
 ﻿namespace Team4_YelpProject.ViewModel
 {
+    using Microsoft.Maps.MapControl.WPF;
+    using System.Collections.ObjectModel;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
     using Team4_YelpProject.Commands;
     using Team4_YelpProject.Model;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System;
     using Team4_YelpProject.View;
-    using System.Collections.Generic;
-    using Microsoft.Maps.MapControl.WPF;
+    using System.Windows;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
@@ -102,7 +103,7 @@
         public string ItemCount
         {
             get { return itemCount; }
-            set { itemCount = value;OnPropertyChanged("itemCount"); }
+            set { itemCount = value;OnPropertyChanged("ItemCount"); }
         }
         #endregion
 
@@ -345,8 +346,8 @@
                     bus.Distance = ObjYelpService.DetermineDistance(bus, SelectedUser);
                 }
             }
-            LoadBusinessLocations();
             ItemCounter();
+            LoadBusinessLocations();
         }
 
         public void ItemCounter()
@@ -406,10 +407,9 @@
                 pins.Add(pin);
             }
             BusinessLocations = new ObservableCollection<Pushpin>(pins);
-
         }
-
         #endregion
+
 
         /*    LOAD BUSINESS TIPS WINDOW    */
 

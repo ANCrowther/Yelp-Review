@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:Team4_YelpProject"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Style TargetType="GroupBox">
+        <!--<Style TargetType="GroupBox">
             <Setter Property="FontFamily" Value="Paletino Linotype"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="FontWeight" Value="Bold"/>
@@ -38,7 +38,7 @@
         </Style>
         <Style TargetType="TabControl">
             <Setter Property="Background" Value="#FF655168"/>
-        </Style>
+        </Style>-->
     </Application.Resources>
 </Application>
 

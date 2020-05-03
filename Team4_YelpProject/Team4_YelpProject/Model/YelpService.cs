@@ -363,9 +363,8 @@
         {
             List<Business> ObjBusinesses = new List<Business>();
 
-            StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.business_id,B.name,B.state,B.city,B.address,B.zipcode,B.latitude,B.longitude,B.stars,B.is_open,B.review_count,B.numtips,B.numcheckins FROM business as B ");
+            StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.business_id,B.name,B.state,B.city,B.address,B.zipcode,B.latitude,B.longitude,B.stars,B.is_open,B.review_count,B.numtips,B.numcheckins FROM business as B, categories AS C  ");
             StringBuilder sqlCategory = new StringBuilder();
-            StringBuilder sqlCategoryBackEnd = new StringBuilder(" JOIN categories AS C ON B.business_id=C.business_id ");
 
             /*    Appends selected Category choices to Query    */
             if (BList != null)
@@ -374,12 +373,6 @@
                 {
                     sqlCategory.Append(" AND category='" + item.Category + "' ");
                 }
-            }
-
-            /*    Append Category JOIN statement    */
-            if (BList != null)
-            {
-                sqlStr.Append(sqlCategoryBackEnd);
             }
 
             sqlStr.Append("WHERE state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' ");

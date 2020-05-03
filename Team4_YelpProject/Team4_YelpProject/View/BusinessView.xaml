@@ -150,8 +150,10 @@
                        Padding="3"
                        Margin="5 5"
                        CredentialsProvider ="TiL8nashAKDrGMxI4Y4F~i20_8cpTeHKKiAzdghzvOg~AsUdO8HqeWXszl6dTixVEOq33X4tsTLP7ODoNCHY_9My12iNiCffnM7A-eZWY0Z7" 
-                       Center="48.0090,-122.2021" Height="368">
+                       Center="48.0090,-122.2021"
+                       Height="368">
                     <m:MapItemsControl ItemsSource="{Binding BusinessLocations}"/>
+
                 </m:Map>
             </StackPanel>
         </GroupBox>
@@ -190,7 +192,6 @@
                             Padding="3" 
                             Background="#FF30F2FB"
                             Width="100"
-                            
                             Height="30"
                             Command="{Binding Path=CheckinCommand}"/>
                     <Button Content="Show Tips" 
