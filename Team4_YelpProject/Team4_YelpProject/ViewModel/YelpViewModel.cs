@@ -7,6 +7,7 @@
     using System;
     using Team4_YelpProject.View;
     using System.Collections.Generic;
+    using Microsoft.Maps.MapControl.WPF;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
@@ -344,7 +345,7 @@
                     bus.Distance = ObjYelpService.DetermineDistance(bus, SelectedUser);
                 }
             }
-
+            LoadBusinessLocations();
             ItemCounter();
         }
 
@@ -378,9 +379,38 @@
         }
         #endregion
 
-        #region Sort Results By
+        /*    BUSINESS VIEW MAP    */
+
+        #region Populate Bing Map
+        private ObservableCollection<Pushpin> businessLocations;
+        public ObservableCollection<Pushpin> BusinessLocations
+        {
+            get { return businessLocations; }
+            set
+            {
+                businessLocations = value;
+                OnPropertyChanged("BusinessList");
+                OnPropertyChanged("BusinessLocations");
+            }
+        }
+
+        private void LoadBusinessLocations()
+        {
+            List<Pushpin> pins = new List<Pushpin>();
+            foreach(Business B in BusinessList)
+            {
+                Location loc = new Location(B.Latitude, B.Longitude);
+                Pushpin pin = new Pushpin();
+                pin.Location = loc;
+                pin.Content = B.BusinessName;
+                pins.Add(pin);
+            }
+            BusinessLocations = new ObservableCollection<Pushpin>(pins);
+
+        }
 
         #endregion
+
 
         /*    LOAD BUSINESS TIPS WINDOW    */
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
+﻿using System.Windows;
 using Microsoft.Maps.MapControl.WPF;
 
 namespace Map
@@ -19,7 +14,7 @@ namespace Map
         public MainWindow()
         {
             InitializeComponent();
-            DelegateEventHandlers();
+            //DelegateEventHandlers();
         }
 
         private void DelegateEventHandlers()
