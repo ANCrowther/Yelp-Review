@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vw="clr-namespace:Team4_YelpProject.View"
         xmlns:local="clr-namespace:Team4_YelpProject"
+        xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         mc:Ignorable="d"
-        Title="Team 4 Yelp App" Height="750" Width="1200" Background="#FF5F5858">
+        Title="Team 4 Yelp App" Height="800" Width="1200" Background="#FF5F5858">
     <Window.Resources>
         <!--The style settings sit here as they do not work correctly when they are in
         the app xaml. Not sure why, not as important as the rest of the project, so

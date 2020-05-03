@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Team4_YelpProject.View" xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+             xmlns:local="clr-namespace:Team4_YelpProject.View" 
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d" 
              d:DesignHeight="740" 
              d:DesignWidth="1200">
@@ -12,7 +14,8 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="600"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -127,69 +130,39 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-        <StackPanel Orientation="Vertical" 
-                    Grid.Column="1">
-
-            <GroupBox Header="Business Search Results" 
-                      Height="300" 
-                      Margin="5 5 5 5" 
-                      Padding="3">
-                <StackPanel Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="# of Businesses:" 
-                               Margin="10 5 5 5" 
+        <GroupBox Header="Map" 
+                  Grid.Column="1"
+                  Grid.ColumnSpan="2"
+                  Margin="5 5 5 5" 
+                  Padding="3">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="# of Businesses:" 
+                               Margin="10 0 5 5" 
                                Padding="3"/>
-                        <TextBlock Text="{Binding Path=ItemCount,
+                    <TextBlock Text="{Binding Path=ItemCount,
                                           Mode=OneWay}"
-                                   Margin="0 5 25 5" 
+                                   Margin="0 0 5 5" 
                                    Padding="3"/>
-                        <Label Content="Sort By:" 
-                               Margin="150 5 0 0" 
-                               Padding="3"/>
-                        <ComboBox Width="150"  
-                                  Margin="5 5" 
-                                  Padding="3">
-                            <ComboBoxItem Content="Business"/>
-                        </ComboBox>
-                    </StackPanel>
-                    <DataGrid x:Name="businessDG" 
-                              Height="230" 
-                              Margin="5 5 5 5"
-                              ItemsSource="{Binding Path=BusinessList, 
-                                        Mode=TwoWay}"
-                              SelectedItem="{Binding Path=CurrentBusiness}">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name"
-                                                Width="auto" 
-                                                Binding="{Binding Path=BusinessName}"/>
-                            <DataGridTextColumn Header="Address" 
-                                                Width="auto" 
-                                                Binding="{Binding Path=Address}"/>
-                            <DataGridTextColumn Header="City"
-                                                Width="auto" 
-                                                Binding="{Binding Path=City}"/>
-                            <DataGridTextColumn Header="State" 
-                                                Width="auto" 
-                                                Binding="{Binding Path=State}"/>
-                            <DataGridTextColumn Header="Stars" 
-                                                Width="auto" 
-                                                Binding="{Binding Path=Stars}"/>
-                            <DataGridTextColumn Header="# of tips" 
-                                                Width="auto" 
-                                                Binding="{Binding Path=NumberOfTips}"/>
-                            <DataGridTextColumn Header="# of checkins" 
-                                                Width="auto" 
-                                                Binding="{Binding Path=TotalCheckins}"/>
-                            <DataGridTextColumn Header="Distance" 
-                                                Width="auto" 
-                                                Binding="{Binding Path=Distance}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
                 </StackPanel>
-            </GroupBox>
+                <m:Map x:Name="myMap" 
+                       ZoomLevel="14" 
+                       Padding="3"
+                       Margin="5 5"
+                       CredentialsProvider ="TiL8nashAKDrGMxI4Y4F~i20_8cpTeHKKiAzdghzvOg~AsUdO8HqeWXszl6dTixVEOq33X4tsTLP7ODoNCHY_9My12iNiCffnM7A-eZWY0Z7" 
+                       Center="48.0090,-122.2021" Height="368"/>
+            </StackPanel>
+        </GroupBox>
+        
+        <StackPanel Orientation="Vertical" 
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <GroupBox Header="Selected Business" 
-                          Width="450">
+                          Width="450"
+                          Margin="5 5"
+                          Padding="3">
                     <StackPanel>
                         <TextBox x:Name="businessNameTB" 
                                  Margin="5 5" 
@@ -223,7 +196,51 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" 
+        <GroupBox Header="Business Search Results" 
+                  Height="230"
+                  VerticalAlignment="Top"
+                  Margin="5 5 5 5" 
+                  Padding="3"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  Grid.Row="1">
+            <StackPanel Orientation="Vertical">
+                <DataGrid x:Name="businessDG" 
+                              Height="200" 
+                              Margin="5 5 5 5"
+                              ItemsSource="{Binding Path=BusinessList, 
+                                        Mode=TwoWay}"
+                              SelectedItem="{Binding Path=CurrentBusiness}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Name"
+                                                Width="auto" 
+                                                Binding="{Binding Path=BusinessName}"/>
+                        <DataGridTextColumn Header="Address" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=Address}"/>
+                        <DataGridTextColumn Header="City"
+                                                Width="auto" 
+                                                Binding="{Binding Path=City}"/>
+                        <DataGridTextColumn Header="State" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=State}"/>
+                        <DataGridTextColumn Header="Stars" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=Stars}"/>
+                        <DataGridTextColumn Header="# of tips" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=NumberOfTips}"/>
+                        <DataGridTextColumn Header="# of checkins" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=TotalCheckins}"/>
+                        <DataGridTextColumn Header="Distance" 
+                                                Width="auto" 
+                                                Binding="{Binding Path=Distance}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </GroupBox>
+        <!--<StackPanel Orientation="Horizontal" 
                     VerticalAlignment="Top"  
                     Grid.Column="0" 
                     Grid.ColumnSpan="2" 
@@ -310,9 +327,9 @@
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
-        </StackPanel>
+        </StackPanel>-->
         <GroupBox Header="Business Categories and Attributes"
-                  Grid.Column="2"
+                  Grid.Column="3"
                   HorizontalAlignment="Left"
                   Margin="5 5"
                   Width="260"
@@ -339,8 +356,5 @@
                 </TreeViewItem>
             </TreeView>
         </GroupBox>
-        
-
-
     </Grid>
 </UserControl>

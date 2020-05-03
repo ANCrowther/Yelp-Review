@@ -12,6 +12,7 @@
 
 using System.Windows;
 using Team4_YelpProject.ViewModel;
+using Microsoft.Maps.MapControl.WPF;
 
 namespace Team4_YelpProject
 {
