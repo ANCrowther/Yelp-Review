@@ -363,7 +363,7 @@
         {
             List<Business> ObjBusinesses = new List<Business>();
 
-            StringBuilder sqlStr = new StringBuilder("SELECT DISTINCT B.business_id,B.name,B.state,B.city,B.address,B.zipcode,B.latitude,B.longitude,B.stars,B.is_open,B.review_count,B.numtips,B.numcheckins FROM business as B, categories AS C  ");
+            StringBuilder sqlStr = new StringBuilder();
             StringBuilder sqlCategory = new StringBuilder();
 
             /*    Appends selected Category choices to Query    */
@@ -371,19 +371,19 @@
             {
                 foreach (Business item in BList)
                 {
-                    sqlCategory.Append(" AND category='" + item.Category + "' ");
-                }
+                    sqlStr.Append("(SELECT DISTINCT B.business_id, B.name, B.state, B.city, B.address, B.zipcode, B.latitude, B.longitude, B.stars, B.is_open, B.review_count, B.numtips, B.numcheckins FROM business as B, categories as C where B.business_id = C.business_id AND state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' AND category='" + item.Category + "') INTERSECT");
+                };
+                Console.WriteLine(sqlStr.Length.ToString());
+                Console.WriteLine(sqlStr.ToString());
+                if (sqlStr.Length > 9)
+                    sqlStr.Remove(sqlStr.Length-9,9);
+                sqlStr.Append(";");
             }
-
-            sqlStr.Append("WHERE state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' ");
-
-            /*    Sew the queries together     */
-            if (sqlCategory != null)
+            else
             {
-                sqlStr.Append(sqlCategory);
+                sqlStr.Append("SELECT DISTINCT B.business_id,B.name,B.state,B.city,B.address,B.zipcode,B.latitude,B.longitude,B.stars,B.is_open,B.review_count,B.numtips,B.numcheckins FROM business as B, categories AS C WHERE state = '" + location.State + "' AND city = '" + location.City + "' AND zipcode = '" + location.Zipcode + "';");
             }
 
-            sqlStr.Append(";");
             Console.WriteLine(sqlStr.ToString());
 
             using (var connection = new NpgsqlConnection(buildConnectionString()))
