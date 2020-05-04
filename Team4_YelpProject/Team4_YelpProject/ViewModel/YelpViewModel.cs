@@ -8,7 +8,6 @@
     using Team4_YelpProject.Commands;
     using Team4_YelpProject.Model;
     using Team4_YelpProject.View;
-    using System.Windows;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
@@ -280,9 +279,8 @@
             {
                 SelectionList = new ObservableCollection<Business>();
             }
-
-            SelectionList.Add(SelectedItem);
             CategoryList.Remove(SelectedItem);
+            SelectionList.Add(SelectedItem);
         }
 
         private RelayCommand removeCommand;

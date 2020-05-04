@@ -1,5 +1,6 @@
 ﻿namespace Team4_YelpProject.Model
 {
+    using Microsoft.Maps.MapControl.WPF;
     using System.ComponentModel;
 
     public class YelpUser : INotifyPropertyChanged
@@ -86,6 +87,12 @@
         {
             get { return this.user_id; }
             set { this.user_id = value; RaisePropertyChanged("User_id"); }
+        }
+
+        private Location uLocation;
+        public Location ULocation
+        {
+            get { return new Location(latitude, longitude); }
         }
 
         public YelpUser() { }

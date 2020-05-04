@@ -153,10 +153,14 @@
                        Center="48.0090,-122.2021"
                        Height="368">
                     <m:MapItemsControl ItemsSource="{Binding BusinessLocations}"/>
-                    <m:Pushpin x:Name="FocusPin"
+                    <m:Pushpin x:Name="SelectedBusinessPin"
                                Location="{Binding CurrentBusiness.BLocation}"
-                               BorderThickness="20"
+                               Content="{Binding CurrentBusiness.BusinessName}"
                                Background="#FF101AE5"/>
+                    <m:Pushpin x:Name="CurrentUserPin"
+                               Location="{Binding SelectedUser.ULocation}"
+                               Content="{Binding SelectedUser.Name}"
+                               Background="#FF009114"/>
                 </m:Map>
             </StackPanel>
         </GroupBox>
@@ -251,94 +255,6 @@
                 </DataGrid>
             </StackPanel>
         </GroupBox>
-        <!--<StackPanel Orientation="Horizontal" 
-                    VerticalAlignment="Top"  
-                    Grid.Column="0" 
-                    Grid.ColumnSpan="2" 
-                    Grid.Row="1">
-            <GroupBox Header="Filter by Price" 
-                      Margin="5 5 5 5" 
-                      Padding="3">
-                <StackPanel>
-                    <CheckBox Content="$" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="$$" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="$$$" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="$$$$" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="Filter by Meal" 
-                      Margin="5 5 5 5" 
-                      Padding="3">
-                <StackPanel>
-                    <CheckBox Content="Breakfast" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="Lunch" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="Brunch" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="Dinner" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="Dessert" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                    <CheckBox Content="Late Night" 
-                              Margin="15 0 0 0" 
-                              Padding="3"/>
-                </StackPanel>
-            </GroupBox>
-            <GroupBox Header="Filter by Attributes" 
-                      Margin="5 5 5 5" 
-                      Padding="3">
-                <StackPanel Orientation="Horizontal">
-                    <StackPanel Orientation="Vertical">
-                        <CheckBox Content="Accepts Credit Cards" 
-                                  Margin="15 0 0 0" 
-                                  Padding="3"/>
-                        <CheckBox Content="Takes Reservations" 
-                                  Margin="15 0 0 0"
-                                  Padding="3"/>
-                        <CheckBox Content="Wheelchair Accessible" 
-                                  Margin="15 0 0 0" 
-                                  Padding="3"/>
-                        <CheckBox Content="Outdoor Seating" 
-                                  Margin="15 0 0 0" 
-                                  Padding="3"/>
-                        <CheckBox Content="Good for Kids"
-                                  Margin="15 0 0 0" 
-                                  Padding="3"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Vertical">
-                        <CheckBox Content="Good for Groups" 
-                                  Margin="15 0 0 0" 
-                                  Padding="3"/>
-                        <CheckBox Content="Delivery" 
-                                  Margin="15 0 0 0"
-                                  Padding="3"/>
-                        <CheckBox Content="Take Out" 
-                                  Margin="15 0 0 0" 
-                                  Padding="3"/>
-                        <CheckBox Content="Free Wi-Fi" 
-                                  Margin="15 0 0 0"
-                                  Padding="3"/>
-                        <CheckBox Content="Bike Parking" 
-                                  Margin="15 0 0 0" 
-                                  Padding="3"/>
-                    </StackPanel>
-                </StackPanel>
-            </GroupBox>
-        </StackPanel>-->
         <GroupBox Header="Business Categories and Attributes"
                   Grid.Column="3"
                   HorizontalAlignment="Left"
@@ -349,7 +265,6 @@
                   Margin="5 5"
                   Padding="3">
                 <TreeViewItem Header="Categories"
-                              
                               ItemsSource="{Binding BusinessCategories}">
                     <TreeViewItem.ItemTemplate>
                         <DataTemplate>
