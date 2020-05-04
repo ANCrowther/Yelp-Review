@@ -156,7 +156,8 @@
                     <m:Pushpin x:Name="SelectedBusinessPin"
                                Location="{Binding CurrentBusiness.BLocation}"
                                Content="{Binding CurrentBusiness.BusinessName}"
-                               Background="#FF101AE5"/>
+                               Background="#FF101AE5">
+                    </m:Pushpin>
                     <m:Pushpin x:Name="CurrentUserPin"
                                Location="{Binding SelectedUser.ULocation}"
                                Content="{Binding SelectedUser.Name}"
