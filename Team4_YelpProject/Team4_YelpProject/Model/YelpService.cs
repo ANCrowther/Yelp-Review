@@ -8,14 +8,14 @@
 
     public class YelpServices
     {
-        public YelpServices()
-        {
-        }
+        public YelpServices() { }
 
         private string buildConnectionString()
         {
             return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
         }
+
+        /*    USER VIEW    */
 
         public List<YelpUser> SearchUser(string name)
         {
@@ -75,7 +75,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT distinct U.user_id,U.name,U.average_stars, U.fans, U.cool, U.funny, U.useful,totallikes,U.tipcount,date(U.yelping_since),U.user_latitude,U.user_longitude FROM users AS U,friend WHERE U.user_id=friend.friend_id AND friend.user_id=(SELECT U1.user_id FROM users AS U1 WHERE U1.user_id='" + id + "' ORDER BY name,average_stars,totallikes);";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -122,7 +122,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.likes, T.business_id, T.user_id, T.text FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + id + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id ORDER BY date(T.tipdate) DESC;";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -168,7 +168,6 @@
                     {
                         cmd.Connection = connection;
                         cmd.CommandText = "UPDATE users SET user_latitude='" + ObjUser.Latitude + "', user_longitude='" + ObjUser.Longitude + "' WHERE user_id='" + ObjUser.User_id + "';";
-                        Console.WriteLine(cmd.CommandText);
                         cmd.ExecuteNonQuery();
                         IsUpdated = true;
                     }
@@ -185,6 +184,8 @@
 
             return IsUpdated;
         }
+
+        /*    BUSINESS VIEW    */
 
         public List<Business> GetStates()
         {
@@ -263,7 +264,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT DISTINCT state, city, zipcode FROM business WHERE state='" + State + "' AND city='" + City + "' ORDER BY zipcode";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -302,7 +303,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT DISTINCT C.category FROM business AS B, categories AS C WHERE B.business_id=C.business_id AND state='" + B.State + "' AND city='" + B.City + "' AND zipcode='" + B.Zipcode + "' ORDER BY category;";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -336,7 +337,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT mydistance (" + location.Latitude + ", "+ location.Longitude + ", "+ uLoc.Latitude + ", " + uLoc.Longitude + ");";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -359,32 +360,39 @@
             return ObjBusiness.Distance;
         }
 
+        public StringBuilder BusinessChosenSelection(StringBuilder sqlStr, ObservableCollection<Business> BList, Business location)
+        {
+            foreach (Business item in BList)
+            {
+                sqlStr.Append("(SELECT DISTINCT B.business_id, B.name, B.state, B.city, B.address, B.zipcode, B.latitude, B.longitude, B.stars, B.is_open, B.review_count, B.numtips, B.numcheckins FROM business as B, categories as C where B.business_id = C.business_id AND state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' AND category='" + item.Category + "') INTERSECT");
+            };
+            if (sqlStr.Length > 9)
+                sqlStr.Remove(sqlStr.Length - 9, 9);
+            sqlStr.Append(";");
+
+            return sqlStr;
+        }
+
+        public StringBuilder BusinessNoSelection(StringBuilder sqlStr, Business location)
+        {
+            return sqlStr.Append("SELECT DISTINCT B.business_id,B.name,B.state,B.city,B.address,B.zipcode,B.latitude,B.longitude,B.stars,B.is_open,B.review_count,B.numtips,B.numcheckins FROM business as B, categories AS C WHERE state = '" + location.State + "' AND city = '" + location.City + "' AND zipcode = '" + location.Zipcode + "';");
+        }
+
         public List<Business> SearchBusinesses(ObservableCollection<Business> BList, Business location)
         {
             List<Business> ObjBusinesses = new List<Business>();
-
             StringBuilder sqlStr = new StringBuilder();
-            StringBuilder sqlCategory = new StringBuilder();
 
-            /*    Appends selected Category choices to Query    */
             if (BList != null)
             {
-                foreach (Business item in BList)
-                {
-                    sqlStr.Append("(SELECT DISTINCT B.business_id, B.name, B.state, B.city, B.address, B.zipcode, B.latitude, B.longitude, B.stars, B.is_open, B.review_count, B.numtips, B.numcheckins FROM business as B, categories as C where B.business_id = C.business_id AND state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' AND category='" + item.Category + "') INTERSECT");
-                };
-                Console.WriteLine(sqlStr.Length.ToString());
-                Console.WriteLine(sqlStr.ToString());
-                if (sqlStr.Length > 9)
-                    sqlStr.Remove(sqlStr.Length-9,9);
-                sqlStr.Append(";");
+                sqlStr = BusinessChosenSelection(sqlStr, BList, location);
             }
             else
             {
-                sqlStr.Append("SELECT DISTINCT B.business_id,B.name,B.state,B.city,B.address,B.zipcode,B.latitude,B.longitude,B.stars,B.is_open,B.review_count,B.numtips,B.numcheckins FROM business as B, categories AS C WHERE state = '" + location.State + "' AND city = '" + location.City + "' AND zipcode = '" + location.Zipcode + "';");
+                sqlStr = BusinessNoSelection(sqlStr, location);
             }
 
-            Console.WriteLine(sqlStr.ToString());
+            Console.WriteLine("Business Selection: " + sqlStr);
 
             using (var connection = new NpgsqlConnection(buildConnectionString()))
             {
@@ -393,7 +401,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = sqlStr.ToString();
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -442,7 +450,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT H.business_id, H.day_of_week, H.open, H.close FROM business AS B, hours AS H WHERE B.business_id=H.business_id AND B.business_id='" + B.BusinessID + "' AND H.day_of_week='" + DateTime.Today.DayOfWeek + "';";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -468,6 +476,84 @@
             return ObjHours;
         }
 
+        public List<Business> GetCategories(string bid)
+        {
+            List<Business> ObjCatList = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT category, business_id FROM categories WHERE business_id='" + bid + "';";
+
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjCatList.Add(new Business
+                            {
+                                Category = R.GetString(0),
+                                BusinessID = R.GetString(1)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjCatList;
+        }
+
+        public List<Business> GetAttributes(string bid)
+        {
+            List<Business> ObjCatList = new List<Business>();
+
+            using (var connection = new NpgsqlConnection(buildConnectionString()))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand())
+                {
+                    cmd.Connection = connection;
+                    cmd.CommandText = "SELECT attr_name, business_id FROM attributes WHERE business_id='" + bid + "' AND value='True';";
+
+                    try
+                    {
+                        var R = cmd.ExecuteReader();
+                        while (R.Read())
+                        {
+                            ObjCatList.Add(new Business
+                            {
+                                Attribute = R.GetString(0),
+                                BusinessID = R.GetString(1)
+                            });
+                        }
+                    }
+                    catch (NpgsqlException ex)
+                    {
+                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
+                    }
+                    finally
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+
+            return ObjCatList;
+        }
+
+        /*    LOAD BUSINESS TIPS WINDOW    */
+
         public List<Tips> GetTips(string bid)
         {
             List<Tips> ObjTipsList = new List<Tips>();
@@ -479,7 +565,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT T.tipdate, U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM Business AS B, tip AS T, users AS U WHERE T.user_id=U.user_id AND T.business_id=B.business_id AND T.business_id='" + bid +"' ORDER BY date(T.tipdate) DESC;";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -523,7 +609,7 @@
                 {
                     cmd.Connection = connection;
                     cmd.CommandText = "SELECT date(T.tipdate), U.name, B.name, B.city, T.text, T.likes, T.business_id, T.user_id FROM Business AS B, tip AS T, users AS U,(SELECT F.friend_id FROM users AS U1, friend AS F WHERE U1.user_id = '" + U + "' AND U1.user_id = F.user_id) AS T1 WHERE T1.friend_id = T.user_id AND B.business_id = T.business_id AND T.user_id = U.user_id AND T.business_id='" + B + "' ORDER BY date(T.tipdate) DESC;";
-                    Console.WriteLine(cmd.CommandText);
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -569,7 +655,6 @@
                     {
                         cmd.Connection = connection;
                         cmd.CommandText = "UPDATE tip SET likes=likes+1 WHERE user_id='" + T.UserID + "' AND business_id='" + T.BusinessID + "' AND tipdate='" + T.Date +"';";
-                        Console.WriteLine(cmd.CommandText);
                         cmd.ExecuteNonQuery();
                         IsUpdated = true;
                     }
@@ -600,7 +685,6 @@
                     {
                         cmd.Connection = connection;
                         cmd.CommandText = "INSERT INTO tip(tipdate, business_id, user_id, text, likes) VALUES(current_timestamp, '" + T.BusinessID + "', '" + T.UserID + "', '" + T.Text + "', 0);";
-                        Console.WriteLine(cmd.CommandText);
                         cmd.ExecuteNonQuery();
                         IsUpdated = true;
                     }
@@ -618,6 +702,8 @@
             return IsUpdated;
         }
 
+        /*    LOAD CHECKINS WINDOW    */
+
         public List<KeyValuePair<string, int>> GetCheckins(string bid)
         {
             List<KeyValuePair<string, int>> ObjCheckins = new List<KeyValuePair<string, int>>();
@@ -628,8 +714,8 @@
                 using (var cmd = new NpgsqlCommand())
                 {
                     cmd.Connection = connection;
-                    cmd.CommandText = "SELECT month, count(month) FROM checkins where business_id = '" + bid + "' group by month;" ;
-                    Console.WriteLine(cmd.CommandText);
+                    cmd.CommandText = "SELECT month, count(month) FROM checkins where business_id = '" + bid + "' group by month;";
+
                     try
                     {
                         var R = cmd.ExecuteReader();
@@ -685,82 +771,6 @@
             }
         }
 
-        public List<Business> GetCategories(string bid)
-        {
-            List<Business> ObjCatList = new List<Business>();
-
-            using (var connection = new NpgsqlConnection(buildConnectionString()))
-            {
-                connection.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = connection;
-                    cmd.CommandText = "SELECT category, business_id FROM categories WHERE business_id='" + bid + "';";
-                    Console.WriteLine(cmd.CommandText);
-                    try
-                    {
-                        var R = cmd.ExecuteReader();
-                        while (R.Read())
-                        {
-                            ObjCatList.Add(new Business
-                            {
-                                Category = R.GetString(0),
-                                BusinessID = R.GetString(1)
-                            });
-                        }
-                    }
-                    catch (NpgsqlException ex)
-                    {
-                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-
-            return ObjCatList;
-        }
-
-        public List<Business> GetAttributes(string bid)
-        {
-            List<Business> ObjCatList = new List<Business>();
-
-            using (var connection = new NpgsqlConnection(buildConnectionString()))
-            {
-                connection.Open();
-                using (var cmd = new NpgsqlCommand())
-                {
-                    cmd.Connection = connection;
-                    cmd.CommandText = "SELECT attr_name, business_id FROM attributes WHERE business_id='" + bid + "' AND value='True';";
-                    Console.WriteLine(cmd.CommandText);
-                    try
-                    {
-                        var R = cmd.ExecuteReader();
-                        while (R.Read())
-                        {
-                            ObjCatList.Add(new Business
-                            {
-                                Attribute = R.GetString(0),
-                                BusinessID = R.GetString(1)
-                            });
-                        }
-                    }
-                    catch (NpgsqlException ex)
-                    {
-                        System.Windows.MessageBox.Show("SQL ERROR: " + ex.Message.ToString());
-                    }
-                    finally
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-
-            return ObjCatList;
-        }
-
         public bool AddCheckin(string bid)
         {
             bool IsUpdated = false;
@@ -774,7 +784,6 @@
                     {
                         cmd.Connection = connection;
                         cmd.CommandText = "INSERT INTO checkins(business_id, year, month, day, time) VALUES ('"+bid+ "', date_part('year', current_timestamp), date_part('month', current_timestamp), date_part('day', current_timestamp), current_time);";
-                        Console.WriteLine(cmd.CommandText);
                         cmd.ExecuteNonQuery();
                         IsUpdated = true;
                     }

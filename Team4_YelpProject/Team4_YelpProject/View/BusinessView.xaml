@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
              xmlns:local="clr-namespace:Team4_YelpProject.View" 
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
              d:DesignHeight="740" 
              d:DesignWidth="1200">
@@ -153,7 +153,10 @@
                        Center="48.0090,-122.2021"
                        Height="368">
                     <m:MapItemsControl ItemsSource="{Binding BusinessLocations}"/>
-
+                    <m:Pushpin x:Name="FocusPin"
+                               Location="{Binding CurrentBusiness.BLocation}"
+                               BorderThickness="20"
+                               Background="#FF101AE5"/>
                 </m:Map>
             </StackPanel>
         </GroupBox>

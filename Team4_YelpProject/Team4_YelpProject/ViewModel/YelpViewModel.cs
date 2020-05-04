@@ -295,8 +295,8 @@
                 CategoryList = new ObservableCollection<Business>();
             }
 
-            CategoryList.Add(SelectedItem);
             SelectionList.Remove(SelectedItem);
+            CategoryList.Add(SelectedItem);
         }
 
         private Business selectedItem;
@@ -306,6 +306,7 @@
             set
             {
                 selectedItem = value;
+                OnPropertyChanged("SelectedItem");
             }
         }
 
@@ -329,7 +330,9 @@
         public ObservableCollection<Business> BusinessList
         {
             get { return businessList; }
-            set { businessList = value; 
+            set 
+            { 
+                businessList = value;
                 OnPropertyChanged("BusinessList"); 
                 OnPropertyChanged("ItemCount");
             }
@@ -346,6 +349,7 @@
                     bus.Distance = ObjYelpService.DetermineDistance(bus, SelectedUser);
                 }
             }
+
             ItemCounter();
             LoadBusinessLocations();
         }
@@ -409,7 +413,6 @@
             BusinessLocations = new ObservableCollection<Pushpin>(pins);
         }
         #endregion
-
 
         /*    LOAD BUSINESS TIPS WINDOW    */
 
@@ -532,7 +535,7 @@
         {
             Checkins = new ObservableCollection<KeyValuePair<string, int>>(ObjYelpService.GetCheckins(CurrentBusiness.BusinessID));
 
-            Console.WriteLine(Checkins.Count);
+            Console.WriteLine("LoadCheckinsAtBusiness: " + Checkins.Count);
             foreach(KeyValuePair<string, int> key in Checkins)
             {
                 Console.WriteLine($"Pair here: {key.Key}, {key.Value}");
