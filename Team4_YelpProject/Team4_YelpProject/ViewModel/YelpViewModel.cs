@@ -36,6 +36,7 @@
             addTipCommand = new RelayCommand(AddToTips);
             checkinCommand = new RelayCommand(checkinSearch);
             checkinWindowCommand = new RelayCommand(addCheckin);
+            centerOnBusinessCommand = new RelayCommand(CenterMap);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -382,6 +383,24 @@
                 businessCategories = value;
                 OnPropertyChanged("BusinessCategories");
             }
+        }
+        #endregion
+
+        #region Center on SelectedBusiness
+        private RelayCommand centerOnBusinessCommand;
+        public RelayCommand CenterOnBusinessCommand { get { return centerOnBusinessCommand; } }
+
+        private Location currentBLocation;
+        public Location CurrentBLocation
+        {
+            get { return currentBLocation; }
+            set { currentBLocation = value; OnPropertyChanged("CurrentBLocation"); }
+        }
+
+        private void CenterMap()
+        {
+            CurrentBLocation = CurrentBusiness.BLocation;
+            Console.WriteLine(CurrentBLocation);
         }
         #endregion
 

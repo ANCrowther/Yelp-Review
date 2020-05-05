@@ -4,8 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
-             xmlns:local="clr-namespace:Team4_YelpProject.View" 
-             xmlns:sys="clr-namespace:System;assembly=mscorlib" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:Team4_YelpProject.View"
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="740" 
              d:DesignWidth="1200">
@@ -150,7 +150,7 @@
                        Padding="3"
                        Margin="5 5"
                        CredentialsProvider ="TiL8nashAKDrGMxI4Y4F~i20_8cpTeHKKiAzdghzvOg~AsUdO8HqeWXszl6dTixVEOq33X4tsTLP7ODoNCHY_9My12iNiCffnM7A-eZWY0Z7" 
-                       Center="48.0090,-122.2021"
+                       Center="{Binding YelpViewModel.CurrentBLocation}"
                        Height="368">
                     <m:MapItemsControl ItemsSource="{Binding BusinessLocations}"/>
                     <m:Pushpin x:Name="SelectedBusinessPin"
@@ -254,6 +254,11 @@
                                                 Width="auto" 
                                                 Binding="{Binding Path=Distance}"/>
                     </DataGrid.Columns>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding CenterOnBusinessCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                 </DataGrid>
             </StackPanel>
         </GroupBox>
