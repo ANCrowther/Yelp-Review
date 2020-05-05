@@ -362,13 +362,21 @@
 
         public StringBuilder BusinessChosenSelection(StringBuilder sqlStr, ObservableCollection<Business> BList, Business location)
         {
-            foreach (Business item in BList)
+            // Having to check the BList 
+            if (BList.Count > 0)
             {
-                sqlStr.Append("(SELECT DISTINCT B.business_id, B.name, B.state, B.city, B.address, B.zipcode, B.latitude, B.longitude, B.stars, B.is_open, B.review_count, B.numtips, B.numcheckins FROM business as B, categories as C where B.business_id = C.business_id AND state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' AND category='" + item.Category + "') INTERSECT");
-            };
-            if (sqlStr.Length > 9)
-                sqlStr.Remove(sqlStr.Length - 9, 9);
-            sqlStr.Append(";");
+                foreach (Business item in BList)
+                {
+                    sqlStr.Append("(SELECT DISTINCT B.business_id, B.name, B.state, B.city, B.address, B.zipcode, B.latitude, B.longitude, B.stars, B.is_open, B.review_count, B.numtips, B.numcheckins FROM business as B, categories as C where B.business_id = C.business_id AND state='" + location.State + "' AND city='" + location.City + "' AND zipcode='" + location.Zipcode + "' AND category='" + item.Category + "') INTERSECT");
+                };
+                if (sqlStr.Length > 9)
+                    sqlStr.Remove(sqlStr.Length - 9, 9);
+                sqlStr.Append(";");
+            }
+            else
+            {
+                return BusinessNoSelection(sqlStr, location);
+            }
 
             return sqlStr;
         }

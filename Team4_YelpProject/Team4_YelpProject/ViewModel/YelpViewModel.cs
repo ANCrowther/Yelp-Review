@@ -280,8 +280,9 @@
             {
                 SelectionList = new ObservableCollection<Business>();
             }
-            CategoryList.Remove(SelectedItem);
+
             SelectionList.Add(SelectedItem);
+            CategoryList.Remove(SelectedItem);
         }
 
         private RelayCommand removeCommand;
@@ -294,8 +295,9 @@
                 CategoryList = new ObservableCollection<Business>();
             }
 
-            SelectionList.Remove(SelectedItem);
             CategoryList.Add(SelectedItem);
+            SelectionList.Remove(SelectedItem);
+            
         }
 
         private Business selectedItem;
