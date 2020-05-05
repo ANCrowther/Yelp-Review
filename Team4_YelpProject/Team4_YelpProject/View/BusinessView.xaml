@@ -162,6 +162,7 @@
                                Location="{Binding SelectedUser.ULocation}"
                                Content="{Binding SelectedUser.Name}"
                                Background="#FF009114"/>
+
                 </m:Map>
             </StackPanel>
         </GroupBox>

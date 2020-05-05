@@ -8,6 +8,7 @@
     using Team4_YelpProject.Commands;
     using Team4_YelpProject.Model;
     using Team4_YelpProject.View;
+    using System.Device.Location;
 
     public class YelpViewModel : INotifyPropertyChanged
     {
