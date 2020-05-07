@@ -150,8 +150,8 @@
                        Padding="3"
                        Margin="5 5"
                        CredentialsProvider ="TiL8nashAKDrGMxI4Y4F~i20_8cpTeHKKiAzdghzvOg~AsUdO8HqeWXszl6dTixVEOq33X4tsTLP7ODoNCHY_9My12iNiCffnM7A-eZWY0Z7" 
-                       Center="{Binding YelpViewModel.CurrentBLocation}"
-                       Height="368">
+                       Center="47.9790, -122.2021"
+                       Height="370">
                     <m:MapItemsControl ItemsSource="{Binding BusinessLocations}"/>
                     <m:Pushpin x:Name="SelectedBusinessPin"
                                Location="{Binding CurrentBusiness.BLocation}"
@@ -162,11 +162,9 @@
                                Location="{Binding SelectedUser.ULocation}"
                                Content="{Binding SelectedUser.Name}"
                                Background="#FF009114"/>
-
                 </m:Map>
             </StackPanel>
         </GroupBox>
-        
         <StackPanel Orientation="Vertical" 
                     Grid.Column="2"
                     Grid.ColumnSpan="2"
@@ -226,7 +224,7 @@
                               Height="200" 
                               Margin="5 5 5 5"
                               ItemsSource="{Binding Path=BusinessList, 
-                                        Mode=TwoWay}"
+                                            Mode=TwoWay}"
                               SelectedItem="{Binding Path=CurrentBusiness}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Name"
@@ -254,11 +252,6 @@
                                                 Width="auto" 
                                                 Binding="{Binding Path=Distance}"/>
                     </DataGrid.Columns>
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding CenterOnBusinessCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
                 </DataGrid>
             </StackPanel>
         </GroupBox>

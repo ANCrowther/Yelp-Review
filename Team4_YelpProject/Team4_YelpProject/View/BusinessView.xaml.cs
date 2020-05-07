@@ -3,6 +3,7 @@
     using Microsoft.Maps.MapControl.WPF;
     using System;
     using System.Windows.Controls;
+    using Team4_YelpProject.ViewModel;
 
     /// <summary>
     /// Interaction logic for BusinessView.xaml
