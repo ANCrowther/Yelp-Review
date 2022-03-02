@@ -147,7 +147,7 @@
             get { return new Location(latitude, longitude); }
         }
 
-        public Business() { }
+        //public Business() { }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

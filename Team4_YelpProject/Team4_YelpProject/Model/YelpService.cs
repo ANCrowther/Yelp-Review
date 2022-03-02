@@ -12,7 +12,7 @@
 
         private string buildConnectionString()
         {
-            return "Host = localhost; Username = postgres; Database = milestone2db; password = spiffy";
+            return "Host = ####; Username = ####; Database = ####; password = ####";
         }
 
         /*    USER VIEW    */
